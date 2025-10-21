@@ -1,0 +1,92 @@
+{
+  "categories": [
+    {
+      "id": "favorites",
+      "name": "⭐ Favorites",
+      "cards": []
+    },
+    {
+      "id": "all",
+      "name": "All Applications",
+      "cards": []
+    },
+    {
+      "id": "communication",
+      "name": "Communication & Files",
+      "cards": [
+        {
+          "icon": "📨",
+          "title": "Outlook Web Access",
+          "description": "Access your Organization email (@hopeignites.org)",
+          "url": "https://outlook.office.com/hopeignites.org"
+        },
+        {
+          "icon": "📁",
+          "title": "File Sharing",
+          "description": "Access your personal OneDrive",
+          "url": "https://hopeignites-my.sharepoint.com"
+        },
+        {
+          "icon": "🗄️",
+          "title": "Network Hub",
+          "description": "Manage identity, access, and security for your organization",
+          "url": "https://hopeignites1977.sharepoint.com/sites/hub"
+        }
+      ]
+    },
+    {
+      "id": "hr-payroll",
+      "name": "HR & Payroll",
+      "cards": [
+        {
+          "icon": "🏦",
+          "title": "ADP Workforce Now",
+          "description": "Access your timecard, pay stubs, and tax documents",
+          "url": "https://adp.hopeignites.app"
+        },
+                {
+          "icon": "🏦",
+          "title": "ADP Workforce Now Admin",
+          "description": "Access your timecard, pay stubs, and tax documents",
+          "url": "https://adp.hopeignites.app/admin"
+        }
+      ]
+    },
+    {
+      "id": "crm-apps",
+      "name": "CRM & Apps",
+      "cards": [
+        {
+          "icon": "💼",
+          "title": "Hopeforce",
+          "description": "Salesforce for fundraising",
+          "url": "https://bhgh.my.salesforce.com"
+        },
+        {
+          "icon": "🌐",
+          "title": "Hopeforce Apps",
+          "description": "Access our purpose built apps (HCM, PPM, VM)",
+          "url": "https://community.bhgh.org"
+        }
+      ]
+    }
+  ],
+  "quickLinks": [
+    {
+      "title": "Network Site",
+      "url": "https://www.hopeignites.org"
+    },
+    {
+      "title": "Hope Ignites on LinkedIn",
+      "url": "https://www.linkedin.com/company/hopeignitesnetwork"
+    },
+    {
+      "title": "Quick Link 3",
+      "url": "https://sharepoint.com"
+    },
+    {
+      "title": "Quick Link 4",
+      "url": "https://onedrive.live.com"
+    }
+  ]
+}

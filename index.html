@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hope Ignites - Portal Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- BETA banner (can be dismissed) -->
+    <div id="beta-banner" class="beta-banner" role="region" aria-label="Beta site notification" hidden>
+        <div class="beta-text">BETA — This site is in beta. Some features may be incomplete. <span style="opacity:0.9;margin-left:8px;">Please send feedback <a target="_blank" rel="noopener noreferrer" href="https://forms.monday.com/forms/4df76a6392b5bd7b2d7e118b45017333?r=use1">here.</a></span></div>
+        <button class="beta-close" id="beta-close" aria-label="Dismiss banner">×</button>
+    </div>
+
+    <div class="container">
+        <!-- IP-specific notice will be inserted here by JavaScript -->
+
+        <div class="header">
+            <button id="search-trigger" aria-label="Open search" title="Search (Cmd+K or /)">🔍</button>
+            <button id="dark-mode-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+            <img src="assets/hope-ignites-blue-on-white.png" alt="hope-ignites-logo-blue-white">
+            <h1>Network Application Portal</h1>
+            <p>Access all your tools and applications in one place</p>
+        </div>
+
+        <!-- Tab Navigation (dynamically generated) -->
+        <div id="tab-container" class="tab-container" role="tablist"></div>
+
+        <!-- Portal Cards Grid (dynamically generated) -->
+        <div id="portal-grid" class="portal-grid"></div>
+
+        <div class="quick-links">
+            <h4>Quick Links</h4>
+            <div id="quick-link-grid" class="quick-link-grid">
+                <!-- Quick links dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Collapsible section -->
+        <details class="collapsible">
+            <summary>More information</summary>
+            <div class="collapsible-content">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Application</th>
+                                <th>Description</th>
+                                <th>URL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ADP Workforce Now</td>
+                                <td>My Timecard, Pay stubs, Tax Documents</td>
+                                <td>adp.hopeignites.app</td>
+                            </tr>
+                            <tr>
+                                <td>Campaign Monitor</td>
+                                <td>Fully Supported Email Marketing</td>
+                                <td>emarketing.hopeignites.app</td>
+                            </tr>
+                            <tr>
+                                <td>Network Hub</td>
+                                <td>Our organizational intranet</td>
+                                <td>hub.hopeignites.app</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Hope Ignites. All rights reserved.</p>
+            <p>
+                This portal is open source software licensed under the
+                <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" title="View MIT License">MIT License</a>.
+            </p>
+            <p>
+                Built with ❤️ by Hope Ignites Technology Services with the help of
+                <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" title="Claude Code - AI-powered coding assistant">🤖 Claude Code</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Floating help button -->
+    <button id="help-btn" aria-haspopup="dialog" aria-controls="help-modal" title="Help">?</button>
+
+    <!-- Security badge -->
+    <a id="security-badge" href="https://www.cloudflare.com/products/turnstile/" target="_blank" rel="noopener noreferrer" title="Protected by Cloudflare Turnstile">
+        <span class="badge-icon">🛡️</span>
+        <div class="badge-text">
+            <span class="badge-label">Protected by</span>
+            <span class="badge-brand">Cloudflare Turnstile</span>
+        </div>
+    </a>
+
+    <!-- Modal -->
+    <div id="help-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Help desk contact">
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-content" role="document">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h3>Contact Hope Ignites Technology Services</h3>
+            <p>If you need assistance, contact the Help Desk:</p>
+            <ul class="contact-list">
+                <li><strong>Email:</strong> <a href="mailto:tech.services@hopeignites.org">tech.services@hopeignites.org</a></li>
+                <li><strong>Phone:</strong> <a href="tel:13149129401">1 (555) 555-5555</a></li>
+                <li><strong>Hours:</strong> Mon–Fri, 9:00 AM — 5:00 PM Central Time</li>
+                <li><strong>Web:</strong> https://www.hopeignites.org/help</li>
+            </ul>
+            <p style="margin-top:10px;">For urgent issues, call the phone number above. For non-urgent requests, email the help desk.</p>
+        </div>
+    </div>
+
+    <!-- Spotlight-style Search Overlay -->
+    <div id="search-overlay" class="search-overlay" role="dialog" aria-modal="true" aria-label="Search applications">
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <span class="search-icon-wrapper">🔍</span>
+                <input
+                    type="text"
+                    id="search-input"
+                    class="search-input"
+                    placeholder="Search applications..."
+                    autocomplete="off"
+                    aria-label="Search applications"
+                />
+                <span class="search-shortcut">
+                    <kbd>ESC</kbd> to close
+                </span>
+            </div>
+            <div id="search-results" class="search-results"></div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
