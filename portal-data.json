@@ -6,11 +6,6 @@
       "cards": []
     },
     {
-      "id": "all",
-      "name": "All Applications",
-      "cards": []
-    },
-    {
       "id": "communication",
       "name": "Communication & Files",
       "cards": [
@@ -69,6 +64,11 @@
           "url": "https://community.bhgh.org"
         }
       ]
+    },
+        {
+      "id": "all",
+      "name": "All Applications",
+      "cards": []
     }
   ],
   "quickLinks": [
