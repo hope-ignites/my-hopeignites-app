@@ -65,7 +65,7 @@ const FavoritesManager = (function() {
 // ===== PORTAL RENDERING FROM JSON =====
 (async function() {
     let portalData = null;
-    let currentCategory = 'all';
+    let currentCategory = 'favorites';
 
     // Fetch portal data from JSON file
     async function loadPortalData() {
