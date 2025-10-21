@@ -644,3 +644,53 @@ const FavoritesManager = (function() {
     // Initialize
     collectAllApps();
 })();
+
+// ===== VERSION/COMMIT ID DISPLAY =====
+(function() {
+    const commitIdElement = document.getElementById('commit-id');
+
+    // Configuration - Update these values with your GitHub repo info
+    const GITHUB_REPO_OWNER = 'hope-ignites';
+    const GITHUB_REPO_NAME = 'my-hopeignites-app';
+    const BRANCH = 'main';
+
+    async function fetchCommitId() {
+        try {
+            const response = await fetch(
+                `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/commits/${BRANCH}`,
+                {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch commit data');
+            }
+
+            const data = await response.json();
+            const commitSha = data.sha.substring(0, 7); // Short commit hash
+            const commitDate = new Date(data.commit.author.date);
+            const commitMessage = data.commit.message.split('\n')[0]; // First line only
+
+            // Format date
+            const formattedDate = commitDate.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            // Create clickable link to commit on GitHub
+            const commitUrl = `https://github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/commit/${data.sha}`;
+            commitIdElement.innerHTML = `Version: <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" title="${commitMessage}" style="color: inherit; text-decoration: underline;">${commitSha}</a> (${formattedDate})`;
+
+        } catch (error) {
+            console.error('Error fetching commit ID:', error);
+            commitIdElement.textContent = 'Version: unknown';
+        }
+    }
+
+    // Fetch commit ID on page load
+    fetchCommitId();
+})();
