@@ -28,7 +28,11 @@
         <button id="category-mobile-toggle" class="category-mobile-toggle" aria-label="Toggle category menu">
             <span id="current-category-name">Categories</span>
         </button>
-        <div id="tab-container" class="tab-container" role="tablist"></div>
+        <div class="tab-navigation-wrapper">
+            <button class="tab-scroll-arrow tab-scroll-left" aria-label="Scroll categories left">‹</button>
+            <div id="tab-container" class="tab-container" role="tablist"></div>
+            <button class="tab-scroll-arrow tab-scroll-right" aria-label="Scroll categories right">›</button>
+        </div>
 
         <!-- Portal Cards Grid (dynamically generated) -->
         <div id="portal-grid" class="portal-grid"></div>

@@ -13,19 +13,22 @@
           "icon": "outlook.png",
           "title": "Outlook Web Access",
           "description": "Access your Organization email (@hopeignites.org)",
-          "url": "https://outlook.office.com/hopeignites.org"
+          "url": "https://outlook.office.com/hopeignites.org",
+          "universal": true
         },
         {
           "icon": "one-drive.png",
           "title": "File Sharing",
           "description": "Access your personal OneDrive",
-          "url": "https://hopeignites-my.sharepoint.com"
+          "url": "https://hopeignites-my.sharepoint.com",
+          "universal": true
         },
         {
           "icon": "sharepoint.png",
           "title": "Network Hub",
-          "description": "Manage identity, access, and security for your organization",
-          "url": "https://hopeignites1977.sharepoint.com/sites/hub"
+          "description": "Access Hope Ignites intranet and team sites",
+          "url": "https://hopeignites1977.sharepoint.com/sites/hub",
+          "universal": true
         },
         {
           "icon": "campaign-monitor.png",
@@ -36,8 +39,26 @@
       ]
     },
     {
+      "id": "training-eval",
+      "name": "Training",
+      "cards": [
+        {
+          "icon": "lms.png",
+          "title": "Vatterott Training Institute",
+          "description": "Learning Management System for Hope Ignites Team Members",
+          "url": "https://bhgh.my.salesforce.com"
+        },
+        {
+          "icon": "ilearn.png",
+          "title": "iLearning Engines",
+          "description": "Learning Management System made avaliable by Christian Brothers ",
+          "url": "https://bhgh.my.salesforce.com"
+        }        
+      ]
+    },
+    { 
       "id": "crm-apps",
-      "name": "Hope Force",
+      "name": "HopeForce",
       "cards": [
         {
           "icon": "salesforce.png",
@@ -85,7 +106,8 @@
           "icon": "adp.png",
           "title": "ADP Workforce Now",
           "description": "Access your timecard, pay stubs, and tax documents",
-          "url": "https://adp.hopeignites.app"
+          "url": "https://adp.hopeignites.app",
+          "universal": true
         },
         {
           "icon": "adp-admin.png",

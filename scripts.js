@@ -191,6 +191,11 @@ const FavoritesManager = (function() {
                 console.log('DEBUG - iconHtml (emoji):', iconHtml);
             }
 
+            // Check for universal app indicator
+            const universalIndicator = card.universal
+                ? `<div class="universal-indicator" title="Available to all team members"><img src="${ICON_BASE_PATH}universal.png" alt="Universal" /></div>`
+                : '';
+
             cardLink.innerHTML = `
                 <button class="favorite-btn ${isFav ? 'favorited' : ''}"
                         data-url="${card.url}"
@@ -201,6 +206,7 @@ const FavoritesManager = (function() {
                 <div class="portal-icon">${iconHtml}</div>
                 <h3>${card.title}</h3>
                 <p>${card.description}</p>
+                ${universalIndicator}
             `;
             console.log('DEBUG - Final card HTML:', cardLink.innerHTML);
 
@@ -258,6 +264,66 @@ const FavoritesManager = (function() {
         }
     }
 
+    // Tab scroll arrows functionality
+    function initTabScrollArrows() {
+        const tabContainer = document.getElementById('tab-container');
+        const leftArrow = document.querySelector('.tab-scroll-left');
+        const rightArrow = document.querySelector('.tab-scroll-right');
+
+        if (!tabContainer || !leftArrow || !rightArrow) return;
+
+        const scrollAmount = 200; // pixels to scroll
+        let scrollInterval;
+
+        // Scroll left
+        leftArrow.addEventListener('mouseenter', () => {
+            scrollInterval = setInterval(() => {
+                tabContainer.scrollLeft -= 5;
+                updateArrowVisibility();
+            }, 20);
+        });
+
+        leftArrow.addEventListener('mouseleave', () => {
+            clearInterval(scrollInterval);
+        });
+
+        // Scroll right
+        rightArrow.addEventListener('mouseenter', () => {
+            scrollInterval = setInterval(() => {
+                tabContainer.scrollLeft += 5;
+                updateArrowVisibility();
+            }, 20);
+        });
+
+        rightArrow.addEventListener('mouseleave', () => {
+            clearInterval(scrollInterval);
+        });
+
+        // Click handlers for single scroll
+        leftArrow.addEventListener('click', () => {
+            tabContainer.scrollLeft -= scrollAmount;
+        });
+
+        rightArrow.addEventListener('click', () => {
+            tabContainer.scrollLeft += scrollAmount;
+        });
+
+        // Update arrow visibility based on scroll position
+        function updateArrowVisibility() {
+            const isAtStart = tabContainer.scrollLeft <= 0;
+            const isAtEnd = tabContainer.scrollLeft >= tabContainer.scrollWidth - tabContainer.clientWidth - 1;
+
+            leftArrow.classList.toggle('hidden', isAtStart);
+            rightArrow.classList.toggle('hidden', isAtEnd);
+        }
+
+        // Update on scroll
+        tabContainer.addEventListener('scroll', updateArrowVisibility);
+
+        // Initial check
+        setTimeout(updateArrowVisibility, 100);
+    }
+
     // Initialize portal
     async function initPortal() {
         const data = await loadPortalData();
@@ -266,6 +332,7 @@ const FavoritesManager = (function() {
             renderCards();
             renderQuickLinks();
             initMobileToggle();
+            initTabScrollArrows();
         }
     }
 
