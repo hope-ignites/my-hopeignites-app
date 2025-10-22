@@ -109,7 +109,21 @@ const FavoritesManager = (function() {
         const currentCategoryName = document.getElementById('current-category-name');
         tabContainer.innerHTML = '';
 
-        portalData.categories.forEach(category => {
+        // Reorder categories if in tech mode - put tech-tools after favorites
+        let categoriesToRender = [...portalData.categories];
+        if (isTechMode) {
+            const techToolsIndex = categoriesToRender.findIndex(cat => cat.id === 'tech-tools');
+            const favoritesIndex = categoriesToRender.findIndex(cat => cat.id === 'favorites');
+
+            if (techToolsIndex !== -1 && favoritesIndex !== -1) {
+                // Remove tech-tools from its current position
+                const [techTools] = categoriesToRender.splice(techToolsIndex, 1);
+                // Insert it right after favorites
+                categoriesToRender.splice(favoritesIndex + 1, 0, techTools);
+            }
+        }
+
+        categoriesToRender.forEach(category => {
             // Filter out tech-only categories if not in tech mode
             const hasTechCards = category.cards.some(card => card.tech === true);
             if (!isTechMode && hasTechCards && category.id === 'tech-tools') {
@@ -351,6 +365,14 @@ const FavoritesManager = (function() {
         setTimeout(updateArrowVisibility, 100);
     }
 
+    // Show tech mode indicator if on /tech path
+    function initTechModeIndicator() {
+        const techModeIndicator = document.getElementById('tech-mode-indicator');
+        if (techModeIndicator && isTechMode) {
+            techModeIndicator.style.display = 'flex';
+        }
+    }
+
     // Initialize portal
     async function initPortal() {
         const data = await loadPortalData();
@@ -360,6 +382,7 @@ const FavoritesManager = (function() {
             renderQuickLinks();
             initMobileToggle();
             initTabScrollArrows();
+            initTechModeIndicator();
         }
     }
 
