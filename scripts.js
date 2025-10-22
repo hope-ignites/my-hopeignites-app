@@ -68,6 +68,9 @@ const FavoritesManager = (function() {
     let currentCategory = 'favorites';
     const ICON_BASE_PATH = 'assets/app-icons/';
 
+    // Detect if we're on /tech path
+    const isTechMode = window.location.pathname.includes('/tech');
+
     // Fetch portal data from JSON file
     async function loadPortalData() {
         try {
@@ -97,6 +100,12 @@ const FavoritesManager = (function() {
         tabContainer.innerHTML = '';
 
         portalData.categories.forEach(category => {
+            // Filter out tech-only categories if not in tech mode
+            const hasTechCards = category.cards.some(card => card.tech === true);
+            if (!isTechMode && hasTechCards && category.id === 'tech-tools') {
+                return; // Skip this category
+            }
+
             const button = document.createElement('button');
             button.className = 'tab-button';
             button.textContent = category.name;
@@ -140,6 +149,10 @@ const FavoritesManager = (function() {
             const favoriteUrls = FavoritesManager.getFavorites();
             portalData.categories.forEach(category => {
                 if (category.id !== 'all' && category.id !== 'favorites') {
+                    // Skip tech-only categories if not in tech mode
+                    if (!isTechMode && category.id === 'tech-tools') {
+                        return;
+                    }
                     category.cards.forEach(card => {
                         if (favoriteUrls.includes(card.url)) {
                             cardsToDisplay.push(card);
@@ -151,6 +164,10 @@ const FavoritesManager = (function() {
             // Show all cards from all categories (except "all" and "favorites" itself)
             portalData.categories.forEach(category => {
                 if (category.id !== 'all' && category.id !== 'favorites') {
+                    // Skip tech-only categories if not in tech mode
+                    if (!isTechMode && category.id === 'tech-tools') {
+                        return;
+                    }
                     cardsToDisplay = cardsToDisplay.concat(category.cards);
                 }
             });

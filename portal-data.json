@@ -46,7 +46,8 @@
           "icon": "lms.png",
           "title": "Vatterott Training Institute",
           "description": "Learning Management System for Hope Ignites Team Members",
-          "url": "https://bhgh.my.salesforce.com"
+          "url": "https://bhgh.my.salesforce.com",
+          "universal": true
         },
         {
           "icon": "ilearn.png",
@@ -94,7 +95,8 @@
           "icon": "brand.png",
           "title": "Hope Ignites Brand Guide",
           "description": "Access brand assets and guidelines",
-          "url": "https://www.canva.com"
+          "url": "https://www.canva.com",
+          "universal": true
         }
       ]
     },
@@ -112,7 +114,7 @@
         {
           "icon": "adp-admin.png",
           "title": "ADP Workforce Now Admin",
-          "description": "Access your timecard, pay stubs, and tax documents",
+          "description": "Access ADP admin portal for supervisors",
           "url": "https://adp.hopeignites.app/admin"
         },
         {
@@ -120,6 +122,26 @@
           "title": "QuickBooks Online",
           "description": "Accounting software for general ledger and other finances",
           "url": "https://accounts.intuit.com/app/sign-in?app_group=QBO"
+        }
+      ]
+    },
+    {
+      "id": "tech-tools",
+      "name": "Tech Team Tools",
+      "cards": [
+        {
+          "icon": "m365.png",
+          "title": "Microsoft 365 Admin",
+          "description": "Manage users, licenses, and security settings",
+          "url": "https://admin.microsoft.com",
+          "tech": true
+        },
+        {
+          "icon": "sharepoint.png",
+          "title": "SharePoint Admin",
+          "description": "Manage SharePoint sites and permissions",
+          "url": "https://admin.microsoft.com/sharepoint",
+          "tech": true
         }
       ]
     },
