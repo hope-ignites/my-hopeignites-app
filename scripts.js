@@ -163,9 +163,12 @@ const FavoritesManager = (function() {
             const isFav = FavoritesManager.isFavorite(card.url);
 
             // Determine if icon is an image filename or emoji
-            const iconHtml = card.icon.endsWith('.png')
-                ? `<img src="${ICON_BASE_PATH}${card.icon}" alt="${card.title} icon" style="width: 46px; height: 46px; object-fit: contain;">`
-                : card.icon;
+            let iconHtml;
+            if (card.icon && card.icon.includes('.png')) {
+                iconHtml = `<img src="${ICON_BASE_PATH}${card.icon}" alt="${card.title} icon" style="width: 46px; height: 46px; object-fit: contain;">`;
+            } else {
+                iconHtml = card.icon;
+            }
 
             cardLink.innerHTML = `
                 <button class="favorite-btn ${isFav ? 'favorited' : ''}"
