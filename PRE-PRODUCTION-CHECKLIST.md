@@ -4,6 +4,26 @@ This document tracks tasks that must be completed before the portal goes into pr
 
 ## Code Cleanup
 
+### Remove Beta Banner
+**Status**: ⏳ To Do
+**Location**: [index.html:11-14](index.html#L11-L14), [scripts.js](scripts.js)
+
+Remove the beta banner before going live:
+
+**HTML to remove** (lines 11-14 in index.html):
+```html
+<div id="beta-banner" class="beta-banner" role="region" aria-label="Beta site notification" hidden>
+    <div class="beta-text">BETA — This site is in beta. Some features may be incomplete. Hosted on Cloudflare Pages. Please send feedback <a target="_blank" rel="noopener noreferrer" href="...">here.</a></div>
+    <button class="beta-close" id="beta-close" aria-label="Dismiss banner">×</button>
+</div>
+```
+
+**JavaScript to remove**:
+- Search for `beta-banner` related code in scripts.js and remove the banner dismiss functionality
+
+**CSS to remove or keep**:
+- Beta banner styles in styles.css (can be left for future use or removed)
+
 ### Remove Debug Logging
 **Status**: ⏳ To Do
 **Location**: [scripts.js:166-194](scripts.js#L166-L194)
