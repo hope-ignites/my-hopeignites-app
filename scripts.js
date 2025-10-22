@@ -66,6 +66,7 @@ const FavoritesManager = (function() {
 (async function() {
     let portalData = null;
     let currentCategory = 'favorites';
+    const ICON_BASE_PATH = 'assets/app-icons/';
 
     // Fetch portal data from JSON file
     async function loadPortalData() {
@@ -161,6 +162,11 @@ const FavoritesManager = (function() {
 
             const isFav = FavoritesManager.isFavorite(card.url);
 
+            // Determine if icon is an image filename or emoji
+            const iconHtml = card.icon.endsWith('.png')
+                ? `<img src="${ICON_BASE_PATH}${card.icon}" alt="${card.title} icon" style="width: 46px; height: 46px; object-fit: contain;">`
+                : card.icon;
+
             cardLink.innerHTML = `
                 <button class="favorite-btn ${isFav ? 'favorited' : ''}"
                         data-url="${card.url}"
@@ -168,7 +174,7 @@ const FavoritesManager = (function() {
                         title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
                     ${isFav ? '⭐' : '☆'}
                 </button>
-                <div class="portal-icon">${card.icon}</div>
+                <div class="portal-icon">${iconHtml}</div>
                 <h3>${card.title}</h3>
                 <p>${card.description}</p>
             `;

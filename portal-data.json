@@ -10,19 +10,19 @@
       "name": "Communication & Files",
       "cards": [
         {
-          "icon": "📨",
+          "icon": "outlook.png",
           "title": "Outlook Web Access",
           "description": "Access your Organization email (@hopeignites.org)",
           "url": "https://outlook.office.com/hopeignites.org"
         },
         {
-          "icon": "📁",
+          "icon": "one-drive.png",
           "title": "File Sharing",
           "description": "Access your personal OneDrive",
           "url": "https://hopeignites-my.sharepoint.com"
         },
         {
-          "icon": "🗄️",
+          "icon": "sharepoint.png",
           "title": "Network Hub",
           "description": "Manage identity, access, and security for your organization",
           "url": "https://hopeignites1977.sharepoint.com/sites/hub"
@@ -34,13 +34,13 @@
       "name": "HR & Payroll",
       "cards": [
         {
-          "icon": "🏦",
+          "icon": "adp.png",
           "title": "ADP Workforce Now",
           "description": "Access your timecard, pay stubs, and tax documents",
           "url": "https://adp.hopeignites.app"
         },
-                {
-          "icon": "🏦",
+        {
+          "icon": "adp.png",
           "title": "ADP Workforce Now Admin",
           "description": "Access your timecard, pay stubs, and tax documents",
           "url": "https://adp.hopeignites.app/admin"
@@ -52,13 +52,13 @@
       "name": "CRM & Apps",
       "cards": [
         {
-          "icon": "💼",
+          "icon": "salesforce.png",
           "title": "Hopeforce",
           "description": "Salesforce for fundraising",
           "url": "https://bhgh.my.salesforce.com"
         },
         {
-          "icon": "🌐",
+          "icon": "experience-app.png",
           "title": "Hopeforce Apps",
           "description": "Access our purpose built apps (HCM, PPM, VM)",
           "url": "https://community.bhgh.org"
