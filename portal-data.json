@@ -6,8 +6,8 @@
       "cards": []
     },
     {
-      "id": "communication",
-      "name": "Communication & Files",
+      "id": "Collaboration",
+      "name": "Collaboration and Communication",
       "cards": [
         {
           "icon": "outlook.png",
@@ -26,12 +26,60 @@
           "title": "Network Hub",
           "description": "Manage identity, access, and security for your organization",
           "url": "https://hopeignites1977.sharepoint.com/sites/hub"
+        },
+        {
+          "icon": "campaign-monitor.png",
+          "title": "Campaign Monitor",
+          "description": "Email Marketing platform for newsletters and other donor communications, Integrated to Hopeforce.",
+          "url": "https://hopeignites1977.sharepoint.com/sites/hub"
         }
       ]
     },
     {
-      "id": "hr-payroll",
-      "name": "HR & Payroll",
+      "id": "crm-apps",
+      "name": "Hope Force",
+      "cards": [
+        {
+          "icon": "salesforce.png",
+          "title": "Fundraising CRM",
+          "description": "Salesforce for fundraising",
+          "url": "https://bhgh.my.salesforce.com"
+        },
+        {
+          "icon": "experience-app.png",
+          "title": "Human Capital Management Apps",
+          "description": "Team Member experience applications integrated with Salesforce",
+          "url": "https://community.bhgh.org/hiring"
+        },
+        {
+          "icon": "experience-app.png",
+          "title": "Program Participant Management App",
+          "description": "Hopeforce application for managing program participants",
+          "url": "https://hopeforce.bhgh.org/ppm"
+        }
+      ]
+    },
+    {
+      "id": "DesignTools",
+      "name": "Design and Brand",
+      "cards": [
+        {
+          "icon": "canva.png",
+          "title": "Canva",
+          "description": "Design graphics, presentations, and marketing materials",
+          "url": "https://www.canva.com"
+        },
+        {
+          "icon": "brand.png",
+          "title": "Hope Ignites Brand Guide",
+          "description": "Access brand assets and guidelines",
+          "url": "https://www.canva.com"
+        }
+      ]
+    },
+    {
+      "id": "fin-accounting",
+      "name": "Finance & Accounting",
       "cards": [
         {
           "icon": "adp.png",
@@ -40,28 +88,16 @@
           "url": "https://adp.hopeignites.app"
         },
         {
-          "icon": "adp.png",
+          "icon": "adp-admin.png",
           "title": "ADP Workforce Now Admin",
           "description": "Access your timecard, pay stubs, and tax documents",
           "url": "https://adp.hopeignites.app/admin"
-        }
-      ]
-    },
-    {
-      "id": "crm-apps",
-      "name": "CRM & Apps",
-      "cards": [
-        {
-          "icon": "salesforce.png",
-          "title": "Hopeforce",
-          "description": "Salesforce for fundraising",
-          "url": "https://bhgh.my.salesforce.com"
         },
         {
-          "icon": "experience-app.png",
-          "title": "Hopeforce Apps",
-          "description": "Access our purpose built apps (HCM, PPM, VM)",
-          "url": "https://community.bhgh.org"
+          "icon": "qbo.png",
+          "title": "QuickBooks Online",
+          "description": "Accounting software for general ledger and other finances",
+          "url": "https://accounts.intuit.com/app/sign-in?app_group=QBO"
         }
       ]
     },
@@ -81,12 +117,12 @@
       "url": "https://www.linkedin.com/company/hopeignitesnetwork"
     },
     {
-      "title": "Quick Link 3",
-      "url": "https://sharepoint.com"
+      "title": "Hope Ignites on Facebook",
+      "url": "https://www.facebook.com/HopeIgnitesNetwork"
     },
     {
-      "title": "Quick Link 4",
-      "url": "https://onedrive.live.com"
+      "title": "Hope Ignites on Instagram",
+      "url": "https://www.instagram.com/HopeIgnitesNetwork"
     }
   ]
 }

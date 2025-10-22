@@ -92,6 +92,8 @@ const FavoritesManager = (function() {
     // Render tab buttons
     function renderTabs() {
         const tabContainer = document.getElementById('tab-container');
+        const mobileToggle = document.getElementById('category-mobile-toggle');
+        const currentCategoryName = document.getElementById('current-category-name');
         tabContainer.innerHTML = '';
 
         portalData.categories.forEach(category => {
@@ -104,12 +106,21 @@ const FavoritesManager = (function() {
 
             if (category.id === currentCategory) {
                 button.classList.add('active');
+                // Update mobile toggle button text with current category
+                if (currentCategoryName) {
+                    currentCategoryName.textContent = category.name;
+                }
             }
 
             button.addEventListener('click', () => {
                 currentCategory = category.id;
                 renderTabs();
                 renderCards();
+                // Close mobile menu after selection
+                if (tabContainer.classList.contains('mobile-open')) {
+                    tabContainer.classList.remove('mobile-open');
+                    mobileToggle.classList.remove('open');
+                }
             });
 
             tabContainer.appendChild(button);
@@ -234,6 +245,19 @@ const FavoritesManager = (function() {
         });
     }
 
+    // Mobile category toggle
+    function initMobileToggle() {
+        const mobileToggle = document.getElementById('category-mobile-toggle');
+        const tabContainer = document.getElementById('tab-container');
+
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => {
+                tabContainer.classList.toggle('mobile-open');
+                mobileToggle.classList.toggle('open');
+            });
+        }
+    }
+
     // Initialize portal
     async function initPortal() {
         const data = await loadPortalData();
@@ -241,6 +265,7 @@ const FavoritesManager = (function() {
             renderTabs();
             renderCards();
             renderQuickLinks();
+            initMobileToggle();
         }
     }
 
