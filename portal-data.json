@@ -35,6 +35,13 @@
           "title": "Campaign Monitor",
           "description": "Email Marketing platform for newsletters and other donor communications, Integrated to Hopeforce.",
           "url": "https://hopeignites1977.sharepoint.com/sites/hub"
+        },
+        {
+          "icon": "dialpad.png",
+          "title": "Dialpad",
+          "description": "Cloud-based phone system for Hope Ignites Team Members",
+          "url": "https://dialpad.com/login",
+          "universal": false
         }
       ]
     },
@@ -133,16 +140,58 @@
           "icon": "m365.png",
           "title": "Microsoft 365 Admin",
           "description": "Manage users, licenses, and security settings",
-          "url": "https://admin.microsoft.com",
+          "url": "https://admin.microsoft.com/hopeignites.org",
           "tech": true
         },
         {
-          "icon": "sharepoint.png",
-          "title": "SharePoint Admin",
-          "description": "Manage SharePoint sites and permissions",
-          "url": "https://admin.microsoft.com/sharepoint",
+          "icon": "app-launcher.png",
+          "title": "Microsoft SSO Portal",
+          "description": "SSO to apps such as Cisco Meraki, NHQ Data Center, etc.",
+          "url": "https://myapplications.microsoft.com/hopeignites.org",
           "tech": true
-        }
+        },
+        {
+          "icon": "lms-admin.png",
+          "title": "Learn 365 Backend",
+          "description": "Admin portal for Vatterott Training Institute LMS",
+          "url": "https://lms.365.systems",
+          "tech": true
+        },                
+        {
+          "icon": "git-hub.png",
+          "title": "Hope Ignites GitHub",
+          "description": "Code repository for Hope Ignites web and software projects",
+          "url": "https://github.com/hope-ignites",
+          "tech": true
+        },
+        {
+          "icon": "cloudflare.png",
+          "title": "Cloudflare Dashboard",
+          "description": "Manage DNS, security, and performance settings for Hope Ignites websites",
+          "url": "https://dash.cloudflare.com/1234567890abcdef/hopeignites.org",
+          "tech": true
+        },
+        {
+          "icon": "scribe.png",
+          "title": "Scribe",
+          "description": "Create and manage process documentation and guides",
+          "url": "https://scribehow.com",
+          "tech": true
+        },
+        {
+          "icon": "entra.png",
+          "title": "Entra ID Portal",
+          "description": "Manage Entra ID settings and configurations",
+          "url": "https://entra.microsoft.com/hopeignites.org",
+          "tech": true
+        },
+        {
+          "icon": "azure.png",
+          "title": "Azure Portal",
+          "description": "Manage Azure resources and services for Hope Ignites",
+          "url": "https://portal.azure.com/#home",
+          "tech": true
+        }          
       ]
     },
     {
