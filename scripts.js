@@ -2,12 +2,20 @@
 (function() {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
+    const headerLogo = document.getElementById('header-logo');
+
+    function updateLogo(isDarkMode) {
+        if (headerLogo) {
+            headerLogo.src = isDarkMode ? 'assets/dark-logo.png' : 'assets/light-logo.png';
+        }
+    }
 
     // Check for saved preference or default to light mode
     const savedMode = localStorage.getItem('darkMode');
     if (savedMode === 'enabled') {
         body.classList.add('dark-mode');
         darkModeToggle.textContent = '☀️';
+        updateLogo(true);
     }
 
     darkModeToggle.addEventListener('click', () => {
@@ -16,9 +24,11 @@
         if (body.classList.contains('dark-mode')) {
             darkModeToggle.textContent = '☀️';
             localStorage.setItem('darkMode', 'enabled');
+            updateLogo(true);
         } else {
             darkModeToggle.textContent = '🌙';
             localStorage.setItem('darkMode', 'disabled');
+            updateLogo(false);
         }
     });
 })();

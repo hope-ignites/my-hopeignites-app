@@ -199,7 +199,7 @@ body {
 .tab-button.active {
     background: var(--card-bg);
     color: var(--accent-secondary);
-    border-color: var(--accent-primary);
+    border-color: #0b6180;
     box-shadow: 0 4px 12px var(--card-shadow);
 }
 
@@ -290,6 +290,7 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 10;
+    text-shadow: 0 0 1px #f79d1e, 0 0 2px #f79d1e;
 }
 
 .favorite-btn:hover {
@@ -304,6 +305,16 @@ body {
 .favorite-btn:focus {
     outline: 2px solid var(--accent-secondary);
     outline-offset: 2px;
+}
+
+/* Dark mode favorite star styling */
+body.dark-mode .favorite-btn {
+    background: rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 1px white, 0 0 2px white;
+}
+
+body.dark-mode .favorite-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .quick-links {
