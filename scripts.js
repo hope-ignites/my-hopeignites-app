@@ -163,11 +163,21 @@ const FavoritesManager = (function() {
             const isFav = FavoritesManager.isFavorite(card.url);
 
             // Determine if icon is an image filename or emoji
+            console.log('DEBUG - Card:', card.title);
+            console.log('DEBUG - Icon value:', card.icon);
+            console.log('DEBUG - Icon type:', typeof card.icon);
+            console.log('DEBUG - Has .png?', card.icon && card.icon.includes('.png'));
+            console.log('DEBUG - ICON_BASE_PATH:', ICON_BASE_PATH);
+
             let iconHtml;
             if (card.icon && card.icon.includes('.png')) {
-                iconHtml = `<img src="${ICON_BASE_PATH}${card.icon}" alt="${card.title} icon" style="width: 46px; height: 46px; object-fit: contain;">`;
+                const fullPath = `${ICON_BASE_PATH}${card.icon}`;
+                console.log('DEBUG - Full image path:', fullPath);
+                iconHtml = `<img src="${fullPath}" alt="${card.title} icon" style="width: 46px; height: 46px; object-fit: contain;">`;
+                console.log('DEBUG - iconHtml (img):', iconHtml);
             } else {
                 iconHtml = card.icon;
+                console.log('DEBUG - iconHtml (emoji):', iconHtml);
             }
 
             cardLink.innerHTML = `
@@ -181,6 +191,7 @@ const FavoritesManager = (function() {
                 <h3>${card.title}</h3>
                 <p>${card.description}</p>
             `;
+            console.log('DEBUG - Final card HTML:', cardLink.innerHTML);
 
             // Add click handler for favorite button
             const favBtn = cardLink.querySelector('.favorite-btn');
