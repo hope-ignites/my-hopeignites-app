@@ -20,7 +20,7 @@
           "icon": "one-drive.png",
           "title": "File Sharing",
           "description": "Access your personal OneDrive",
-          "url": "https://hopeignites-my.sharepoint.com",
+          "url": "https://hopeignites1977-my.sharepoint.com",
           "universal": true
         },
         {
@@ -34,7 +34,7 @@
           "icon": "campaign-monitor.png",
           "title": "Campaign Monitor",
           "description": "Email Marketing platform for newsletters and other donor communications, Integrated to Hopeforce.",
-          "url": "https://hopeignites1977.sharepoint.com/sites/hub"
+          "url": "https://emarketing.hopeignites.app"
         },
         {
           "icon": "dialpad.png",
@@ -42,6 +42,13 @@
           "description": "Cloud-based phone system for Hope Ignites Team Members",
           "url": "https://dialpad.com/login",
           "universal": false
+        },
+        {
+          "icon": "monday-com.png",
+          "title": "Monday.com",
+          "description": "Project management and team collaboration platform",
+          "url": "https://hopeignites.monday.com/",
+          "nhqOnly": true
         }
       ]
     },
@@ -53,14 +60,14 @@
           "icon": "lms.png",
           "title": "Vatterott Training Institute",
           "description": "Learning Management System for Hope Ignites Team Members",
-          "url": "https://bhgh.my.salesforce.com",
+          "url": "https://hopeignites1977.sharepoint.com/sites/PROD-LMS365/",
           "universal": true
         },
         {
           "icon": "ilearn.png",
           "title": "iLearning Engines",
           "description": "Learning Management System made avaliable by Christian Brothers ",
-          "url": "https://bhgh.my.salesforce.com"
+          "url": "https://ins.ilearningengines.com/main/"
         }        
       ]
     },
@@ -102,14 +109,14 @@
           "icon": "brand.png",
           "title": "Hope Ignites Brand Guide",
           "description": "Access brand assets and guidelines",
-          "url": "https://www.canva.com",
+          "url": "https://hopeignites1977.sharepoint.com/sites/hub-mrktcomm-brand/SitePages/Home.aspx",
           "universal": true
         }
       ]
     },
     {
       "id": "fin-accounting",
-      "name": "Finance & Accounting",
+      "name": "Payroll, Finance & Accounting",
       "cards": [
         {
           "icon": "adp.png",
@@ -122,13 +129,15 @@
           "icon": "adp-admin.png",
           "title": "ADP Workforce Now Admin",
           "description": "Access ADP admin portal for supervisors",
-          "url": "https://adp.hopeignites.app/admin"
+          "url": "https://adp.hopeignites.app/admin",
+          "nhqOnly": false
         },
         {
           "icon": "qbo.png",
           "title": "QuickBooks Online",
           "description": "Accounting software for general ledger and other finances",
-          "url": "https://accounts.intuit.com/app/sign-in?app_group=QBO"
+          "url": "https://accounts.intuit.com/app/sign-in?app_group=QBO",
+          "nhqOnly": false
         }
       ]
     },

@@ -273,6 +273,27 @@ body {
     opacity: 1;
 }
 
+/* NHQ-only indicator on cards */
+.nhq-indicator {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.nhq-indicator img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.portal-card:hover .nhq-indicator {
+    opacity: 1;
+}
+
 /* Favorite/Pin button on cards */
 .favorite-btn {
     position: absolute;

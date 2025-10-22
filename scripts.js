@@ -178,6 +178,10 @@ const FavoritesManager = (function() {
                         return;
                     }
                     category.cards.forEach(card => {
+                        // Skip NHQ-only cards if not at NHQ
+                        if (card.nhqOnly && !isNHQIP) {
+                            return;
+                        }
                         if (favoriteUrls.includes(card.url)) {
                             cardsToDisplay.push(card);
                         }
@@ -192,14 +196,22 @@ const FavoritesManager = (function() {
                     if (!isTechMode && category.id === 'tech-tools') {
                         return;
                     }
-                    cardsToDisplay = cardsToDisplay.concat(category.cards);
+                    category.cards.forEach(card => {
+                        // Skip NHQ-only cards if not at NHQ
+                        if (!card.nhqOnly || isNHQIP) {
+                            cardsToDisplay.push(card);
+                        }
+                    });
                 }
             });
         } else {
             // Show cards from selected category
             const category = portalData.categories.find(cat => cat.id === currentCategory);
             if (category) {
-                cardsToDisplay = category.cards;
+                cardsToDisplay = category.cards.filter(card => {
+                    // Skip NHQ-only cards if not at NHQ
+                    return !card.nhqOnly || isNHQIP;
+                });
             }
         }
 
@@ -237,6 +249,11 @@ const FavoritesManager = (function() {
                 ? `<div class="universal-indicator" title="Available to all team members"><img src="${ICON_BASE_PATH}universal.png" alt="Universal" /></div>`
                 : '';
 
+            // Check for NHQ-only indicator
+            const nhqIndicator = card.nhqOnly
+                ? `<div class="nhq-indicator" title="Only available from NHQ office"><img src="${ICON_BASE_PATH}hq-badge.png" alt="NHQ Only" /></div>`
+                : '';
+
             cardLink.innerHTML = `
                 <button class="favorite-btn ${isFav ? 'favorited' : ''}"
                         data-url="${card.url}"
@@ -248,6 +265,7 @@ const FavoritesManager = (function() {
                 <h3>${card.title}</h3>
                 <p>${card.description}</p>
                 ${universalIndicator}
+                ${nhqIndicator}
             `;
             console.log('DEBUG - Final card HTML:', cardLink.innerHTML);
 
@@ -424,8 +442,11 @@ const FavoritesManager = (function() {
 })();
 
 // ===== IP DETECTION AND CONDITIONAL MESSAGE DISPLAY =====
+// Global variable to track NHQ IP status
+let isNHQIP = false;
+
 (function() {
-    // CONFIGURATION: Define your IP addresses or ranges here
+    // CONFIGURATION: Define your IP addresses or ranges here (NHQ IPs)
     const ALLOWED_IPS = [
         '24.207.150.155',        // Pete Home IP
         '35.134.139.202',            // Shaw FIA IP
@@ -433,6 +454,11 @@ const FavoritesManager = (function() {
         // Add more specific IPs here
     ];
 
+    // CONFIGURATION: Define IP ranges if needed (optional)
+    const ALLOWED_IP_RANGES = [
+        // Example: { start: '192.168.1.1', end: '192.168.1.254' }
+        // Add IP ranges here if needed
+    ];
 
     // CONFIGURATION: Cache settings (reduces API calls)
     const CACHE_KEY = 'user_ip_data';
@@ -548,10 +574,13 @@ const FavoritesManager = (function() {
                 return;
             }
 
-            // Check if IP matches allowed list
+            // Check if IP matches allowed list (NHQ IPs)
             if (checkIP(userIP)) {
+                isNHQIP = true;
                 showIPMessage(userIP);
+                console.log('IP Detection: NHQ IP detected, isNHQIP =', isNHQIP);
             } else {
+                isNHQIP = false;
                 console.log('IP Detection: IP not in allowed list:', userIP);
             }
         } catch (error) {
