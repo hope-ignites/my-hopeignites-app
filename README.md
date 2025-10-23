@@ -7,13 +7,14 @@ A single-page HTML portal hub for Hope Ignites employees, providing centralized 
 - **Portal Cards** - Grid of application links organized by category with 46x46 PNG icons
 - **Badge System** - Visual indicators for Universal, SSO, and NHQ-only apps
 - **Badge Legend** - Collapsible card-style guide explaining all badge types
+- **Mobile Hamburger Menu** - Slide-out drawer navigation for mobile devices
 - **Quick Links** - Secondary navigation for frequently accessed tools
 - **Dark Mode** - Toggle between light and dark themes with dynamic logo switching
 - **Favorites System** - Pin favorite apps for quick access
 - **Tech Mode** - Special view at `/tech` path showing tech team tools
 - **NHQ IP Detection** - Filter and display location-specific applications
-- **Beta Ribbon** - Dismissible diagonal badge indicator
-- **Responsive Design** - Mobile-friendly interface with hamburger menu and scroll arrows
+- **Spotlight Search** - Fast keyboard-accessible search with icon support
+- **Responsive Design** - Mobile-first interface with hamburger menu and scroll arrows
 - **Accessibility** - WCAG 2.1 Level AA compliant
 
 ## Deployment
@@ -131,7 +132,24 @@ For the best development experience, use VS Code with the Live Server extension:
 
 Tech Mode (`/tech`) uses SPA routing that requires CloudFlare Pages. For local testing:
 - Add query parameter: `http://127.0.0.1:5500/index.html?tech=true`
-- Or modify `scripts.js` line 82 to force tech mode temporarily
+- Or modify `scripts.js` line 85 to force tech mode temporarily
+
+### Testing Mobile Menu
+
+The mobile hamburger menu appears only on viewports ≤ 768px:
+1. Open Chrome DevTools (F12)
+2. Click device toolbar icon or press `Ctrl+Shift+M` / `Cmd+Shift+M`
+3. Select a mobile device (e.g., iPhone 12 Pro - 390px)
+4. Refresh the page
+5. Hamburger menu (☰) appears in top-left corner
+
+**Mobile Menu Features:**
+- Hamburger icon fades when menu opens
+- Slide-out drawer from left with all navigation
+- Search and dark mode buttons integrated
+- All categories dynamically populated
+- Active category highlighted
+- Closes on category selection, overlay click, or ESC key
 
 ## Security & Privacy
 

@@ -24,13 +24,14 @@ This is a **single-page HTML portal hub** for Hope Ignites employees, deployed o
 2. **Quick Links** - Secondary navigation (rendered from portal-data.json)
 3. **Help Modal** - Floating help button with contact info
 4. **IP Detection & NHQ Filtering** - Client-side IP detection for NHQ-only applications
-5. **Beta Ribbon** - Dismissible diagonal ribbon badge with localStorage persistence
-6. **Badge Legend** - Collapsible section explaining application badges
+5. **Mobile Hamburger Menu** - Slide-out drawer navigation for mobile devices (< 768px)
+6. **Badge Legend** - Collapsible card-style section explaining application badges
 7. **Badge Indicators** - Visual badges on cards (Universal, SSO, NHQ-only)
 8. **Collapsible Details** - Expandable application information table
-9. **Dark Mode Toggle** - Light/dark theme switcher with localStorage
+9. **Dark Mode Toggle** - Light/dark theme switcher with localStorage and dynamic logo
 10. **Favorites System** - Pin favorite apps for quick access
 11. **Tech Mode** - Special view at /tech path showing tech team tools
+12. **Spotlight Search** - Keyboard-accessible search across all applications
 
 ### IP Detection & NHQ-Only Applications
 The portal includes client-side IP detection using the ipify API to:
@@ -77,6 +78,28 @@ Access the portal at `/tech` to enable Tech Mode:
 - Uses SPA routing via `_redirects` file
 
 **Local Testing**: Use query parameter `?tech=true` or hash `#tech` for testing in Live Server.
+
+### Mobile Hamburger Menu
+On mobile devices (< 768px width), the portal uses a hamburger menu instead of desktop navigation:
+
+**Features:**
+- Hamburger icon (☰) in top-left corner that fades out when menu opens
+- Slide-out drawer (280px wide) from the left side
+- Semi-transparent overlay that closes menu when tapped
+- Contains: Search button, Dark mode toggle, and all category buttons
+- Categories dynamically populated from portal-data.json
+- Active category highlighted with accent color
+- Closes automatically when category selected or ESC key pressed
+- Body scroll locked when menu open
+
+**Desktop vs Mobile:**
+- **Desktop (> 768px)**: Horizontal tab navigation with scroll arrows, search/dark mode in top-right
+- **Mobile (≤ 768px)**: Hamburger menu replaces all desktop controls
+
+**Implementation:**
+- HTML: Mobile drawer structure at top of body (before container)
+- CSS: Positioned fixed with z-index 2000+, hidden on desktop
+- JavaScript: Global variables expose `portalData`, `currentCategory`, `renderCards()` to mobile menu
 
 ## Development Commands
 

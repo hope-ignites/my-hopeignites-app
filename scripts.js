@@ -725,20 +725,31 @@ let isNHQIP = false;
             return;
         }
 
-        searchResults.innerHTML = results.map((app, index) => `
-            <a href="${app.url}"
-               class="search-result-item ${index === selectedIndex ? 'selected' : ''}"
-               data-index="${index}"
-               target="_blank"
-               rel="noopener noreferrer">
-                <div class="search-result-icon">${app.icon}</div>
-                <div class="search-result-content">
-                    <div class="search-result-title">${app.title}</div>
-                    <div class="search-result-description">${app.description}</div>
-                    <div class="search-result-category">${app.category}</div>
-                </div>
-            </a>
-        `).join('');
+        searchResults.innerHTML = results.map((app, index) => {
+            // Determine if icon is an image filename or emoji
+            let iconHtml;
+            if (app.icon && app.icon.includes('.png')) {
+                const fullPath = `${ICON_BASE_PATH}${app.icon}`;
+                iconHtml = `<img src="${fullPath}" alt="${app.title} icon" style="width: 40px; height: 40px; object-fit: contain;">`;
+            } else {
+                iconHtml = app.icon;
+            }
+
+            return `
+                <a href="${app.url}"
+                   class="search-result-item ${index === selectedIndex ? 'selected' : ''}"
+                   data-index="${index}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <div class="search-result-icon">${iconHtml}</div>
+                    <div class="search-result-content">
+                        <div class="search-result-title">${app.title}</div>
+                        <div class="search-result-description">${app.description}</div>
+                        <div class="search-result-category">${app.category}</div>
+                    </div>
+                </a>
+            `;
+        }).join('');
 
         // Add click handlers to results
         const resultItems = searchResults.querySelectorAll('.search-result-item');
