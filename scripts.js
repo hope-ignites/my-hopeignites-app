@@ -108,7 +108,7 @@ const isTechMode = window.location.pathname.includes('/tech');
     }
 
     // Render tab buttons
-    function renderTabs() {
+    renderTabs = function() {
         const tabContainer = document.getElementById('tab-container');
         const mobileToggle = document.getElementById('category-mobile-toggle');
         const currentCategoryName = document.getElementById('current-category-name');
@@ -163,7 +163,7 @@ const isTechMode = window.location.pathname.includes('/tech');
 
             tabContainer.appendChild(button);
         });
-    }
+    };
 
     // Render portal cards
     renderCards = function() {
@@ -305,7 +305,7 @@ const isTechMode = window.location.pathname.includes('/tech');
         if (currentCategory === 'favorites' && cardsToDisplay.length === 0) {
             grid.innerHTML = '<p style="color: var(--text-light); text-align: center; grid-column: 1/-1;">No favorites yet. Click the ☆ on any card to add it to your favorites!</p>';
         }
-    }
+    };
 
     // Render quick links
     function renderQuickLinks() {
@@ -989,18 +989,21 @@ let isNHQIP = false;
             e.stopPropagation();
             console.log('Mobile search clicked');
 
-            // Trigger desktop search
-            const searchOverlay = document.getElementById('search-overlay');
-            if (searchOverlay) {
-                closeDrawer();
-                searchOverlay.classList.add('open');
+            // Close drawer first
+            closeDrawer();
+
+            // Trigger desktop search with correct class
+            setTimeout(() => {
+                const searchOverlay = document.getElementById('search-overlay');
                 const searchInput = document.getElementById('search-input');
-                if (searchInput) {
-                    setTimeout(() => searchInput.focus(), 300);
+
+                if (searchOverlay && searchInput) {
+                    searchOverlay.classList.add('active');
+                    setTimeout(() => searchInput.focus(), 100);
+                } else {
+                    console.error('Search overlay or input not found');
                 }
-            } else {
-                console.error('Search overlay not found');
-            }
+            }, 300); // Wait for drawer to close
         });
     }
 
