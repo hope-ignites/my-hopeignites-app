@@ -1094,11 +1094,13 @@ details.collapsible summary::after {
     background: rgba(0, 0, 0, 0.5);
     z-index: 2000;
     opacity: 0;
+    pointer-events: none; /* Don't block clicks when closed */
     transition: opacity 0.3s ease;
 }
 
 .mobile-drawer-overlay.open {
     opacity: 1;
+    pointer-events: auto; /* Enable clicks when open */
 }
 
 @media (max-width: 768px) {
