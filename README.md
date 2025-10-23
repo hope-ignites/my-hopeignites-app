@@ -4,13 +4,16 @@ A single-page HTML portal hub for Hope Ignites employees, providing centralized 
 
 ## Features
 
-- **Portal Cards** - Grid of application links organized by category
+- **Portal Cards** - Grid of application links organized by category with 46x46 PNG icons
+- **Badge System** - Visual indicators for Universal, SSO, and NHQ-only apps
+- **Badge Legend** - Collapsible card-style guide explaining all badge types
 - **Quick Links** - Secondary navigation for frequently accessed tools
-- **Dark Mode** - Toggle between light and dark themes
+- **Dark Mode** - Toggle between light and dark themes with dynamic logo switching
 - **Favorites System** - Pin favorite apps for quick access
-- **Search** - Spotlight-style search across all applications
-- **IP Detection** - Location-based informational messages
-- **Responsive Design** - Mobile-friendly interface
+- **Tech Mode** - Special view at `/tech` path showing tech team tools
+- **NHQ IP Detection** - Filter and display location-specific applications
+- **Beta Ribbon** - Dismissible diagonal badge indicator
+- **Responsive Design** - Mobile-friendly interface with hamburger menu and scroll arrows
 - **Accessibility** - WCAG 2.1 Level AA compliant
 
 ## Deployment
@@ -34,6 +37,14 @@ This portal is deployed on **CloudFlare Pages** with automatic deployments from 
    - Build output directory: `/`
 6. Click "Save and Deploy"
 
+### Cache Management
+
+CloudFlare caches content aggressively. If updates aren't appearing:
+
+1. **Purge Cache**: CloudFlare Dashboard → Caching → Configuration → "Purge Everything"
+2. **Development Mode**: Toggle on for 3-hour cache bypass
+3. **Hard Refresh**: `Ctrl/Cmd + Shift + R` in browser
+
 ## Technology Stack
 
 - **HTML5** - Semantic markup
@@ -48,10 +59,21 @@ hopeignites-portal-cloudflare/
 ├── index.html              # Main HTML file
 ├── styles.css              # All CSS styling
 ├── scripts.js              # All JavaScript functionality
-├── portal-data.json        # Application data
-├── _redirects              # CloudFlare Pages routing
-├── assets/                 # Logo and icon files
+├── portal-data.json        # Application data (cards, categories, quick links)
+├── _redirects              # CloudFlare Pages routing (SPA support)
+├── assets/
+│   ├── light-logo.png      # Logo for light mode
+│   ├── dark-logo.png       # Logo for dark mode
+│   ├── universal.png       # Universal badge icon
+│   ├── sso-badge.png       # SSO badge icon
+│   └── app-icons/          # 46x46 application icons
+│       ├── outlook.png
+│       ├── sharepoint.png
+│       ├── hq-badge.png    # NHQ badge icon
+│       └── ...
 ├── CLAUDE.md               # Development instructions
+├── PRE-PRODUCTION-CHECKLIST.md
+├── ROADMAP.md
 └── README.md               # This file
 ```
 
@@ -63,12 +85,27 @@ Edit `portal-data.json` and add a new card to the appropriate category:
 
 ```json
 {
-  "icon": "🔧",
+  "icon": "app-icon.png",
   "title": "App Name",
   "description": "Brief description",
-  "url": "https://app.example.com"
+  "url": "https://app.example.com",
+  "universal": true,
+  "sso": true,
+  "nhqOnly": false,
+  "tech": false
 }
 ```
+
+**Badge Properties:**
+- `universal: true` - Shows universal badge (available to all team members)
+- `sso: true` - Shows SSO badge (Single Sign-On enabled)
+- `nhqOnly: true` - Only visible from NHQ IPs, shows HQ badge
+- `tech: true` - Only visible in Tech Mode (`/tech` path)
+
+**Icons:**
+- Place 46x46 PNG icons in `assets/app-icons/`
+- Reference by filename: `"icon": "outlook.png"`
+- Emojis also supported: `"icon": "🔧"`
 
 ### Updating Styles
 
@@ -90,12 +127,19 @@ For the best development experience, use VS Code with the Live Server extension:
 1. Right-click `index.html`
 2. Select "Open with Live Server"
 
+### Testing Tech Mode Locally
+
+Tech Mode (`/tech`) uses SPA routing that requires CloudFlare Pages. For local testing:
+- Add query parameter: `http://127.0.0.1:5500/index.html?tech=true`
+- Or modify `scripts.js` line 82 to force tech mode temporarily
+
 ## Security & Privacy
 
 - All application links use HTTPS
 - No user data is collected or stored on servers
-- IP detection is client-side only (localStorage) and informational
+- NHQ IP detection is client-side only (localStorage) and informational - **never use for access control**
 - No cookies or tracking
+- IP detection can be easily bypassed - it's for convenience, not security
 
 ## License
 

@@ -22,23 +22,61 @@ This is a **single-page HTML portal hub** for Hope Ignites employees, deployed o
 
 1. **Portal Cards** - Grid of application links (rendered from portal-data.json)
 2. **Quick Links** - Secondary navigation (rendered from portal-data.json)
-3. **Help Modal** - Floating help button with contact info (index.html lines 100-115)
-4. **IP Detection** - Client-side IP detection for location-based messages (scripts.js lines 277-369)
-5. **Beta Banner** - Dismissible banner with localStorage persistence (index.html lines 10-14, scripts.js lines 371-382)
-6. **Collapsible Details** - Expandable application information table (index.html lines 40-72)
-7. **Dark Mode Toggle** - Light/dark theme switcher with localStorage (scripts.js lines 1-24)
-8. **Favorites System** - Pin favorite apps for quick access (scripts.js lines 26-61)
+3. **Help Modal** - Floating help button with contact info
+4. **IP Detection & NHQ Filtering** - Client-side IP detection for NHQ-only applications
+5. **Beta Ribbon** - Dismissible diagonal ribbon badge with localStorage persistence
+6. **Badge Legend** - Collapsible section explaining application badges
+7. **Badge Indicators** - Visual badges on cards (Universal, SSO, NHQ-only)
+8. **Collapsible Details** - Expandable application information table
+9. **Dark Mode Toggle** - Light/dark theme switcher with localStorage
+10. **Favorites System** - Pin favorite apps for quick access
+11. **Tech Mode** - Special view at /tech path showing tech team tools
 
-### IP Detection Feature
-The portal includes client-side IP detection using the ipify API to show custom messages for specific IP addresses or ranges. This is **informational only** and should never be used for access control or security.
+### IP Detection & NHQ-Only Applications
+The portal includes client-side IP detection using the ipify API to:
+1. Show a custom "Hope On The Hill Network Detected" banner for NHQ IPs
+2. Filter and display NHQ-only applications (marked with `nhqOnly: true` in portal-data.json)
+3. Show HQ badge indicator on NHQ-only cards when accessing from NHQ
 
 **Configuration** (in [scripts.js](scripts.js)):
-- IP addresses defined in `ALLOWED_IPS` array (line 279)
-- IP ranges can be added to `ALLOWED_IP_RANGES` array
+- NHQ IP addresses defined in `ALLOWED_IPS` array (line 432)
+- IP ranges can be added to `ALLOWED_IP_RANGES` array (line 440)
 - IP cached in localStorage for 1 hour to reduce API calls
-- Message content customizable at lines 351-359
+- Global `isNHQIP` variable tracks NHQ status
+- Cards with `nhqOnly: true` are filtered out when not at NHQ
+
+**Important**: This is **informational only** and should never be used for access control or security. IP detection is client-side and easily bypassed.
 
 **Testing**: Use browser DevTools console to see IP detection logs.
+
+### Badge System
+Applications can display up to three badge indicators in the bottom-right corner of cards:
+
+1. **Universal Badge** (`universal: true`) - Available to all team members
+   - Icon: `assets/universal.png`
+   - Position: Bottom-right corner
+   - Tooltip: "Available to all team members"
+
+2. **SSO Badge** (`sso: true`) - Single Sign-On enabled
+   - Icon: `assets/sso-badge.png`
+   - Position: Middle position (48px from right)
+   - Tooltip: "Single Sign-On enabled"
+
+3. **NHQ Badge** (`nhqOnly: true`) - Only visible from NHQ IPs
+   - Icon: `assets/app-icons/hq-badge.png`
+   - Position: Leftmost (84px from right)
+   - Tooltip: "Only available from NHQ office"
+
+**Badge Legend**: Collapsible section below category tabs explains all badges with card-style presentation.
+
+### Tech Mode
+Access the portal at `/tech` to enable Tech Mode:
+- Shows additional tech team tools (cards marked with `tech: true`)
+- Tech Tools category moves to second position (after Favorites)
+- Tech mode indicator appears next to help button
+- Uses SPA routing via `_redirects` file
+
+**Local Testing**: Use query parameter `?tech=true` or hash `#tech` for testing in Live Server.
 
 ## Development Commands
 
@@ -76,6 +114,26 @@ git push origin main
 
 **Deployment Status**: Check the CloudFlare Pages dashboard to monitor deployment progress.
 
+#### Cache Clearing
+CloudFlare aggressively caches content. If updates aren't appearing immediately:
+
+1. **Purge CloudFlare Cache** (Recommended):
+   - Go to CloudFlare Dashboard → Caching → Configuration
+   - Click "Purge Cache" → "Purge Everything"
+
+2. **Development Mode** (3-hour bypass):
+   - CloudFlare Dashboard → Caching → Configuration
+   - Toggle "Development Mode" to ON
+
+3. **Browser Hard Refresh**:
+   - Chrome/Edge: `Ctrl + Shift + R` (Windows) or `Cmd + Shift + R` (Mac)
+   - Firefox: `Ctrl + F5`
+
+4. **Cache Busting** (for production):
+   - Add version query parameters to CSS/JS files
+   - Example: `styles.css?v=1.0.2`
+   - Increment version with each deployment
+
 #### Custom Domain Setup
 1. In CloudFlare Pages dashboard, go to your project
 2. Navigate to "Custom domains"
@@ -92,24 +150,51 @@ git push origin main
 3. Add a new card object to that category's `cards` array:
    ```json
    {
-     "icon": "🔧",
+     "icon": "app-icon.png",
      "title": "App Name",
      "description": "Brief description",
-     "url": "https://app.example.com"
+     "url": "https://app.example.com",
+     "universal": true,
+     "sso": true,
+     "nhqOnly": false,
+     "tech": false
    }
    ```
+
+**Card Properties**:
+- `icon`: Filename from `assets/app-icons/` (e.g., "outlook.png") or emoji
+- `title`: Application name
+- `description`: Brief description of the application
+- `url`: Full HTTPS URL to the application
+- `universal`: (optional) Set to `true` to show universal badge
+- `sso`: (optional) Set to `true` to show SSO badge
+- `nhqOnly`: (optional) Set to `true` to restrict to NHQ IPs only
+- `tech`: (optional) Set to `true` to show only in Tech Mode (/tech)
 
 ### Updating Help Desk Contact Info
 1. Open [index.html](index.html)
 2. Find the `help-modal` section (around line 100)
 3. Update contact list items (email, phone, hours, website)
 
-### Configuring IP Detection
+### Configuring NHQ IP Detection
 1. Open [scripts.js](scripts.js)
-2. Find the IP Detection configuration section (around line 279)
-3. Add IP addresses to `ALLOWED_IPS` array
-4. Optionally add IP ranges to `ALLOWED_IP_RANGES` array
-5. Customize message content (around line 351)
+2. Find the IP Detection configuration section (around line 432)
+3. Add NHQ IP addresses to `ALLOWED_IPS` array:
+   ```javascript
+   const ALLOWED_IPS = [
+       '24.207.150.155',    // Example NHQ IP
+       '192.168.1.100',     // Add your NHQ IPs here
+   ];
+   ```
+4. Optionally add IP ranges to `ALLOWED_IP_RANGES` array:
+   ```javascript
+   const ALLOWED_IP_RANGES = [
+       { start: '192.168.1.1', end: '192.168.1.254' }
+   ];
+   ```
+5. Customize NHQ banner message (around line 528)
+
+**Important**: Cards marked with `nhqOnly: true` in portal-data.json will only appear when accessing from these IPs.
 
 To disable IP detection entirely, clear both arrays or comment out the IP detection section.
 

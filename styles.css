@@ -979,17 +979,42 @@ details.collapsible summary::after {
 
 @media (max-width: 420px) {
     #help-btn { width: 48px; height: 48px; font-size: 20px; left: 12px; bottom: 12px; }
+
+    /* Make Turnstile badge icon-only on mobile */
     #security-badge {
         right: 12px;
         bottom: 12px;
-        padding: 8px 12px;
-        font-size: 0.7rem;
+        padding: 10px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
     }
-    #security-badge .badge-label {
-        font-size: 0.6rem;
+    #security-badge .badge-text {
+        display: none;
     }
-    #security-badge .badge-brand {
-        font-size: 0.75rem;
+    #security-badge .badge-icon {
+        font-size: 1.3rem;
+    }
+
+    /* Adjust search and dark mode buttons to not overlap logo */
+    #search-trigger,
+    #dark-mode-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        top: 8px;
+    }
+    #search-trigger {
+        right: 50px;
+    }
+    #dark-mode-toggle {
+        right: 8px;
+    }
+
+    /* Add top padding to header to account for buttons */
+    .header {
+        padding-top: 56px;
+        position: relative;
     }
 }
 
