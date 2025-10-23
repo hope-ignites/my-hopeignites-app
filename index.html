@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- BETA banner (can be dismissed) -->
-    <div id="beta-banner" class="beta-banner" role="region" aria-label="Beta site notification" hidden>
-        <div class="beta-text">BETA — This site is in beta. Some features may be incomplete. Hosted on Cloudflare Pages. <span style="opacity:0.9;margin-left:8px;">Please send feedback <a target="_blank" rel="noopener noreferrer" href="https://forms.monday.com/forms/4df76a6392b5bd7b2d7e118b45017333?r=use1">here.</a></span></div>
-        <button class="beta-close" id="beta-close" aria-label="Dismiss banner">×</button>
+    <!-- BETA ribbon (can be dismissed) -->
+    <div id="beta-banner" class="beta-ribbon" role="region" aria-label="Beta site notification">
+        <span class="beta-ribbon-text">BETA</span>
+        <button class="beta-close" id="beta-close" aria-label="Dismiss ribbon">×</button>
     </div>
 
     <div class="container">
@@ -33,6 +33,36 @@
             <div id="tab-container" class="tab-container" role="tablist"></div>
             <button class="tab-scroll-arrow tab-scroll-right" aria-label="Scroll categories right">›</button>
         </div>
+
+        <!-- Badge Legend -->
+        <details class="collapsible badge-legend">
+            <summary>Badge Legend</summary>
+            <div class="collapsible-content">
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <img src="assets/universal.png" alt="Universal badge" class="legend-badge">
+                        <div class="legend-text">
+                            <strong>Available to All Team Members</strong>
+                            <p>This application is accessible to all Hope Ignites team members.</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <img src="assets/sso-badge.png" alt="SSO badge" class="legend-badge">
+                        <div class="legend-text">
+                            <strong>Single Sign-On Enabled</strong>
+                            <p>Log in seamlessly using your @hopeignites.org Microsoft 365 credentials.</p>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <img src="assets/app-icons/hq-badge.png" alt="HQ badge" class="legend-badge">
+                        <div class="legend-text">
+                            <strong>NHQ Office Only</strong>
+                            <p>Only available to Network Headquarters Team Members.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </details>
 
         <!-- Portal Cards Grid (dynamically generated) -->
         <div id="portal-grid" class="portal-grid"></div>

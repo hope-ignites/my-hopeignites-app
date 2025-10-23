@@ -14,21 +14,24 @@
           "title": "Outlook Web Access",
           "description": "Access your Organization email (@hopeignites.org)",
           "url": "https://outlook.office.com/hopeignites.org",
-          "universal": true
+          "universal": true,
+          "sso" : true
         },
         {
           "icon": "one-drive.png",
           "title": "File Sharing",
           "description": "Access your personal OneDrive",
           "url": "https://hopeignites1977-my.sharepoint.com",
-          "universal": true
+          "universal": true,
+          "sso" : true
         },
         {
           "icon": "sharepoint.png",
           "title": "Network Hub",
           "description": "Access Hope Ignites intranet and team sites",
           "url": "https://hopeignites1977.sharepoint.com/sites/hub",
-          "universal": true
+          "universal": true,
+          "sso" : true
         },
         {
           "icon": "campaign-monitor.png",
@@ -41,7 +44,8 @@
           "title": "Dialpad",
           "description": "Cloud-based phone system for Hope Ignites Team Members",
           "url": "https://dialpad.com/login",
-          "universal": false
+          "universal": false,
+          "sso" : true
         },
         {
           "icon": "monday-com.png",
@@ -61,7 +65,8 @@
           "title": "Vatterott Training Institute",
           "description": "Learning Management System for Hope Ignites Team Members",
           "url": "https://hopeignites1977.sharepoint.com/sites/PROD-LMS365/",
-          "universal": true
+          "universal": true,
+          "sso" : true
         },
         {
           "icon": "ilearn.png",
@@ -79,19 +84,22 @@
           "icon": "salesforce.png",
           "title": "Fundraising CRM",
           "description": "Salesforce for fundraising",
-          "url": "https://bhgh.my.salesforce.com"
+          "url": "https://bhgh.my.salesforce.com",
+          "sso": true
         },
         {
           "icon": "experience-app.png",
           "title": "Human Capital Management Apps",
           "description": "Team Member experience applications integrated with Salesforce",
-          "url": "https://community.bhgh.org/hiring"
+          "url": "https://community.bhgh.org/hiring",
+          "sso": true
         },
         {
           "icon": "experience-app.png",
           "title": "Program Participant Management App",
           "description": "Hopeforce application for managing program participants",
-          "url": "https://hopeforce.bhgh.org/ppm"
+          "url": "https://hopeforce.bhgh.org/ppm",
+          "sso": true
         }
       ]
     },
@@ -103,14 +111,16 @@
           "icon": "canva.png",
           "title": "Canva",
           "description": "Design graphics, presentations, and marketing materials",
-          "url": "https://www.canva.com"
+          "url": "https://www.canva.com",
+          "sso": true
         },
         {
           "icon": "brand.png",
           "title": "Hope Ignites Brand Guide",
           "description": "Access brand assets and guidelines",
           "url": "https://hopeignites1977.sharepoint.com/sites/hub-mrktcomm-brand/SitePages/Home.aspx",
-          "universal": true
+          "universal": true,
+          "sso": true
         }
       ]
     },
@@ -123,14 +133,16 @@
           "title": "ADP Workforce Now",
           "description": "Access your timecard, pay stubs, and tax documents",
           "url": "https://adp.hopeignites.app",
-          "universal": true
+          "universal": true,
+          "sso": true
         },
         {
           "icon": "adp-admin.png",
           "title": "ADP Workforce Now Admin",
           "description": "Access ADP admin portal for supervisors",
           "url": "https://adp.hopeignites.app/admin",
-          "nhqOnly": false
+          "nhqOnly": false,
+          "sso": true
         },
         {
           "icon": "qbo.png",
@@ -150,21 +162,24 @@
           "title": "Microsoft 365 Admin",
           "description": "Manage users, licenses, and security settings",
           "url": "https://admin.microsoft.com/hopeignites.org",
-          "tech": true
+          "tech": true,
+          "sso" : true
         },
         {
           "icon": "app-launcher.png",
           "title": "Microsoft SSO Portal",
           "description": "SSO to apps such as Cisco Meraki, NHQ Data Center, etc.",
           "url": "https://myapplications.microsoft.com/hopeignites.org",
-          "tech": true
+          "tech": true,
+          "sso" : true
         },
         {
           "icon": "lms-admin.png",
           "title": "Learn 365 Backend",
           "description": "Admin portal for Vatterott Training Institute LMS",
           "url": "https://lms.365.systems",
-          "tech": true
+          "tech": true,
+          "sso" : true
         },                
         {
           "icon": "git-hub.png",
@@ -188,18 +203,20 @@
           "tech": true
         },
         {
-          "icon": "entra.png",
+          "icon": "entra-id.png",
           "title": "Entra ID Portal",
           "description": "Manage Entra ID settings and configurations",
           "url": "https://entra.microsoft.com/hopeignites.org",
-          "tech": true
+          "tech": true,
+          "sso" : true
         },
         {
           "icon": "azure.png",
           "title": "Azure Portal",
           "description": "Manage Azure resources and services for Hope Ignites",
           "url": "https://portal.azure.com/#home",
-          "tech": true
+          "tech": true,
+          "sso" : true
         }          
       ]
     },

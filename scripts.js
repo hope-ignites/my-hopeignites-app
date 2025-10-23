@@ -246,12 +246,17 @@ const FavoritesManager = (function() {
 
             // Check for universal app indicator
             const universalIndicator = card.universal
-                ? `<div class="universal-indicator" title="Available to all team members"><img src="${ICON_BASE_PATH}universal.png" alt="Universal" /></div>`
+                ? `<div class="universal-indicator" title="Available to all team members"><img src="assets/universal.png" alt="Universal" /></div>`
                 : '';
 
             // Check for NHQ-only indicator
             const nhqIndicator = card.nhqOnly
                 ? `<div class="nhq-indicator" title="Only available from NHQ office"><img src="${ICON_BASE_PATH}hq-badge.png" alt="NHQ Only" /></div>`
+                : '';
+
+            // Check for SSO indicator
+            const ssoIndicator = card.sso
+                ? `<div class="sso-indicator" title="Single Sign-On enabled"><img src="assets/sso-badge.png" alt="SSO" /></div>`
                 : '';
 
             cardLink.innerHTML = `
@@ -266,6 +271,7 @@ const FavoritesManager = (function() {
                 <p>${card.description}</p>
                 ${universalIndicator}
                 ${nhqIndicator}
+                ${ssoIndicator}
             `;
             console.log('DEBUG - Final card HTML:', cardLink.innerHTML);
 

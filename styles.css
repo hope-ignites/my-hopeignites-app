@@ -277,7 +277,7 @@ body {
 .nhq-indicator {
     position: absolute;
     bottom: 12px;
-    right: 12px;
+    right: 48px;
     width: 28px;
     height: 28px;
     opacity: 0.8;
@@ -291,6 +291,27 @@ body {
 }
 
 .portal-card:hover .nhq-indicator {
+    opacity: 1;
+}
+
+/* SSO indicator on cards */
+.sso-indicator {
+    position: absolute;
+    bottom: 12px;
+    right: 84px;
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.sso-indicator img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.portal-card:hover .sso-indicator {
     opacity: 1;
 }
 
@@ -410,6 +431,71 @@ details.collapsible summary::after {
     line-height: 1.6;
 }
 
+/* Badge Legend Styles */
+.badge-legend {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.legend-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.legend-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.legend-item:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.legend-badge {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.legend-text {
+    flex: 1;
+}
+
+.legend-text strong {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.legend-text p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.5;
+}
+
+/* Responsive: stack on mobile */
+@media (max-width: 768px) {
+    .legend-items {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Table styles */
 .table-wrap {
     overflow-x: auto;
@@ -449,42 +535,49 @@ details.collapsible summary::after {
 /* BETA banner */
 :root { --beta-banner-height: 48px; }
 
-.beta-banner {
+/* Beta Ribbon */
+.beta-ribbon {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--beta-banner-height);
+    top: 60px;
+    left: -30px;
+    width: 120px;
     background: #ffb020;
     color: #072032;
+    text-align: center;
+    padding: 8px 0;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    z-index: 1000;
+    transform: rotate(-45deg);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.beta-ribbon-text {
+    display: block;
+}
+
+.beta-ribbon .beta-close {
+    position: absolute;
+    right: 4px;
+    top: 2px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: #072032;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    z-index: 2000;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
 }
 
-.beta-banner .beta-text {
-    max-width: 1100px;
-    width: 100%;
-    padding: 0 16px;
-    text-align: center;
+.beta-ribbon .beta-close:hover {
+    opacity: 1;
 }
-
-.beta-banner .beta-close {
-    position: absolute;
-    right: 12px;
-    top: 8px;
-    background: transparent;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: #072032;
-}
-
-/* push page content down so banner doesn't overlap */
-.container { margin-top: var(--beta-banner-height); }
 
 /* IP-specific notice banner */
 .ip-notice {
