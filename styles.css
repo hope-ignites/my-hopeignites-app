@@ -532,53 +532,6 @@ details.collapsible summary::after {
     background-color: #f0f0f0;
 }
 
-/* BETA banner */
-:root { --beta-banner-height: 48px; }
-
-/* Beta Ribbon */
-.beta-ribbon {
-    position: fixed;
-    top: 60px;
-    left: -30px;
-    width: 120px;
-    background: #ffb020;
-    color: #072032;
-    text-align: center;
-    padding: 8px 0;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    z-index: 1000;
-    transform: rotate(-45deg);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.beta-ribbon-text {
-    display: block;
-}
-
-.beta-ribbon .beta-close {
-    position: absolute;
-    right: 4px;
-    top: 2px;
-    background: transparent;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-    color: #072032;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-
-.beta-ribbon .beta-close:hover {
-    opacity: 1;
-}
-
 /* IP-specific notice banner */
 .ip-notice {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -589,6 +542,8 @@ details.collapsible summary::after {
     text-align: center;
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     animation: slideDown 0.5s ease-out;
+    position: relative;
+    z-index: 1;
 }
 
 .ip-notice strong {
@@ -977,6 +932,214 @@ details.collapsible summary::after {
     font-size: 0.8rem;
 }
 
+/* Mobile Hamburger Menu */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 2000;
+    width: 44px;
+    height: 44px;
+    background: var(--overlay-bg);
+    border: 2px solid var(--overlay-bg-hover);
+    border-radius: 8px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: var(--overlay-bg-hover);
+}
+
+.mobile-menu-toggle.open {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Mobile Drawer */
+.mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 280px;
+    height: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    z-index: 2001;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-drawer.open {
+    left: 0;
+}
+
+.mobile-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-drawer-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.3rem;
+}
+
+.mobile-drawer-close {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.mobile-drawer-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-drawer-content {
+    padding: 12px;
+}
+
+.mobile-menu-item {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.mobile-menu-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 16px 0;
+}
+
+.mobile-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mobile-category-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-category-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-category-btn.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+}
+
+/* Mobile Drawer Overlay */
+.mobile-drawer-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-drawer-overlay.open {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    /* Show mobile hamburger menu */
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    /* Show mobile drawer */
+    .mobile-drawer,
+    .mobile-drawer-overlay {
+        display: block;
+    }
+
+    /* Hide desktop search and dark mode buttons */
+    #search-trigger,
+    #dark-mode-toggle {
+        display: none;
+    }
+
+    /* Hide the mobile dropdown toggle (replaced by hamburger menu) */
+    .category-mobile-toggle {
+        display: none !important;
+    }
+
+    /* Hide desktop tab navigation */
+    .tab-navigation-wrapper {
+        display: none !important;
+    }
+
+    /* Push NHQ banner down on mobile to not interfere with hamburger */
+    .ip-notice {
+        margin-top: 70px;
+    }
+
+    /* Ensure hamburger is always on top */
+    .mobile-menu-toggle {
+        z-index: 2100 !important;
+    }
+}
+
 @media (max-width: 420px) {
     #help-btn { width: 48px; height: 48px; font-size: 20px; left: 12px; bottom: 12px; }
 
@@ -996,25 +1159,9 @@ details.collapsible summary::after {
         font-size: 1.3rem;
     }
 
-    /* Adjust search and dark mode buttons to not overlap logo */
-    #search-trigger,
-    #dark-mode-toggle {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
-        top: 8px;
-    }
-    #search-trigger {
-        right: 50px;
-    }
-    #dark-mode-toggle {
-        right: 8px;
-    }
-
-    /* Add top padding to header to account for buttons */
-    .header {
-        padding-top: 56px;
-        position: relative;
+    /* Reduce logo size on smaller mobile */
+    .header img {
+        width: 200px;
     }
 }
 

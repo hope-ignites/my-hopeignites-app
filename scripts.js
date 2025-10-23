@@ -1,14 +1,15 @@
 // ===== DARK MODE TOGGLE =====
+// Global updateLogo function so mobile menu can access it
+function updateLogo(isDarkMode) {
+    const headerLogo = document.getElementById('header-logo');
+    if (headerLogo) {
+        headerLogo.src = isDarkMode ? 'assets/dark-logo.png' : 'assets/light-logo.png';
+    }
+}
+
 (function() {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
-    const headerLogo = document.getElementById('header-logo');
-
-    function updateLogo(isDarkMode) {
-        if (headerLogo) {
-            headerLogo.src = isDarkMode ? 'assets/dark-logo.png' : 'assets/light-logo.png';
-        }
-    }
 
     // Check for saved preference or default to light mode
     const savedMode = localStorage.getItem('darkMode');
@@ -73,13 +74,17 @@ const FavoritesManager = (function() {
 })();
 
 // ===== PORTAL RENDERING FROM JSON =====
-(async function() {
-    let portalData = null;
-    let currentCategory = 'favorites';
-    const ICON_BASE_PATH = 'assets/app-icons/';
+// Global variables so mobile menu can access them
+let portalData = null;
+let currentCategory = 'favorites';
+const ICON_BASE_PATH = 'assets/app-icons/';
+let renderCards; // Will be defined below
+let renderTabs; // Will be defined below
 
-    // Detect if we're on /tech path
-    const isTechMode = window.location.pathname.includes('/tech');
+// Detect if we're on /tech path
+const isTechMode = window.location.pathname.includes('/tech');
+
+(async function() {
 
     // Fetch portal data from JSON file
     async function loadPortalData() {
@@ -161,7 +166,7 @@ const FavoritesManager = (function() {
     }
 
     // Render portal cards
-    function renderCards() {
+    renderCards = function() {
         const grid = document.getElementById('portal-grid');
         grid.innerHTML = '';
 
@@ -599,20 +604,6 @@ let isNHQIP = false;
     checkAndDisplayMessage();
 })();
 
-// ===== BETA BANNER =====
-(function () {
-    const banner = document.getElementById('beta-banner');
-    const closeBtn = document.getElementById('beta-close');
-    const dismissed = localStorage.getItem('betaBannerDismissed');
-    if (!dismissed) {
-        banner.removeAttribute('hidden');
-    }
-    closeBtn.addEventListener('click', () => {
-        banner.style.display = 'none';
-        localStorage.setItem('betaBannerDismissed', '1');
-    });
-})();
-
 // ===== HELP MODAL =====
 (function () {
     const helpBtn = document.getElementById('help-btn');
@@ -890,4 +881,171 @@ let isNHQIP = false;
 
     // Fetch commit ID on page load
     fetchCommitId();
+})();
+
+// ===== MOBILE HAMBURGER MENU =====
+(function() {
+    const menuToggle = document.getElementById('mobile-menu-toggle');
+    const drawer = document.getElementById('mobile-drawer');
+    const overlay = document.getElementById('mobile-drawer-overlay');
+    const drawerClose = document.getElementById('mobile-drawer-close');
+    const mobileCategories = document.getElementById('mobile-categories');
+    const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+    const mobileDarkModeToggle = document.getElementById('mobile-dark-mode-toggle');
+
+    // Check if elements exist
+    if (!menuToggle || !drawer || !overlay) {
+        console.error('Mobile menu elements not found');
+        return;
+    }
+
+    console.log('Mobile menu initialized');
+
+    function openDrawer() {
+        console.log('Opening drawer');
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+        menuToggle.classList.add('open');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+
+        // Populate categories when opening (in case they weren't loaded yet)
+        populateMobileCategories();
+    }
+
+    function closeDrawer() {
+        if (!drawer.classList.contains('open')) {
+            return; // Already closed, don't do anything
+        }
+        console.log('Closing drawer');
+        drawer.classList.remove('open');
+        overlay.classList.remove('open');
+        menuToggle.classList.remove('open');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    // Populate mobile categories
+    function populateMobileCategories() {
+        console.log('Populating mobile categories...');
+        console.log('portalData:', portalData);
+        console.log('mobileCategories element:', mobileCategories);
+
+        if (!portalData || !portalData.categories) {
+            console.error('No portal data available');
+            return;
+        }
+
+        mobileCategories.innerHTML = '';
+
+        const categoriesToShow = portalData.categories.filter(cat => {
+            // Skip "all" category
+            if (cat.id === 'all') return false;
+            // Skip tech-only categories if not in tech mode
+            if (!isTechMode && cat.id === 'tech-tools') return false;
+            return true;
+        });
+
+        console.log('Categories to show:', categoriesToShow);
+
+        categoriesToShow.forEach(category => {
+            const btn = document.createElement('button');
+            btn.className = 'mobile-category-btn';
+            btn.textContent = category.name;
+            btn.dataset.categoryId = category.id;
+
+            // Mark active category
+            if (category.id === currentCategory) {
+                btn.classList.add('active');
+            }
+
+            btn.addEventListener('click', () => {
+                currentCategory = category.id;
+                renderCards();
+
+                // Update active state
+                document.querySelectorAll('.mobile-category-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+
+                // Update desktop tabs too
+                document.querySelectorAll('.tab-button').forEach(b => {
+                    b.classList.remove('active');
+                    if (b.dataset.category === category.id) {
+                        b.classList.add('active');
+                    }
+                });
+
+                closeDrawer();
+            });
+
+            mobileCategories.appendChild(btn);
+        });
+    }
+
+    // Mobile search trigger
+    if (mobileSearchTrigger) {
+        mobileSearchTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Mobile search clicked');
+
+            // Trigger desktop search
+            const searchOverlay = document.getElementById('search-overlay');
+            if (searchOverlay) {
+                closeDrawer();
+                searchOverlay.classList.add('open');
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) {
+                    setTimeout(() => searchInput.focus(), 300);
+                }
+            } else {
+                console.error('Search overlay not found');
+            }
+        });
+    }
+
+    // Mobile dark mode toggle
+    if (mobileDarkModeToggle) {
+        mobileDarkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+
+            // Update icon
+            const icon = mobileDarkModeToggle.querySelector('.mobile-dark-mode-icon');
+            if (icon) {
+                icon.textContent = isDark ? '☀️' : '🌙';
+            }
+
+            // Update desktop button too
+            const desktopBtn = document.getElementById('dark-mode-toggle');
+            if (desktopBtn) {
+                desktopBtn.textContent = isDark ? '☀️' : '🌙';
+            }
+
+            // Update logo
+            updateLogo(isDark);
+        });
+    }
+
+    // Event listeners
+    menuToggle.addEventListener('click', (e) => {
+        console.log('Menu toggle clicked');
+        e.preventDefault();
+        e.stopPropagation();
+        openDrawer();
+    });
+
+    if (drawerClose) {
+        drawerClose.addEventListener('click', closeDrawer);
+    }
+
+    overlay.addEventListener('click', closeDrawer);
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+            closeDrawer();
+        }
+    });
 })();

@@ -7,11 +7,35 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- BETA ribbon (can be dismissed) -->
-    <div id="beta-banner" class="beta-ribbon" role="region" aria-label="Beta site notification">
-        <span class="beta-ribbon-text">BETA</span>
-        <button class="beta-close" id="beta-close" aria-label="Dismiss ribbon">×</button>
+    <!-- Mobile Hamburger Menu -->
+    <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-drawer" class="mobile-drawer">
+        <div class="mobile-drawer-header">
+            <h3>Menu</h3>
+            <button id="mobile-drawer-close" class="mobile-drawer-close" aria-label="Close menu">×</button>
+        </div>
+        <div class="mobile-drawer-content">
+            <button id="mobile-search-trigger" class="mobile-menu-item" aria-label="Open search">
+                🔍 Search
+            </button>
+            <button id="mobile-dark-mode-toggle" class="mobile-menu-item" aria-label="Toggle dark mode">
+                <span class="mobile-dark-mode-icon">🌙</span> <span class="mobile-dark-mode-text">Dark Mode</span>
+            </button>
+            <hr class="mobile-menu-divider">
+            <div id="mobile-categories" class="mobile-categories">
+                <!-- Categories will be dynamically inserted here -->
+            </div>
+        </div>
     </div>
+
+    <!-- Mobile Drawer Overlay -->
+    <div id="mobile-drawer-overlay" class="mobile-drawer-overlay"></div>
 
     <div class="container">
         <!-- IP-specific notice will be inserted here by JavaScript -->
