@@ -98,7 +98,7 @@
           "icon": "experience-app.png",
           "title": "Program Participant Management App",
           "description": "Hopeforce application for managing program participants",
-          "url": "https://hopeforce.bhgh.org/ppm",
+          "url": "https://community.bhgh.org/ppm",
           "sso": true
         }
       ]
