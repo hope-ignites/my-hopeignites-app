@@ -209,6 +209,8 @@ const isTechMode = window.location.pathname.includes('/tech');
                     });
                 }
             });
+            // Sort alphabetically by title for "All Applications" view
+            cardsToDisplay.sort((a, b) => a.title.localeCompare(b.title));
         } else {
             // Show cards from selected category
             const category = portalData.categories.find(cat => cat.id === currentCategory);
