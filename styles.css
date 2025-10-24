@@ -359,6 +359,10 @@ body.dark-mode .favorite-btn:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
+body.dark-mode .portal-card h3 {
+    color: #ffffff;
+}
+
 .quick-links {
     background: var(--overlay-bg);
     backdrop-filter: blur(10px);

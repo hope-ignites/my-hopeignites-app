@@ -185,8 +185,8 @@
         },
         {
           "icon": {
-            "light": "adp-admin.png",
-            "dark": "adp-admin.png"
+            "light": "adp-admin-2.png",
+            "dark": "adp-admin-2.png"
           },
           "title": "ADP Workforce Now Admin",
           "description": "Access ADP admin portal for supervisors",
