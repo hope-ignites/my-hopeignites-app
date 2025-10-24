@@ -31,6 +31,11 @@ function updateLogo(isDarkMode) {
             localStorage.setItem('darkMode', 'disabled');
             updateLogo(false);
         }
+
+        // Re-render cards to update icons for new theme
+        if (typeof renderCards === 'function') {
+            renderCards();
+        }
     });
 })();
 
@@ -83,6 +88,29 @@ let renderTabs; // Will be defined below
 
 // Detect if we're on /tech path
 const isTechMode = window.location.pathname.includes('/tech');
+
+// Helper function to get theme-appropriate icon
+function getIconForTheme(iconData) {
+    const isDarkMode = document.body.classList.contains('dark-mode');
+
+    // If icon is a string, use it directly (backward compatibility)
+    if (typeof iconData === 'string') {
+        return iconData;
+    }
+
+    // If icon is an object with light/dark properties
+    if (typeof iconData === 'object' && iconData !== null) {
+        // Use dark mode icon if available and in dark mode, otherwise use light icon
+        if (isDarkMode && iconData.dark) {
+            return iconData.dark;
+        }
+        // Always fallback to light icon
+        return iconData.light || iconData.dark || '📦';
+    }
+
+    // Fallback to generic emoji if no icon data
+    return '📦';
+}
 
 (async function() {
 
@@ -233,21 +261,24 @@ const isTechMode = window.location.pathname.includes('/tech');
 
             const isFav = FavoritesManager.isFavorite(card.url);
 
+            // Get theme-appropriate icon
+            const iconValue = getIconForTheme(card.icon);
+
             // Determine if icon is an image filename or emoji
             console.log('DEBUG - Card:', card.title);
-            console.log('DEBUG - Icon value:', card.icon);
-            console.log('DEBUG - Icon type:', typeof card.icon);
-            console.log('DEBUG - Has .png?', card.icon && card.icon.includes('.png'));
+            console.log('DEBUG - Icon value:', iconValue);
+            console.log('DEBUG - Icon type:', typeof iconValue);
+            console.log('DEBUG - Has .png?', iconValue && iconValue.includes('.png'));
             console.log('DEBUG - ICON_BASE_PATH:', ICON_BASE_PATH);
 
             let iconHtml;
-            if (card.icon && card.icon.includes('.png')) {
-                const fullPath = `${ICON_BASE_PATH}${card.icon}`;
+            if (iconValue && iconValue.includes('.png')) {
+                const fullPath = `${ICON_BASE_PATH}${iconValue}`;
                 console.log('DEBUG - Full image path:', fullPath);
                 iconHtml = `<img src="${fullPath}" alt="${card.title} icon" style="width: 46px; height: 46px; object-fit: contain;">`;
                 console.log('DEBUG - iconHtml (img):', iconHtml);
             } else {
-                iconHtml = card.icon;
+                iconHtml = iconValue;
                 console.log('DEBUG - iconHtml (emoji):', iconHtml);
             }
 
@@ -728,13 +759,16 @@ let isNHQIP = false;
         }
 
         searchResults.innerHTML = results.map((app, index) => {
+            // Get theme-appropriate icon
+            const iconValue = getIconForTheme(app.icon);
+
             // Determine if icon is an image filename or emoji
             let iconHtml;
-            if (app.icon && app.icon.includes('.png')) {
-                const fullPath = `${ICON_BASE_PATH}${app.icon}`;
+            if (iconValue && iconValue.includes('.png')) {
+                const fullPath = `${ICON_BASE_PATH}${iconValue}`;
                 iconHtml = `<img src="${fullPath}" alt="${app.title} icon" style="width: 40px; height: 40px; object-fit: contain;">`;
             } else {
-                iconHtml = app.icon;
+                iconHtml = iconValue;
             }
 
             return `
@@ -1041,6 +1075,11 @@ let isNHQIP = false;
 
             // Update logo
             updateLogo(isDark);
+
+            // Re-render cards to update icons for new theme
+            if (typeof renderCards === 'function') {
+                renderCards();
+            }
         });
     }
 

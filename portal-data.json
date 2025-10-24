@@ -15,7 +15,10 @@
       "name": "Collaboration and Communication",
       "cards": [
         {
-          "icon": "outlook.png",
+          "icon": {
+            "light": "outlook.png",
+            "dark": "outlook.png"
+          },
           "title": "Outlook Web Access",
           "description": "Access your Organization email (@hopeignites.org)",
           "url": "https://outlook.office.com/hopeignites.org",
@@ -23,7 +26,10 @@
           "sso" : true
         },
         {
-          "icon": "one-drive.png",
+          "icon": {
+            "light": "one-drive.png",
+            "dark": "one-drive.png"
+          },
           "title": "File Sharing",
           "description": "Access your personal OneDrive",
           "url": "https://hopeignites1977-my.sharepoint.com",
@@ -31,7 +37,10 @@
           "sso" : true
         },
         {
-          "icon": "sharepoint.png",
+          "icon": {
+            "light": "sharepoint.png",
+            "dark": "sharepoint.png"
+          },
           "title": "Network Hub",
           "description": "Access Hope Ignites intranet and team sites",
           "url": "https://hopeignites1977.sharepoint.com/sites/hub",
@@ -39,13 +48,19 @@
           "sso" : true
         },
         {
-          "icon": "campaign-monitor.png",
+          "icon": {
+            "light": "campaign-monitor.png",
+            "dark": "campaign-monitor.png"
+          },
           "title": "Campaign Monitor",
           "description": "Email Marketing platform for newsletters and other donor communications, Integrated to Hopeforce.",
           "url": "https://emarketing.hopeignites.app"
         },
         {
-          "icon": "dialpad.png",
+          "icon": {
+            "light": "dialpad.png",
+            "dark": "dialpad.png"
+          },
           "title": "Dialpad",
           "description": "Cloud-based phone system for Hope Ignites Team Members",
           "url": "https://dialpad.com/login",
@@ -53,7 +68,10 @@
           "sso" : true
         },
         {
-          "icon": "monday-com.png",
+          "icon": {
+            "light": "monday-com.png",
+            "dark": "monday-com.png"
+          },
           "title": "Monday.com",
           "description": "Project management and team collaboration platform",
           "url": "https://hopeignites.monday.com/",
@@ -66,7 +84,10 @@
       "name": "Training",
       "cards": [
         {
-          "icon": "lms.png",
+          "icon": {
+            "light": "lms.png",
+            "dark": "lms.png"
+          },
           "title": "Vatterott Training Institute",
           "description": "Learning Management System for Hope Ignites Team Members",
           "url": "https://hopeignites1977.sharepoint.com/sites/PROD-LMS365/",
@@ -74,11 +95,14 @@
           "sso" : true
         },
         {
-          "icon": "ilearn.png",
+          "icon": {
+            "light": "ilearn.png",
+            "dark": "ilearn.png"
+          },
           "title": "iLearning Engines",
           "description": "Learning Management System made avaliable by Christian Brothers ",
           "url": "https://ins.ilearningengines.com/main/"
-        }        
+        }
       ]
     },
     { 
@@ -86,21 +110,30 @@
       "name": "HopeForce",
       "cards": [
         {
-          "icon": "salesforce.png",
+          "icon": {
+            "light": "salesforce.png",
+            "dark": "salesforce.png"
+          },
           "title": "Fundraising CRM",
           "description": "Salesforce for fundraising",
           "url": "https://bhgh.my.salesforce.com",
           "sso": true
         },
         {
-          "icon": "experience-app.png",
+          "icon": {
+            "light": "experience-app.png",
+            "dark": "experience-app.png"
+          },
           "title": "Human Capital Management Apps",
           "description": "Team Member experience applications integrated with Salesforce",
           "url": "https://community.bhgh.org/hiring",
           "sso": true
         },
         {
-          "icon": "experience-app.png",
+          "icon": {
+            "light": "experience-app.png",
+            "dark": "experience-app.png"
+          },
           "title": "Program Participant Management App",
           "description": "Hopeforce application for managing program participants",
           "url": "https://community.bhgh.org/ppm",
@@ -113,14 +146,20 @@
       "name": "Design and Brand",
       "cards": [
         {
-          "icon": "canva.png",
+          "icon": {
+            "light": "canva.png",
+            "dark": "canva.png"
+          },
           "title": "Canva",
           "description": "Design graphics, presentations, and marketing materials",
           "url": "https://www.canva.com",
           "sso": true
         },
         {
-          "icon": "brand.png",
+          "icon": {
+            "light": "brand.png",
+            "dark": "brand.png"
+          },
           "title": "Hope Ignites Brand Guide",
           "description": "Access brand assets and guidelines",
           "url": "https://hopeignites1977.sharepoint.com/sites/hub-mrktcomm-brand/SitePages/Home.aspx",
@@ -134,7 +173,10 @@
       "name": "Payroll, Finance & Accounting",
       "cards": [
         {
-          "icon": "adp.png",
+          "icon": {
+            "light": "adp.png",
+            "dark": "adp.png"
+          },
           "title": "ADP Workforce Now",
           "description": "Access your timecard, pay stubs, and tax documents",
           "url": "https://adp.hopeignites.app",
@@ -142,7 +184,10 @@
           "sso": true
         },
         {
-          "icon": "adp-admin.png",
+          "icon": {
+            "light": "adp-admin.png",
+            "dark": "adp-admin.png"
+          },
           "title": "ADP Workforce Now Admin",
           "description": "Access ADP admin portal for supervisors",
           "url": "https://adp.hopeignites.app/admin",
@@ -150,7 +195,10 @@
           "sso": true
         },
         {
-          "icon": "qbo.png",
+          "icon": {
+            "light": "qbo.png",
+            "dark": "qbo.png"
+          },
           "title": "QuickBooks Online",
           "description": "Accounting software for general ledger and other finances",
           "url": "https://accounts.intuit.com/app/sign-in?app_group=QBO",
@@ -163,7 +211,10 @@
       "name": "Tech Team Tools",
       "cards": [
         {
-          "icon": "m365.png",
+          "icon": {
+            "light": "m365.png",
+            "dark": "m365.png"
+          },
           "title": "Microsoft 365 Admin",
           "description": "Manage users, licenses, and security settings",
           "url": "https://admin.microsoft.com/hopeignites.org",
@@ -171,7 +222,10 @@
           "sso" : true
         },
         {
-          "icon": "app-launcher.png",
+          "icon": {
+            "light": "app-launcher.png",
+            "dark": "app-launcher.png"
+          },
           "title": "Microsoft SSO Portal",
           "description": "SSO to apps such as Cisco Meraki, NHQ Data Center, etc.",
           "url": "https://myapplications.microsoft.com/hopeignites.org",
@@ -179,36 +233,51 @@
           "sso" : true
         },
         {
-          "icon": "lms-admin.png",
+          "icon": {
+            "light": "lms-admin.png",
+            "dark": "lms-admin.png"
+          },
           "title": "Learn 365 Backend",
           "description": "Admin portal for Vatterott Training Institute LMS",
           "url": "https://lms.365.systems",
           "tech": true,
           "sso" : true
-        },                
+        },
         {
-          "icon": "git-hub.png",
+          "icon": {
+            "light": "git-hub.png",
+            "dark": "git-hub.png"
+          },
           "title": "Hope Ignites GitHub",
           "description": "Code repository for Hope Ignites web and software projects",
           "url": "https://github.com/hope-ignites",
           "tech": true
         },
         {
-          "icon": "cloudflare.png",
+          "icon": {
+            "light": "cloudflare.png",
+            "dark": "cloudflare.png"
+          },
           "title": "Cloudflare Dashboard",
           "description": "Manage DNS, security, and performance settings for Hope Ignites websites",
           "url": "https://dash.cloudflare.com/1234567890abcdef/hopeignites.org",
           "tech": true
         },
         {
-          "icon": "scribe.png",
+          "icon": {
+            "light": "scribe.png",
+            "dark": "scribe.png"
+          },
           "title": "Scribe",
           "description": "Create and manage process documentation and guides",
           "url": "https://scribehow.com",
           "tech": true
         },
         {
-          "icon": "entra-id.png",
+          "icon": {
+            "light": "entra-id.png",
+            "dark": "entra-id.png"
+          },
           "title": "Entra ID Portal",
           "description": "Manage Entra ID settings and configurations",
           "url": "https://entra.microsoft.com/hopeignites.org",
@@ -216,7 +285,10 @@
           "sso" : true
         },
         {
-          "icon": "azure.png",
+          "icon": {
+            "light": "azure.png",
+            "dark": "azure.png"
+          },
           "title": "Azure Portal",
           "description": "Manage Azure resources and services for Hope Ignites",
           "url": "https://portal.azure.com/#home",

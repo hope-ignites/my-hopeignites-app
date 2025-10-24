@@ -185,7 +185,7 @@ CloudFlare aggressively caches content. If updates aren't appearing immediately:
    ```
 
 **Card Properties**:
-- `icon`: Filename from `assets/app-icons/` (e.g., "outlook.png") or emoji
+- `icon`: Filename from `assets/app-icons/` (e.g., "outlook.png") or emoji, OR an object with light/dark theme icons (see below)
 - `title`: Application name
 - `description`: Brief description of the application
 - `url`: Full HTTPS URL to the application
@@ -193,6 +193,23 @@ CloudFlare aggressively caches content. If updates aren't appearing immediately:
 - `sso`: (optional) Set to `true` to show SSO badge
 - `nhqOnly`: (optional) Set to `true` to restrict to NHQ IPs only
 - `tech`: (optional) Set to `true` to show only in Tech Mode (/tech)
+
+**Light/Dark Mode Icons**:
+You can specify different icons for light and dark themes. If only `light` is provided, it will be used in both themes:
+
+```json
+{
+  "icon": {
+    "light": "app-icon-light.png",
+    "dark": "app-icon-dark.png"
+  },
+  "title": "App Name",
+  "description": "Brief description",
+  "url": "https://app.example.com"
+}
+```
+
+The portal automatically switches icons when the user toggles between light and dark mode. If no dark icon is specified, the light icon is used as a fallback.
 
 ### Updating Help Desk Contact Info
 1. Open [index.html](index.html)
