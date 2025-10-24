@@ -289,7 +289,7 @@ function getIconForTheme(iconData) {
 
             // Check for NHQ-only indicator
             const nhqIndicator = card.nhqOnly
-                ? `<div class="nhq-indicator" title="Only available from NHQ office"><img src="${ICON_BASE_PATH}hq-badge.png" alt="NHQ Only" /></div>`
+                ? `<div class="nhq-indicator" title="Only available from NHQ office"><img src="assets/hq-badge.png" alt="NHQ Only" /></div>`
                 : '';
 
             // Check for SSO indicator

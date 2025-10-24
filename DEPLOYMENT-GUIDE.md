@@ -403,8 +403,8 @@ Add applications with `"tech": true` in `portal-data.json`. Access at `/tech` pa
 │   ├── dark-logo.png       # Your dark mode logo
 │   ├── universal.png       # Universal app badge
 │   ├── sso-badge.png       # SSO badge
+│   ├── hq-badge.png        # Office-only badge
 │   └── app-icons/          # Application icons (46x46 PNG)
-│       └── hq-badge.png    # Office-only badge
 └── README.md               # This file
 ```
 

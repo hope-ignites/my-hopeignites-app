@@ -64,7 +64,7 @@ Applications can display up to three badge indicators in the bottom-right corner
    - Tooltip: "Single Sign-On enabled"
 
 3. **NHQ Badge** (`nhqOnly: true`) - Only visible from NHQ IPs
-   - Icon: `assets/app-icons/hq-badge.png`
+   - Icon: `assets/hq-badge.png`
    - Position: Leftmost (84px from right)
    - Tooltip: "Only available from NHQ office"
 
