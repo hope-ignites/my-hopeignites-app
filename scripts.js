@@ -89,6 +89,14 @@ let renderTabs; // Will be defined below
 // Detect if we're on /tech path
 const isTechMode = window.location.pathname.includes('/tech');
 
+// Show tech mode banner if in tech mode
+if (isTechMode) {
+    const techBanner = document.getElementById('tech-mode-banner');
+    if (techBanner) {
+        techBanner.style.display = 'block';
+    }
+}
+
 // Helper function to get theme-appropriate icon
 function getIconForTheme(iconData) {
     const isDarkMode = document.body.classList.contains('dark-mode');
