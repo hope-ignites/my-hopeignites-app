@@ -1,6 +1,11 @@
 {
   "categories": [
     {
+      "id": "all",
+      "name": "All Applications",
+      "cards": []
+    },
+    {
       "id": "favorites",
       "name": "⭐ Favorites",
       "cards": []
@@ -217,13 +222,8 @@
           "url": "https://portal.azure.com/#home",
           "tech": true,
           "sso" : true
-        }          
+        }
       ]
-    },
-    {
-      "id": "all",
-      "name": "All Applications",
-      "cards": []
     }
   ],
   "quickLinks": [

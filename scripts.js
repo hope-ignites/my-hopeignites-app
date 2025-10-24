@@ -76,7 +76,7 @@ const FavoritesManager = (function() {
 // ===== PORTAL RENDERING FROM JSON =====
 // Global variables so mobile menu can access them
 let portalData = null;
-let currentCategory = 'favorites';
+let currentCategory = 'all';
 const ICON_BASE_PATH = 'assets/app-icons/';
 let renderCards; // Will be defined below
 let renderTabs; // Will be defined below
