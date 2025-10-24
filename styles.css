@@ -575,7 +575,7 @@ details.collapsible summary::after {
 
 /* Tech Mode Banner */
 .tech-mode-banner {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+    background: linear-gradient(135deg, #ef7322 0%, #f79d1e 100%);
     color: white;
     padding: 12px 20px;
     border-radius: 12px;
