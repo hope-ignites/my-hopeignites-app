@@ -1,6 +1,6 @@
 {
-  "name": "Hope Ignites Portal",
-  "short_name": "HI Portal",
+  "name": "Hope Ignites Applications",
+  "short_name": "Hope Ignites Apps",
   "description": "Network Application Portal - Access all your tools and applications in one place",
   "start_url": "/",
   "display": "standalone",
