@@ -32,6 +32,7 @@ This is a **single-page HTML portal hub** for Hope Ignites employees, deployed o
 10. **Favorites System** - Pin favorite apps for quick access
 11. **Tech Mode** - Special view at /tech path showing tech team tools
 12. **Spotlight Search** - Keyboard-accessible search across all applications
+13. **PWA Support** - Progressive Web App with offline capability and installable on mobile devices
 
 ### IP Detection & NHQ-Only Applications
 The portal includes client-side IP detection using the ipify API to:
@@ -78,6 +79,35 @@ Access the portal at `/tech` to enable Tech Mode:
 - Uses SPA routing via `_redirects` file
 
 **Local Testing**: Use query parameter `?tech=true` or hash `#tech` for testing in Live Server.
+
+### Progressive Web App (PWA)
+The portal can be installed as a Progressive Web App on mobile devices:
+
+**Features:**
+- **Installable**: Users can add the portal to their home screen
+- **Offline Support**: Service worker caches core files for offline access
+- **App-like Experience**: Runs in standalone mode without browser UI
+- **Auto-updates**: Service worker automatically updates cached content
+
+**Configuration Files:**
+- `manifest.json` - PWA metadata (name, icons, colors, display mode)
+- `service-worker.js` - Caching and offline functionality
+- PWA meta tags in `index.html` (theme color, Apple-specific tags)
+
+**Required Assets:**
+- `assets/pwa-icon-192.png` - 192x192px app icon
+- `assets/pwa-icon-512.png` - 512x512px app icon
+- See `assets/PWA-ICONS-README.md` for creation instructions
+
+**Installation:**
+- **Android Chrome**: "Add to Home Screen" prompt appears automatically
+- **iOS Safari**: Share button → "Add to Home Screen"
+- **Desktop Chrome**: Install icon in address bar
+
+**Service Worker Strategy:**
+- Cache-first for static assets (CSS, JS, images)
+- Network-first for dynamic content
+- Falls back to cached index.html if offline
 
 ### Mobile Hamburger Menu
 On mobile devices (< 768px width), the portal uses a hamburger menu instead of desktop navigation:

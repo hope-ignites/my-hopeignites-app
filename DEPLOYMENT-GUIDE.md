@@ -165,6 +165,7 @@ A lightweight, single-page HTML portal hub for centralized access to organizatio
 - ✅ **Badge System** - Visual indicators for Universal, SSO, and office-only apps
 - ✅ **Tech Mode** - Special view for IT team tools (access at /tech)
 - ✅ **No-Index Protection** - Prevent search engine and AI crawler indexing
+- ✅ **PWA Support** - Installable as a mobile app with offline capability
 
 ---
 
@@ -380,6 +381,35 @@ Edit `styles.css` (lines 1-32) CSS variables:
 
 Add applications with `"tech": true` in `portal-data.json`. Access at `/tech` path.
 
+### Setting Up PWA (Progressive Web App)
+
+The portal includes PWA support, allowing users to install it as an app on their mobile devices.
+
+**Required Steps:**
+
+1. **Create PWA Icons**:
+   - Create `assets/pwa-icon-192.png` (192x192 pixels)
+   - Create `assets/pwa-icon-512.png` (512x512 pixels)
+   - See `assets/PWA-ICONS-README.md` for detailed instructions
+
+2. **Test PWA Installation**:
+   - Deploy to CloudFlare Pages (PWA requires HTTPS)
+   - Open portal on mobile device
+   - Look for "Add to Home Screen" prompt
+
+3. **Customize PWA Settings** (optional):
+   - Edit `manifest.json` to change app name, colors, description
+   - Modify `service-worker.js` to adjust caching strategy
+
+**What PWA Provides:**
+- ✅ Install button on mobile browsers (Chrome, Safari)
+- ✅ Home screen icon for quick access
+- ✅ Offline functionality (cached content)
+- ✅ Full-screen app experience (no browser UI)
+- ✅ Fast loading with service worker caching
+
+**Note**: PWA icons are not included by default. You must create them for the install feature to work properly.
+
 ### Cache Clearing (If Updates Don't Appear)
 
 1. **CloudFlare Dashboard** → Caching → Configuration → **Purge Everything**
@@ -395,6 +425,8 @@ Add applications with `"tech": true` in `portal-data.json`. Access at `/tech` pa
 ├── styles.css              # All styling
 ├── scripts.js              # All JavaScript
 ├── portal-data.json        # Application data (customize this!)
+├── manifest.json           # PWA manifest
+├── service-worker.js       # PWA service worker for offline support
 ├── _redirects              # CloudFlare Pages routing
 ├── _headers                # Security headers
 ├── robots.txt              # Block search engines/AI crawlers
@@ -404,6 +436,9 @@ Add applications with `"tech": true` in `portal-data.json`. Access at `/tech` pa
 │   ├── universal.png       # Universal app badge
 │   ├── sso-badge.png       # SSO badge
 │   ├── hq-badge.png        # Office-only badge
+│   ├── pwa-icon-192.png    # PWA app icon 192x192 (you need to create)
+│   ├── pwa-icon-512.png    # PWA app icon 512x512 (you need to create)
+│   ├── PWA-ICONS-README.md # Instructions for creating PWA icons
 │   └── app-icons/          # Application icons (46x46 PNG)
 └── README.md               # This file
 ```

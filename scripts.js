@@ -1,3 +1,16 @@
+// ===== PWA SERVICE WORKER REGISTRATION =====
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+                console.log('PWA: Service Worker registered successfully:', registration.scope);
+            })
+            .catch((error) => {
+                console.log('PWA: Service Worker registration failed:', error);
+            });
+    });
+}
+
 // ===== DARK MODE TOGGLE =====
 // Global updateLogo function so mobile menu can access it
 function updateLogo(isDarkMode) {
