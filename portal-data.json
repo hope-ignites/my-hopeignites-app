@@ -30,8 +30,8 @@
             "light": "one-drive.png",
             "dark": "one-drive.png"
           },
-          "title": "File Sharing",
-          "description": "Access your personal OneDrive",
+          "title": "OneDrive",
+          "description": "Access your Hope Ignites OneDrive files.",
           "url": "https://hopeignites1977-my.sharepoint.com",
           "universal": true,
           "sso" : true
@@ -41,8 +41,8 @@
             "light": "sharepoint.png",
             "dark": "sharepoint.png"
           },
-          "title": "Network Hub",
-          "description": "Access Hope Ignites intranet and team sites",
+          "title": "SharePoint Hub",
+          "description": "Access Hope Ignites Network Hub and team sites",
           "url": "https://hopeignites1977.sharepoint.com/sites/hub",
           "universal": true,
           "sso" : true
@@ -114,8 +114,8 @@
             "light": "salesforce.png",
             "dark": "salesforce.png"
           },
-          "title": "Fundraising CRM",
-          "description": "Salesforce for fundraising",
+          "title": "Salesforce for Fundraising",
+          "description": "CRM platform for managing donors and fundraising activities",
           "url": "https://bhgh.my.salesforce.com",
           "sso": true
         },
@@ -124,8 +124,8 @@
             "light": "experience-app.png",
             "dark": "experience-app.png"
           },
-          "title": "Human Capital Management Apps",
-          "description": "Team Member experience applications integrated with Salesforce",
+          "title": "Human Capital Management App",
+          "description": "Team Member experience application integrated with Salesforce",
           "url": "https://community.bhgh.org/hiring",
           "sso": true
         },
