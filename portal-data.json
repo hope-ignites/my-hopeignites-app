@@ -223,6 +223,17 @@
         },
         {
           "icon": {
+            "light": "wp-engine.png",
+            "dark": "wp-engine.png"
+          },
+          "title": "WP Engine Admin",
+          "description": "Manage Hope Ignites WordPress websites and hosting",
+          "url": "https://my.wpengine.com",
+          "tech": true,
+          "sso" : true
+        },        
+        {
+          "icon": {
             "light": "app-launcher.png",
             "dark": "app-launcher.png"
           },
