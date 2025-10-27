@@ -1,5 +1,5 @@
-// Service Worker for Hope Ignites Portal PWA
-const CACHE_NAME = 'hopeignites-portal-v1';
+// Service Worker for Hope Ignites Application Launcher PWA
+const CACHE_NAME = 'hopeignites-app-launcher-v1';
 const urlsToCache = [
   '/',
   '/index.html',

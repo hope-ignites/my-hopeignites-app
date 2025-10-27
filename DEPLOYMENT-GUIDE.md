@@ -1,12 +1,12 @@
 # Deployment Guide for Organizations
 
-This guide explains how to prepare this Hope Ignites Portal for sharing with other organizations, and how those organizations can customize and deploy it in their own environment.
+This guide explains how to prepare this Hope Ignites Application Launcher for sharing with other organizations, and how those organizations can customize and deploy it in their own environment.
 
 ---
 
-## Part 1: Preparing the Portal for Sharing (Hope Ignites Team)
+## Part 1: Preparing the Application Launcher for Sharing (Hope Ignites Team)
 
-Before sharing this portal template with other organizations, you need to scrub organization-specific data and create a clean template.
+Before sharing this Application Launcher template with other organizations, you need to scrub organization-specific data and create a clean template.
 
 ### Step 1: Scrub Organization-Specific Data
 
@@ -127,7 +127,7 @@ Replace with placeholder text:
 **File:** `index.html` (line 6)
 
 ```html
-<title>Your Organization - Portal Hub</title>
+<title>Your Organization - Application Launcher</title>
 ```
 
 #### 1.7 Clean Up Documentation Files
@@ -150,9 +150,9 @@ Below is the content you should provide as the main README.md for organizations 
 
 ---
 
-# Portal Hub - Deployment Instructions
+# Application Launcher - Deployment Instructions
 
-A lightweight, single-page HTML portal hub for centralized access to organizational applications and tools. Designed for deployment on CloudFlare Pages with no build process required.
+A lightweight, single-page HTML application launcher for centralized access to organizational applications and tools. Designed for deployment on CloudFlare Pages with no build process required.
 
 ## Features
 
@@ -174,8 +174,8 @@ A lightweight, single-page HTML portal hub for centralized access to organizatio
 ### 1. Fork or Download This Repository
 
 ```bash
-git clone https://github.com/your-org/portal-hub.git
-cd portal-hub
+git clone https://github.com/your-org/application-launcher.git
+cd application-launcher
 ```
 
 ### 2. Customize for Your Organization
@@ -267,7 +267,7 @@ const GITHUB_REPO_NAME = 'your-repo-name';
 Edit `index.html` (line 6):
 
 ```html
-<title>Your Organization - Portal Hub</title>
+<title>Your Organization - Application Launcher</title>
 ```
 
 ### 3. Test Locally
@@ -291,7 +291,7 @@ npx serve
 1. **Push to GitHub:**
    ```bash
    git add .
-   git commit -m "Initial portal setup"
+   git commit -m "Initial Application Launcher setup"
    git push origin main
    ```
 
@@ -508,7 +508,7 @@ For production use, consider:
 
 ## Support
 
-For issues with this portal template, please open an issue on GitHub.
+For issues with this Application Launcher template, please open an issue on GitHub.
 
 For CloudFlare-specific questions, see [CloudFlare Pages Documentation](https://developers.cloudflare.com/pages/).
 

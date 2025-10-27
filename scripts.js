@@ -54,7 +54,7 @@ function updateLogo(isDarkMode) {
 
 // ===== FAVORITES/PINNING FUNCTIONALITY =====
 const FavoritesManager = (function() {
-    const STORAGE_KEY = 'portal_favorites';
+    const STORAGE_KEY = 'app_launcher_favorites';
 
     function getFavorites() {
         const stored = localStorage.getItem(STORAGE_KEY);
@@ -91,9 +91,9 @@ const FavoritesManager = (function() {
     };
 })();
 
-// ===== PORTAL RENDERING FROM JSON =====
+// ===== APPLICATION LAUNCHER RENDERING FROM JSON =====
 // Global variables so mobile menu can access them
-let portalData = null;
+let portalData = null; // Keep variable name for compatibility
 let currentCategory = 'all';
 const ICON_BASE_PATH = 'assets/app-icons/';
 let renderCards; // Will be defined below
@@ -145,13 +145,13 @@ function getIconForTheme(iconData) {
             portalData = await response.json();
             // Make data available globally for search feature
             window.portalDataCache = portalData;
-            console.log('Portal data loaded successfully');
+            console.log('Application Launcher data loaded successfully');
             return portalData;
         } catch (error) {
-            console.error('Error loading portal data:', error);
+            console.error('Error loading Application Launcher data:', error);
             // Display error message to user
             const grid = document.getElementById('portal-grid');
-            grid.innerHTML = '<p style="color: white; text-align: center;">Unable to load portal applications. Please refresh the page.</p>';
+            grid.innerHTML = '<p style="color: white; text-align: center;">Unable to load applications. Please refresh the page.</p>';
             return null;
         }
     }

@@ -1,6 +1,6 @@
-# Hope Ignites Portal Hub
+# Hope Ignites Application Launcher
 
-A single-page HTML portal hub for Hope Ignites employees, providing centralized access to organizational applications and tools.
+A single-page HTML application launcher for Hope Ignites employees, providing centralized access to organizational applications and tools.
 
 ## Features
 
@@ -19,7 +19,7 @@ A single-page HTML portal hub for Hope Ignites employees, providing centralized 
 
 ## Deployment
 
-This portal is deployed on **CloudFlare Pages** with automatic deployments from the main branch.
+This Application Launcher is deployed on **CloudFlare Pages** with automatic deployments from the main branch.
 
 ### Quick Start
 
@@ -110,7 +110,7 @@ Edit `portal-data.json` and add a new card to the appropriate category:
 
 ### Updating Styles
 
-All styling is in `styles.css`. The portal uses CSS variables for easy theming:
+All styling is in `styles.css`. The Application Launcher uses CSS variables for easy theming:
 
 - `--bg-gradient-start` / `--bg-gradient-end` - Background gradient
 - `--accent-primary` / `--accent-secondary` - Accent colors
@@ -165,4 +165,4 @@ Copyright Hope Ignites. All rights reserved.
 
 ## Support
 
-For technical support or to request new applications, contact the Help Desk via the help button in the portal.
+For technical support or to request new applications, contact the Help Desk via the help button in the Application Launcher.

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **single-page HTML portal hub** for Hope Ignites employees, deployed on CloudFlare Pages. The portal provides centralized access to organizational applications and tools. There is no build process, no backend, and no package manager - it's a static site with separate HTML, CSS, and JavaScript files.
+This is the **Hope Ignites Application Launcher** - a single-page HTML hub for Hope Ignites employees, deployed on CloudFlare Pages. The Application Launcher provides centralized access to organizational applications and tools. There is no build process, no backend, and no package manager - it's a static site with separate HTML, CSS, and JavaScript files.
 
 **Production URL**: To be configured in CloudFlare Pages
 
@@ -35,7 +35,7 @@ This is a **single-page HTML portal hub** for Hope Ignites employees, deployed o
 13. **PWA Support** - Progressive Web App with offline capability and installable on mobile devices
 
 ### IP Detection & NHQ-Only Applications
-The portal includes client-side IP detection using the ipify API to:
+The Application Launcher includes client-side IP detection using the ipify API to:
 1. Show a custom "Hope On The Hill Network Detected" banner for NHQ IPs
 2. Filter and display NHQ-only applications (marked with `nhqOnly: true` in portal-data.json)
 3. Show HQ badge indicator on NHQ-only cards when accessing from NHQ
@@ -72,7 +72,7 @@ Applications can display up to three badge indicators in the bottom-right corner
 **Badge Legend**: Collapsible section below category tabs explains all badges with card-style presentation.
 
 ### Tech Mode
-Access the portal at `/tech` to enable Tech Mode:
+Access the Application Launcher at `/tech` to enable Tech Mode:
 - Shows additional tech team tools (cards marked with `tech: true`)
 - Tech Tools category moves to second position (after Favorites)
 - Tech mode indicator appears next to help button
@@ -81,10 +81,10 @@ Access the portal at `/tech` to enable Tech Mode:
 **Local Testing**: Use query parameter `?tech=true` or hash `#tech` for testing in Live Server.
 
 ### Progressive Web App (PWA)
-The portal can be installed as a Progressive Web App on mobile devices:
+The Application Launcher can be installed as a Progressive Web App on mobile devices:
 
 **Features:**
-- **Installable**: Users can add the portal to their home screen
+- **Installable**: Users can add the Application Launcher to their home screen
 - **Offline Support**: Service worker caches core files for offline access
 - **App-like Experience**: Runs in standalone mode without browser UI
 - **Auto-updates**: Service worker automatically updates cached content
@@ -110,7 +110,7 @@ The portal can be installed as a Progressive Web App on mobile devices:
 - Falls back to cached index.html if offline
 
 ### Mobile Hamburger Menu
-On mobile devices (< 768px width), the portal uses a hamburger menu instead of desktop navigation:
+On mobile devices (< 768px width), the Application Launcher uses a hamburger menu instead of desktop navigation:
 
 **Features:**
 - Hamburger icon (☰) in top-left corner that fades out when menu opens
@@ -160,7 +160,7 @@ open index.html
 All deployments happen automatically via CloudFlare Pages:
 ```bash
 git add .
-git commit -m "Update portal"
+git commit -m "Update Application Launcher"
 git push origin main
 # Deployment completes in 1-2 minutes
 ```
@@ -287,7 +287,7 @@ Colors are defined in [styles.css](styles.css) using CSS variables:
 Always test changes locally by opening index.html in a browser before pushing to production. Since there's no build process, what you see locally is exactly what will deploy.
 
 ### Accessibility
-The portal is WCAG 2.1 Level AA compliant with:
+The Application Launcher is WCAG 2.1 Level AA compliant with:
 - Semantic HTML5 structure
 - ARIA labels for screen readers
 - Keyboard navigation support
