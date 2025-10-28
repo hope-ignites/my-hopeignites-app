@@ -223,6 +223,17 @@
         },
         {
           "icon": {
+            "light":"eco-light.png",
+            "dark": "eco-dark.png"
+          },
+          "title": "Eco System Map",
+          "description": "Hope Ignites Eco System Map part of stackium.tech codename nova",
+          "url": "https://eco.hopeignites.app",
+          "tech": true,
+          "sso" : true
+        },        
+        {
+          "icon": {
             "light": "wp-engine.png",
             "dark": "wp-engine.png"
           },
