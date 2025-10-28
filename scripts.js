@@ -65,6 +65,24 @@ function sanitizeHtml(str) {
     return div.innerHTML;
 }
 
+/**
+ * Debounces a function to limit how often it can be called
+ * @param {Function} func - Function to debounce
+ * @param {number} wait - Milliseconds to wait
+ * @returns {Function} Debounced function
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // ===== PWA SERVICE WORKER REGISTRATION =====
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -115,12 +133,47 @@ function updateLogo(isDarkMode) {
             updateLogo(false);
         }
 
-        // Re-render cards to update icons for new theme
-        if (typeof renderCards === 'function') {
-            renderCards();
-        }
+        // Update card icons for new theme (optimized - no full re-render)
+        updateCardIcons();
     });
 })();
+
+/**
+ * Updates only the card icons for theme changes without full re-render
+ * More efficient than renderCards() for theme switching
+ */
+function updateCardIcons() {
+    const cards = document.querySelectorAll('.portal-card');
+    
+    cards.forEach(card => {
+        const iconContainer = card.querySelector('.portal-icon');
+        if (!iconContainer) return;
+        
+        // Get the card URL to find the original data
+        const cardUrl = card.href;
+        if (!cardUrl || !portalData) return;
+        
+        // Find the card data
+        let cardData = null;
+        for (const category of portalData.categories) {
+            cardData = category.cards.find(c => c.url === cardUrl);
+            if (cardData) break;
+        }
+        
+        if (!cardData || !cardData.icon) return;
+        
+        // Get theme-appropriate icon
+        const iconValue = getIconForTheme(cardData.icon);
+        
+        // Update icon HTML
+        if (iconValue && iconValue.includes('.png')) {
+            const fullPath = `${CONFIG.ICON_BASE_PATH}${iconValue}`;
+            iconContainer.innerHTML = `<img src="${fullPath}" alt="${cardData.title} icon" style="width: 46px; height: 46px; object-fit: contain;">`;
+        } else {
+            iconContainer.innerHTML = iconValue;
+        }
+    });
+}
 
 // ===== FAVORITES/PINNING FUNCTIONALITY =====
 /**
@@ -1024,8 +1077,13 @@ let isNHQIP = false;
     // Event listeners
     searchTrigger.addEventListener('click', openSearch);
 
+    // Debounced search for better performance
+    const debouncedSearch = debounce((value) => {
+        performSearch(value);
+    }, 200); // Wait 200ms after user stops typing
+
     searchInput.addEventListener('input', (e) => {
-        performSearch(e.target.value);
+        debouncedSearch(e.target.value);
     });
 
     searchInput.addEventListener('keydown', handleKeyNavigation);
@@ -1262,10 +1320,8 @@ let isNHQIP = false;
             // Update logo
             updateLogo(isDark);
 
-            // Re-render cards to update icons for new theme
-            if (typeof renderCards === 'function') {
-                renderCards();
-            }
+            // Update card icons for new theme (optimized)
+            updateCardIcons();
         });
     }
 
