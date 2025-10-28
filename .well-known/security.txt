@@ -1,0 +1,23 @@
+# Security Policy for Hope Ignites Application Launcher
+Contact: mailto:tech.services@hopeignites.org
+Preferred-Languages: en
+Canonical: https://my.hopeignites.app/.well-known/security.txt
+Expires: 2026-12-31T23:59:59Z
+
+# Security Reporting
+# If you discover a security vulnerability in the Hope Ignites Application Launcher,
+# please report it to our security team at tech.services@hopeignites.org.
+# We take security seriously and will respond promptly to valid reports.
+
+# Scope
+# This security policy applies to:
+# - Hope Ignites Application Launcher (my.hopeignites.app)
+# - All related infrastructure and services
+
+# Out of Scope
+# - Third-party applications linked from the launcher
+# - Social engineering attacks
+# - Physical security
+
+# Response Time
+# We aim to respond to security reports within 48 hours during business days.

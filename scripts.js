@@ -1,18 +1,88 @@
+// ===== CONFIGURATION CONSTANTS =====
+const CONFIG = {
+    DEBUG_MODE: false, // Set to true for development logging
+    CACHE_DURATION_MS: 1000 * 60 * 60, // 1 hour for IP cache
+    ICON_BASE_PATH: 'assets/app-icons/',
+    STORAGE_KEYS: {
+        DARK_MODE: 'darkMode',
+        FAVORITES: 'app_launcher_favorites',
+        IP_CACHE: 'user_ip_data'
+    },
+    API_ENDPOINTS: {
+        IP_SERVICES: [
+            'https://api.ipify.org?format=json',
+            'https://api64.ipify.org?format=json'
+        ]
+    }
+};
+
+/**
+ * Logging utility that respects DEBUG_MODE setting
+ */
+const logger = {
+    log: (...args) => CONFIG.DEBUG_MODE && logger.log(...args),
+    warn: (...args) => CONFIG.DEBUG_MODE && logger.warn(...args),
+    error: (...args) => logger.error(...args) // Always log errors
+};
+
+/**
+ * Validates and sanitizes URLs to prevent XSS attacks
+ * @param {string} url - URL to validate
+ * @returns {boolean} True if URL is safe
+ */
+function isValidUrl(url) {
+    if (!url || typeof url !== 'string') {
+        return false;
+    }
+    
+    // Block javascript: protocol and other dangerous protocols
+    const dangerousProtocols = ['javascript:', 'data:', 'vbscript:', 'file:'];
+    const lowerUrl = url.toLowerCase().trim();
+    
+    if (dangerousProtocols.some(protocol => lowerUrl.startsWith(protocol))) {
+        logger.warn('Blocked dangerous URL protocol:', url);
+        return false;
+    }
+    
+    // Only allow http: and https: protocols
+    if (!lowerUrl.startsWith('http://') && !lowerUrl.startsWith('https://') && !lowerUrl.startsWith('/')) {
+        logger.warn('Invalid URL protocol:', url);
+        return false;
+    }
+    
+    return true;
+}
+
+/**
+ * Sanitizes a string for safe use in HTML
+ * @param {string} str - String to sanitize
+ * @returns {string} Sanitized string
+ */
+function sanitizeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 // ===== PWA SERVICE WORKER REGISTRATION =====
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/service-worker.js')
             .then((registration) => {
-                console.log('PWA: Service Worker registered successfully:', registration.scope);
+                logger.log('PWA: Service Worker registered successfully:', registration.scope);
             })
             .catch((error) => {
-                console.log('PWA: Service Worker registration failed:', error);
+                logger.error('PWA: Service Worker registration failed:', error);
             });
     });
 }
 
 // ===== DARK MODE TOGGLE =====
-// Global updateLogo function so mobile menu can access it
+/**
+ * Updates the header logo based on the current theme
+ * @param {boolean} isDarkMode - Whether dark mode is enabled
+ */
 function updateLogo(isDarkMode) {
     const headerLogo = document.getElementById('header-logo');
     if (headerLogo) {
@@ -25,7 +95,7 @@ function updateLogo(isDarkMode) {
     const body = document.body;
 
     // Check for saved preference or default to light mode
-    const savedMode = localStorage.getItem('darkMode');
+    const savedMode = localStorage.getItem(CONFIG.STORAGE_KEYS.DARK_MODE);
     if (savedMode === 'enabled') {
         body.classList.add('dark-mode');
         darkModeToggle.textContent = '☀️';
@@ -37,11 +107,11 @@ function updateLogo(isDarkMode) {
 
         if (body.classList.contains('dark-mode')) {
             darkModeToggle.textContent = '☀️';
-            localStorage.setItem('darkMode', 'enabled');
+            localStorage.setItem(CONFIG.STORAGE_KEYS.DARK_MODE, 'enabled');
             updateLogo(true);
         } else {
             darkModeToggle.textContent = '🌙';
-            localStorage.setItem('darkMode', 'disabled');
+            localStorage.setItem(CONFIG.STORAGE_KEYS.DARK_MODE, 'disabled');
             updateLogo(false);
         }
 
@@ -53,23 +123,52 @@ function updateLogo(isDarkMode) {
 })();
 
 // ===== FAVORITES/PINNING FUNCTIONALITY =====
+/**
+ * Manager for handling favorites/pinned applications
+ * Uses localStorage to persist user preferences
+ */
 const FavoritesManager = (function() {
-    const STORAGE_KEY = 'app_launcher_favorites';
-
+    /**
+     * Retrieves favorites from localStorage
+     * @returns {string[]} Array of favorited application URLs
+     */
     function getFavorites() {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        return stored ? JSON.parse(stored) : [];
+        try {
+            const stored = localStorage.getItem(CONFIG.STORAGE_KEYS.FAVORITES);
+            return stored ? JSON.parse(stored) : [];
+        } catch (error) {
+            logger.error('Error loading favorites:', error);
+            return [];
+        }
     }
 
+    /**
+     * Saves favorites to localStorage
+     * @param {string[]} favorites - Array of application URLs to save
+     */
     function saveFavorites(favorites) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+        try {
+            localStorage.setItem(CONFIG.STORAGE_KEYS.FAVORITES, JSON.stringify(favorites));
+        } catch (error) {
+            logger.error('Error saving favorites:', error);
+        }
     }
 
+    /**
+     * Checks if an application is favorited
+     * @param {string} url - Application URL to check
+     * @returns {boolean} True if application is favorited
+     */
     function isFavorite(url) {
         const favorites = getFavorites();
         return favorites.includes(url);
     }
 
+    /**
+     * Toggles favorite status for an application
+     * @param {string} url - Application URL to toggle
+     * @returns {boolean} New favorite status
+     */
     function toggleFavorite(url) {
         let favorites = getFavorites();
         const index = favorites.indexOf(url);
@@ -93,9 +192,8 @@ const FavoritesManager = (function() {
 
 // ===== APPLICATION LAUNCHER RENDERING FROM JSON =====
 // Global variables so mobile menu can access them
-let portalData = null; // Keep variable name for compatibility
+let portalData = null;
 let currentCategory = 'all';
-const ICON_BASE_PATH = 'assets/app-icons/';
 let renderCards; // Will be defined below
 let renderTabs; // Will be defined below
 
@@ -111,6 +209,11 @@ if (isTechMode) {
 }
 
 // Helper function to get theme-appropriate icon
+/**
+ * Returns the appropriate icon based on current theme
+ * @param {string|Object} iconData - Icon filename or object with light/dark properties
+ * @returns {string} Icon filename or emoji
+ */
 function getIconForTheme(iconData) {
     const isDarkMode = document.body.classList.contains('dark-mode');
 
@@ -135,23 +238,43 @@ function getIconForTheme(iconData) {
 
 (async function() {
 
-    // Fetch portal data from JSON file
+    /**
+     * Fetches and validates portal data from JSON file
+     * @returns {Promise<Object|null>} Portal data or null on error
+     */
     async function loadPortalData() {
         try {
             const response = await fetch('portal-data.json');
             if (!response.ok) {
-                throw new Error('Failed to load portal data');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            portalData = await response.json();
+            const data = await response.json();
+            
+            // Validate data structure
+            if (!data || !Array.isArray(data.categories)) {
+                throw new Error('Invalid portal data structure');
+            }
+            
+            portalData = data;
             // Make data available globally for search feature
             window.portalDataCache = portalData;
-            console.log('Application Launcher data loaded successfully');
+            logger.log('Application Launcher data loaded successfully');
             return portalData;
         } catch (error) {
-            console.error('Error loading Application Launcher data:', error);
-            // Display error message to user
+            logger.error('Error loading Application Launcher data:', error);
+            // Display user-friendly error message
             const grid = document.getElementById('portal-grid');
-            grid.innerHTML = '<p style="color: white; text-align: center;">Unable to load applications. Please refresh the page.</p>';
+            if (grid) {
+                grid.innerHTML = `
+                    <div style="color: white; text-align: center; padding: 40px; grid-column: 1/-1;">
+                        <p style="font-size: 1.2rem; margin-bottom: 12px;">⚠️ Unable to load applications</p>
+                        <p style="font-size: 0.9rem; opacity: 0.9;">Please check your internet connection and refresh the page.</p>
+                        <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 24px; background: var(--accent-primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+                            Refresh Page
+                        </button>
+                    </div>
+                `;
+            }
             return null;
         }
     }
@@ -273,6 +396,12 @@ function getIconForTheme(iconData) {
 
         // Create card elements
         cardsToDisplay.forEach(card => {
+            // Validate URL for security
+            if (!isValidUrl(card.url)) {
+                logger.error('Skipping card with invalid URL:', card.title, card.url);
+                return;
+            }
+
             const cardWrapper = document.createElement('div');
             cardWrapper.style.position = 'relative';
 
@@ -286,21 +415,12 @@ function getIconForTheme(iconData) {
             const iconValue = getIconForTheme(card.icon);
 
             // Determine if icon is an image filename or emoji
-            console.log('DEBUG - Card:', card.title);
-            console.log('DEBUG - Icon value:', iconValue);
-            console.log('DEBUG - Icon type:', typeof iconValue);
-            console.log('DEBUG - Has .png?', iconValue && iconValue.includes('.png'));
-            console.log('DEBUG - ICON_BASE_PATH:', ICON_BASE_PATH);
-
             let iconHtml;
             if (iconValue && iconValue.includes('.png')) {
-                const fullPath = `${ICON_BASE_PATH}${iconValue}`;
-                console.log('DEBUG - Full image path:', fullPath);
+                const fullPath = `${CONFIG.ICON_BASE_PATH}${iconValue}`;
                 iconHtml = `<img src="${fullPath}" alt="${card.title} icon" style="width: 46px; height: 46px; object-fit: contain;">`;
-                console.log('DEBUG - iconHtml (img):', iconHtml);
             } else {
                 iconHtml = iconValue;
-                console.log('DEBUG - iconHtml (emoji):', iconHtml);
             }
 
             // Check for universal app indicator
@@ -332,7 +452,6 @@ function getIconForTheme(iconData) {
                 ${nhqIndicator}
                 ${ssoIndicator}
             `;
-            console.log('DEBUG - Final card HTML:', cardLink.innerHTML);
 
             // Add click handler for favorite button
             const favBtn = cardLink.querySelector('.favorite-btn');
@@ -570,11 +689,11 @@ let isNHQIP = false;
 
                 // If cache is less than 1 hour old, use it
                 if (age < CACHE_DURATION) {
-                    console.log('IP Detection: Using cached IP:', data.ip);
+                    logger.log('IP Detection: Using cached IP:', data.ip);
                     return data.ip;
                 }
             } catch (e) {
-                console.warn('IP Detection: Invalid cache data');
+                logger.warn('IP Detection: Invalid cache data');
             }
         }
 
@@ -596,15 +715,15 @@ let isNHQIP = false;
                     timestamp: Date.now()
                 }));
 
-                console.log('IP Detection: Fetched fresh IP:', ip);
+                logger.log('IP Detection: Fetched fresh IP:', ip);
                 return ip;
             } catch (error) {
-                console.warn(`IP Detection: Failed to fetch from ${service}:`, error);
+                logger.warn(`IP Detection: Failed to fetch from ${service}:`, error);
                 continue;
             }
         }
 
-        console.error('IP Detection: All services failed');
+        logger.error('IP Detection: All services failed');
         return null;
     }
 
@@ -626,7 +745,7 @@ let isNHQIP = false;
         // Insert at the top of the container
         container.insertBefore(messageDiv, container.firstChild);
 
-        console.log('IP Detection: Message displayed for IP:', userIP);
+        logger.log('IP Detection: Message displayed for IP:', userIP);
     }
 
     // Main function: Check IP and display message if needed
@@ -635,7 +754,7 @@ let isNHQIP = false;
             const userIP = await getCachedOrFetchIP();
 
             if (!userIP) {
-                console.warn('IP Detection: Could not determine IP address');
+                logger.warn('IP Detection: Could not determine IP address');
                 return;
             }
 
@@ -643,13 +762,13 @@ let isNHQIP = false;
             if (checkIP(userIP)) {
                 isNHQIP = true;
                 showIPMessage(userIP);
-                console.log('IP Detection: NHQ IP detected, isNHQIP =', isNHQIP);
+                logger.log('IP Detection: NHQ IP detected, isNHQIP =', isNHQIP);
             } else {
                 isNHQIP = false;
-                console.log('IP Detection: IP not in allowed list:', userIP);
+                logger.log('IP Detection: IP not in allowed list:', userIP);
             }
         } catch (error) {
-            console.error('IP Detection: Error:', error);
+            logger.error('IP Detection: Error:', error);
             // Fail silently - don't show message if detection fails
         }
     }
@@ -685,6 +804,52 @@ let isNHQIP = false;
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+})();
+
+// ===== KEYBOARD SHORTCUTS MODAL =====
+(function() {
+    const shortcutsModal = document.getElementById('shortcuts-modal');
+    
+    if (!shortcutsModal) return;
+    
+    const closeBtn = shortcutsModal.querySelector('.modal-close');
+    
+    function openShortcutsModal() {
+        shortcutsModal.classList.add('open');
+        shortcutsModal.setAttribute('aria-hidden', 'false');
+        closeBtn.focus();
+    }
+    
+    function closeShortcutsModal() {
+        shortcutsModal.classList.remove('open');
+        shortcutsModal.setAttribute('aria-hidden', 'true');
+    }
+    
+    closeBtn.addEventListener('click', closeShortcutsModal);
+    
+    shortcutsModal.addEventListener('click', function(e) {
+        if (e.target && e.target.hasAttribute('data-close')) closeShortcutsModal();
+    });
+    
+    // Listen for ? key to open shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Close on ESC
+        if (e.key === 'Escape' && shortcutsModal.classList.contains('open')) {
+            closeShortcutsModal();
+            return;
+        }
+        
+        // Open on ? key (Shift + /)
+        if (e.key === '?' && !shortcutsModal.classList.contains('open')) {
+            // Don't trigger if typing in an input
+            if (document.activeElement.tagName === 'INPUT' ||
+                document.activeElement.tagName === 'TEXTAREA') {
+                return;
+            }
+            e.preventDefault();
+            openShortcutsModal();
+        }
     });
 })();
 
@@ -942,7 +1107,7 @@ let isNHQIP = false;
             commitIdElement.innerHTML = `Version: <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" title="${commitMessage}" style="color: inherit; text-decoration: underline;">${commitSha}</a> (${formattedDate})`;
 
         } catch (error) {
-            console.error('Error fetching commit ID:', error);
+            logger.error('Error fetching commit ID:', error);
             commitIdElement.textContent = 'Version: unknown';
         }
     }
@@ -963,14 +1128,14 @@ let isNHQIP = false;
 
     // Check if elements exist
     if (!menuToggle || !drawer || !overlay) {
-        console.error('Mobile menu elements not found');
+        logger.error('Mobile menu elements not found');
         return;
     }
 
-    console.log('Mobile menu initialized');
+    logger.log('Mobile menu initialized');
 
     function openDrawer() {
-        console.log('Opening drawer');
+        logger.log('Opening drawer');
         drawer.classList.add('open');
         overlay.classList.add('open');
         menuToggle.classList.add('open');
@@ -984,7 +1149,7 @@ let isNHQIP = false;
         if (!drawer.classList.contains('open')) {
             return; // Already closed, don't do anything
         }
-        console.log('Closing drawer');
+        logger.log('Closing drawer');
         drawer.classList.remove('open');
         overlay.classList.remove('open');
         menuToggle.classList.remove('open');
@@ -993,12 +1158,12 @@ let isNHQIP = false;
 
     // Populate mobile categories
     function populateMobileCategories() {
-        console.log('Populating mobile categories...');
-        console.log('portalData:', portalData);
-        console.log('mobileCategories element:', mobileCategories);
+        logger.log('Populating mobile categories...');
+        logger.log('portalData:', portalData);
+        logger.log('mobileCategories element:', mobileCategories);
 
         if (!portalData || !portalData.categories) {
-            console.error('No portal data available');
+            logger.error('No portal data available');
             return;
         }
 
@@ -1012,7 +1177,7 @@ let isNHQIP = false;
             return true;
         });
 
-        console.log('Categories to show:', categoriesToShow);
+        logger.log('Categories to show:', categoriesToShow);
 
         categoriesToShow.forEach(category => {
             const btn = document.createElement('button');
@@ -1055,7 +1220,7 @@ let isNHQIP = false;
         mobileSearchTrigger.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            console.log('Mobile search clicked');
+            logger.log('Mobile search clicked');
 
             // Close drawer first
             closeDrawer();
@@ -1069,7 +1234,7 @@ let isNHQIP = false;
                     searchOverlay.classList.add('active');
                     setTimeout(() => searchInput.focus(), 100);
                 } else {
-                    console.error('Search overlay or input not found');
+                    logger.error('Search overlay or input not found');
                 }
             }, 300); // Wait for drawer to close
         });
@@ -1106,7 +1271,7 @@ let isNHQIP = false;
 
     // Event listeners
     menuToggle.addEventListener('click', (e) => {
-        console.log('Menu toggle clicked');
+        logger.log('Menu toggle clicked');
         e.preventDefault();
         e.stopPropagation();
         openDrawer();

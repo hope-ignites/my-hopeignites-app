@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hope Ignites - Application Launcher</title>
 
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://api.ipify.org">
+    <link rel="preconnect" href="https://api.github.com">
+    <link rel="preconnect" href="https://static.cloudflareinsights.com">
+    <link rel="dns-prefetch" href="https://api.ipify.org">
+    <link rel="dns-prefetch" href="https://api64.ipify.org">
+    <link rel="dns-prefetch" href="https://api.github.com">
+    
     <!-- Prevent search engine indexing -->
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
     <meta name="googlebot" content="noindex, nofollow">
@@ -21,6 +29,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
     <!-- Mobile Hamburger Menu -->
     <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Open menu">
         <span></span>
@@ -78,7 +89,7 @@
         </div>
 
         <!-- Badge Legend -->
-        <details class="collapsible badge-legend">
+        <details class="collapsible badge-legend" aria-expanded="false">
             <summary>Badge Legend</summary>
             <div class="collapsible-content">
                 <div class="legend-items">
@@ -108,7 +119,9 @@
         </details>
 
         <!-- Portal Cards Grid (dynamically generated) -->
-        <div id="portal-grid" class="portal-grid"></div>
+        <main id="main-content">
+            <div id="portal-grid" class="portal-grid" role="region" aria-live="polite" aria-label="Application cards"></div>
+        </main>
 
         <div class="quick-links">
             <h4>Quick Links</h4>
@@ -268,6 +281,41 @@
                 <li><strong>Application Launcher Feedback:</strong> To provide feedback on the Application Launcher <a href="https://forms.monday.com/forms/4df76a6392b5bd7b2d7e118b45017333?r=use1">Click Here</a> </li>
             </ul>
             <p style="margin-top:10px;">For urgent issues, call the phone number above. For non-urgent requests please use the web address.</p>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="shortcuts-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Keyboard shortcuts">
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-content" role="document">
+            <button class="modal-close" aria-label="Close">×</button>
+            <h3>⌨️ Keyboard Shortcuts</h3>
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd>Cmd/Ctrl</kbd> + <kbd>K</kbd>
+                    <span class="shortcut-desc">Open search</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>/</kbd>
+                    <span class="shortcut-desc">Open search (alternative)</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>ESC</kbd>
+                    <span class="shortcut-desc">Close search or modals</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>↑</kbd> <kbd>↓</kbd>
+                    <span class="shortcut-desc">Navigate search results</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Enter</kbd>
+                    <span class="shortcut-desc">Open selected application</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>?</kbd>
+                    <span class="shortcut-desc">Show this shortcuts help</span>
+                </div>
+            </div>
         </div>
     </div>
 
