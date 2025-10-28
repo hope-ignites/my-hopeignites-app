@@ -20,9 +20,9 @@ const CONFIG = {
  * Logging utility that respects DEBUG_MODE setting
  */
 const logger = {
-    log: (...args) => CONFIG.DEBUG_MODE && logger.log(...args),
-    warn: (...args) => CONFIG.DEBUG_MODE && logger.warn(...args),
-    error: (...args) => logger.error(...args) // Always log errors
+    log: (...args) => CONFIG.DEBUG_MODE && console.log(...args),
+    warn: (...args) => CONFIG.DEBUG_MODE && console.warn(...args),
+    error: (...args) => console.error(...args) // Always log errors
 };
 
 /**
@@ -150,13 +150,19 @@ function updateCardIcons() {
         if (!iconContainer) return;
         
         // Get the card URL to find the original data
-        const cardUrl = card.href;
+        const cardUrl = card.getAttribute('href'); // Use getAttribute to get exact href value
         if (!cardUrl || !portalData) return;
+        
+        // Normalize URL for comparison (handle both relative and absolute URLs)
+        const normalizedCardUrl = cardUrl.startsWith('http') ? cardUrl : new URL(cardUrl, location.origin).href;
         
         // Find the card data
         let cardData = null;
         for (const category of portalData.categories) {
-            cardData = category.cards.find(c => c.url === cardUrl);
+            cardData = category.cards.find(c => {
+                const dataUrl = c.url.startsWith('http') ? c.url : new URL(c.url, location.origin).href;
+                return dataUrl === normalizedCardUrl;
+            });
             if (cardData) break;
         }
         

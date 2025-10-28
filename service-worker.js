@@ -41,7 +41,7 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  const currentCaches = [STATIC_CACHE, IMAGE_CACHE, DATA_CACHE, CACHE_NAME];
+  const currentCaches = [STATIC_CACHE, IMAGE_CACHE, DATA_CACHE];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -128,7 +128,8 @@ self.addEventListener('fetch', (event) => {
     fetch(request).then((response) => {
       if (response && response.status === 200) {
         const responseClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
+        // Cache in STATIC_CACHE for other resources
+        caches.open(STATIC_CACHE).then((cache) => {
           cache.put(request, responseClone);
         });
       }
