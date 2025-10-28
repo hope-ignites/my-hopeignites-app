@@ -245,6 +245,17 @@
         },        
         {
           "icon": {
+            "light": "hover.png",
+            "dark": "hover.png"
+          },
+          "title": "Hover",
+          "description": "Manage Hope Ignites Domains",
+          "url": "https://www.hover.com/signin",
+          "tech": true,
+          "sso" : true
+        },        
+        {
+          "icon": {
             "light": "app-launcher.png",
             "dark": "app-launcher.png"
           },
