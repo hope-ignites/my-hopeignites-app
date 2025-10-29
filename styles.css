@@ -80,6 +80,63 @@ body {
     opacity: 0.9;
 }
 
+/* Status link */
+#status-link {
+    position: absolute;
+    top: 0;
+    right: 120px;
+    background: var(--overlay-bg);
+    border: 2px solid var(--overlay-bg-hover);
+    color: var(--text-light);
+    min-width: 44px;
+    height: 44px;
+    padding: 0 12px;
+    border-radius: 22px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+    gap: 0;
+}
+
+#status-link .status-icon {
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+#status-link .status-text {
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: max-width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
+    margin-left: 0;
+    overflow: hidden;
+}
+
+#status-link:hover {
+    background: var(--overlay-bg-hover);
+    gap: 8px;
+}
+
+#status-link:hover .status-text {
+    max-width: 150px;
+    opacity: 1;
+    margin-left: 8px;
+}
+
+#status-link:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
 /* Dark mode toggle */
 #dark-mode-toggle {
     position: absolute;
@@ -1059,6 +1116,8 @@ details.collapsible summary::after {
     display: flex;
     align-items: center;
     gap: 12px;
+    text-decoration: none;
+    font-family: inherit;
 }
 
 .mobile-menu-item:hover {
@@ -1133,8 +1192,9 @@ details.collapsible summary::after {
         display: block;
     }
 
-    /* Hide desktop search and dark mode buttons */
+    /* Hide desktop search, status, and dark mode buttons */
     #search-trigger,
+    #status-link,
     #dark-mode-toggle {
         display: none;
     }
