@@ -688,6 +688,48 @@ let isNHQIP = false;
     });
 })();
 
+// ===== WELCOME MODAL (FIRST-TIME VISITORS) =====
+(function () {
+    const WELCOME_DISMISSED_KEY = 'welcomeModalDismissed';
+    const welcomeModal = document.getElementById('welcome-modal');
+    const welcomeDismissBtn = document.getElementById('welcome-dismiss');
+    const closeBtn = welcomeModal.querySelector('.modal-close');
+
+    function openWelcomeModal() {
+        welcomeModal.classList.add('open');
+        welcomeModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeWelcomeModal() {
+        welcomeModal.classList.remove('open');
+        welcomeModal.setAttribute('aria-hidden', 'true');
+        // Remember that user dismissed the welcome modal
+        localStorage.setItem(WELCOME_DISMISSED_KEY, 'true');
+    }
+
+    // Check if user has seen the welcome modal before
+    const hasSeenWelcome = localStorage.getItem(WELCOME_DISMISSED_KEY);
+
+    if (!hasSeenWelcome) {
+        // Show welcome modal after a short delay (500ms) for better UX
+        setTimeout(() => {
+            openWelcomeModal();
+        }, 500);
+    }
+
+    // Event listeners
+    welcomeDismissBtn.addEventListener('click', closeWelcomeModal);
+    closeBtn.addEventListener('click', closeWelcomeModal);
+
+    welcomeModal.addEventListener('click', function (e) {
+        if (e.target && e.target.hasAttribute('data-close')) closeWelcomeModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && welcomeModal.classList.contains('open')) closeWelcomeModal();
+    });
+})();
+
 // ===== SPOTLIGHT-STYLE SEARCH =====
 (function() {
     const searchOverlay = document.getElementById('search-overlay');
