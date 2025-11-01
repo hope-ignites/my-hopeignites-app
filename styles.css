@@ -280,7 +280,7 @@ body {
     background: var(--card-bg);
     color: var(--accent-secondary);
     border-color: #0b6180;
-    box-shadow: 0 4px 12px var(--card-shadow);
+    box-shadow: 0 4px 12px var(--card-shadow), 0 0 20px rgba(239, 115, 34, 0.6);
 }
 
 .tab-button:focus {
@@ -327,22 +327,6 @@ body {
     pointer-events: none;
 }
 
-.portal-card {
-    border: 2px solid transparent;
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-}
-
-.portal-card:hover {
-    background-image: 
-        linear-gradient(var(--card-bg), var(--card-bg)),
-        linear-gradient(135deg, #ff6b35, #0b6180, #ff6b35);
-}
-
-body.dark-mode .portal-card::before {
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-}
-
 .portal-card:hover::before {
     left: 100%;
 }
@@ -352,9 +336,23 @@ body.dark-mode .portal-card {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+body.dark-mode .portal-card::before {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
 .portal-card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 8px 16px var(--card-shadow-hover);
+    box-shadow:
+        0 8px 16px var(--card-shadow-hover),
+        0 0 35px rgba(239, 115, 34, 0.6),
+        0 0 55px rgba(239, 115, 34, 0.4);
+}
+
+body.dark-mode .portal-card:hover {
+    box-shadow:
+        0 8px 16px var(--card-shadow-hover),
+        0 0 35px rgba(255, 107, 53, 0.7),
+        0 0 55px rgba(255, 107, 53, 0.5);
 }
 
 .portal-icon {
@@ -627,10 +625,6 @@ details.collapsible summary::after {
     margin-top: 12px;
 }
 
-.tab-button.active {
-    box-shadow: 0 0 20px rgba(239, 115, 34, 0.6);
-}
-
 .table-wrap table {
     width: 100%;
     border-collapse: collapse;
@@ -757,10 +751,10 @@ details.collapsible summary::after {
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     overflow: hidden;
-    animation: slideDown 0.3s ease;
+    animation: slideDownSearch 0.3s ease;
 }
 
-@keyframes slideDown {
+@keyframes slideDownSearch {
     from {
         opacity: 0;
         transform: translateY(-30px);
