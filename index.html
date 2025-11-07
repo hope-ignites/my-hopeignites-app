@@ -91,6 +91,17 @@
             <button class="tab-scroll-arrow tab-scroll-right" aria-label="Scroll categories right">›</button>
         </div>
 
+        <!-- Default Tab Setting (shown only on favorites tab) -->
+        <div id="default-tab-setting" class="default-tab-setting" style="display: none;">
+            <label class="toggle-label">
+                <span class="toggle-text">Set Favorites as default tab</span>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="default-tab-toggle" aria-label="Set favorites as default tab">
+                    <span class="toggle-slider"></span>
+                </div>
+            </label>
+        </div>
+
         <!-- Badge Legend -->
         <details class="collapsible badge-legend">
             <summary>Badge Legend</summary>
@@ -244,7 +255,7 @@
                 Application Launcher is part of <a href="https://stackium.tech">Stackium.tech</a> (codename Nova)
             </p>            
             <p id="version-info" class="version-info" style="opacity: 0.7; font-size: 0.85em;">
-                <span id="commit-id">Loading version...</span>
+                <span id="commit-id">Loading version...</span> · <a href="CHANGELOG.md" target="_blank" rel="noopener noreferrer" title="View changelog">Changelog</a>
             </p>
         </footer>
     </div>

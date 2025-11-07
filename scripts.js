@@ -1,3 +1,82 @@
+(function() {
+    // Toast Notification Configuration
+    const NOTIFICATION_CONFIG = {
+        enabled: true, // Set to false to disable notification
+        message: "Hope Ignites Pop Up Store is now OPEN! ",
+        linkText: "Order now through Nov 14 →",
+        linkUrl: "https://hopeignites1977.sharepoint.com/sites/Hub/SitePages/All-Team-News---October-29,-2025(1).aspx?from=SendByEmail&e=MzTEPoOqw0yxHpdHe3kpzQ&at=121#final-reminder-fall-winter-pop-up-store-is-now-open!",
+        icon: "🛒", // Emoji or text icon
+        id: "update-nov-2025", // Change this ID to show notification again
+        displayDuration: 8000, // How long to show (milliseconds)
+        autoHide: true // Automatically hide after displayDuration
+    };
+
+    function shouldShowNotification() {
+        if (!NOTIFICATION_CONFIG.enabled) return false;
+        const dismissedNotifications = JSON.parse(localStorage.getItem('dismissed_notifications') || '[]');
+        return !dismissedNotifications.includes(NOTIFICATION_CONFIG.id);
+    }
+
+    function showToastNotification() {
+        if (!shouldShowNotification()) return;
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.innerHTML = `
+            <span class="toast-icon">${NOTIFICATION_CONFIG.icon}</span>
+            <div class="toast-content">
+                <p class="toast-message">${NOTIFICATION_CONFIG.message}</p>
+                <a href="${NOTIFICATION_CONFIG.linkUrl}" class="toast-link" target="_blank" rel="noopener noreferrer">
+                    ${NOTIFICATION_CONFIG.linkText}
+                </a>
+            </div>
+            <button class="toast-close" aria-label="Close notification">&times;</button>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+        // Close button handler
+        const closeBtn = toast.querySelector('.toast-close');
+        closeBtn.addEventListener('click', () => {
+            dismissNotification(toast);
+        });
+        // Auto-hide if enabled
+        if (NOTIFICATION_CONFIG.autoHide) {
+            setTimeout(() => {
+                dismissNotification(toast);
+            }, NOTIFICATION_CONFIG.displayDuration);
+        }
+        // Dismiss when link is clicked
+        const link = toast.querySelector('.toast-link');
+        link.addEventListener('click', () => {
+            setTimeout(() => {
+                dismissNotification(toast);
+            }, 500);
+        });
+    }
+
+    function dismissNotification(toastElement) {
+        toastElement.classList.remove('show');
+        toastElement.classList.add('hide');
+        // Save dismissal to localStorage
+        const dismissedNotifications = JSON.parse(localStorage.getItem('dismissed_notifications') || '[]');
+        if (!dismissedNotifications.includes(NOTIFICATION_CONFIG.id)) {
+            dismissedNotifications.push(NOTIFICATION_CONFIG.id);
+            localStorage.setItem('dismissed_notifications', JSON.stringify(dismissedNotifications));
+        }
+        // Remove from DOM after animation
+        setTimeout(() => {
+            toastElement.remove();
+        }, 400);
+    }
+
+    // Show toast notification after DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => setTimeout(showToastNotification, 1500));
+    } else {
+        setTimeout(showToastNotification, 1500);
+    }
+})();
 // ===== PWA SERVICE WORKER REGISTRATION =====
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -55,6 +134,7 @@ function updateLogo(isDarkMode) {
 // ===== FAVORITES/PINNING FUNCTIONALITY =====
 const FavoritesManager = (function() {
     const STORAGE_KEY = 'app_launcher_favorites';
+    const DEFAULT_TAB_KEY = 'app_launcher_default_tab';
 
     function getFavorites() {
         const stored = localStorage.getItem(STORAGE_KEY);
@@ -84,17 +164,28 @@ const FavoritesManager = (function() {
         return favorites.includes(url);
     }
 
+    function getDefaultTab() {
+        const stored = localStorage.getItem(DEFAULT_TAB_KEY);
+        return stored || 'all';
+    }
+
+    function setDefaultTab(tabId) {
+        localStorage.setItem(DEFAULT_TAB_KEY, tabId);
+    }
+
     return {
         getFavorites,
         isFavorite,
-        toggleFavorite
+        toggleFavorite,
+        getDefaultTab,
+        setDefaultTab
     };
 })();
 
 // ===== APPLICATION LAUNCHER RENDERING FROM JSON =====
 // Global variables so mobile menu can access them
 let portalData = null; // Keep variable name for compatibility
-let currentCategory = 'all';
+let currentCategory = FavoritesManager.getDefaultTab(); // Load saved preference or default to 'all'
 const ICON_BASE_PATH = 'assets/app-icons/';
 let renderCards; // Will be defined below
 let renderTabs; // Will be defined below
@@ -203,6 +294,7 @@ function getIconForTheme(iconData) {
                 currentCategory = category.id;
                 renderTabs();
                 renderCards();
+                updateDefaultTabSettingVisibility();
                 // Close mobile menu after selection
                 if (tabContainer.classList.contains('mobile-open')) {
                     tabContainer.classList.remove('mobile-open');
@@ -388,6 +480,35 @@ function getIconForTheme(iconData) {
         }
     }
 
+    // Default tab setting toggle
+    function initDefaultTabToggle() {
+        const defaultTabSetting = document.getElementById('default-tab-setting');
+        const defaultTabToggle = document.getElementById('default-tab-toggle');
+
+        if (!defaultTabToggle) return;
+
+        // Set initial toggle state
+        const currentDefault = FavoritesManager.getDefaultTab();
+        defaultTabToggle.checked = currentDefault === 'favorites';
+
+        // Handle toggle change
+        defaultTabToggle.addEventListener('change', () => {
+            if (defaultTabToggle.checked) {
+                FavoritesManager.setDefaultTab('favorites');
+            } else {
+                FavoritesManager.setDefaultTab('all');
+            }
+        });
+    }
+
+    // Update visibility of default tab setting based on current category
+    function updateDefaultTabSettingVisibility() {
+        const defaultTabSetting = document.getElementById('default-tab-setting');
+        if (defaultTabSetting) {
+            defaultTabSetting.style.display = currentCategory === 'favorites' ? 'block' : 'none';
+        }
+    }
+
     // Tab scroll arrows functionality
     function initTabScrollArrows() {
         const tabContainer = document.getElementById('tab-container');
@@ -465,6 +586,8 @@ function getIconForTheme(iconData) {
             renderQuickLinks();
             initMobileToggle();
             initTabScrollArrows();
+            initDefaultTabToggle();
+            updateDefaultTabSettingVisibility();
             initTechModeIndicator();
         }
     }
@@ -1070,6 +1193,7 @@ let isNHQIP = false;
             btn.addEventListener('click', () => {
                 currentCategory = category.id;
                 renderCards();
+                updateDefaultTabSettingVisibility();
 
                 // Update active state
                 document.querySelectorAll('.mobile-category-btn').forEach(b => {
