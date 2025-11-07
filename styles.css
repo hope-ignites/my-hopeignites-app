@@ -1565,20 +1565,101 @@ details.collapsible summary::after {
     .toast-notification {
         position: fixed;
         bottom: 80px;
-        right: 20px;
+        right: 0;
         background: var(--card-bg);
         border: 2px solid var(--accent-primary);
-        border-radius: 12px;
+        border-radius: 12px 0 0 12px;
         padding: 16px 20px;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        max-width: 400px;
+        max-width: 340px;
+        min-width: 56px;
         z-index: 10000;
-        transform: translateX(450px);
-        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transform: translateX(260px);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), min-width 0.3s, max-width 0.3s;
         display: flex;
         align-items: center;
         gap: 12px;
+        cursor: pointer;
+        overflow: hidden;
+        height: 76px;
+        min-height: 76px;
+        max-height: 72px;
     }
+
+    .toast-notification.show {
+        transform: translateX(0);
+    }
+
+    .toast-notification.peek {
+        min-width: 56px;
+        max-width: 56px;
+        padding-left: 16px;
+        padding-right: 16px;
+        gap: 0;
+        height: 72px;
+        min-height: 72px;
+        max-height: 72px;
+    }
+
+    .toast-notification.unfurled {
+        min-width: 240px;
+        max-width: 340px;
+        padding-left: 20px;
+        padding-right: 20px;
+        gap: 12px;
+        height: 72px;
+        min-height: 72px;
+        max-height: 72px;
+    }
+
+    .toast-content {
+        opacity: 0;
+        max-width: 0;
+        transition: opacity 0.3s, max-width 0.3s;
+        overflow: hidden;
+        height: 56px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .toast-notification.unfurled .toast-content {
+        opacity: 1;
+        max-width: 320px;
+        height: 56px;
+    }
+
+    .toast-close {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+    }
+    .toast-notification.unfurled .toast-close {
+        opacity: 0.6;
+        pointer-events: auto;
+    }
+
+    @media (max-width: 768px) {
+        .toast-notification {
+            bottom: 70px;
+            right: 0;
+            left: auto;
+            max-width: none;
+            min-width: 56px;
+            transform: translateY(120px);
+        }
+        .toast-notification.show {
+            transform: translateY(0);
+        }
+        .toast-notification.peek {
+            min-width: 56px;
+            max-width: 56px;
+        }
+        .toast-notification.unfurled {
+            min-width: 200px;
+            max-width: 95vw;
+        }
+    }
+    
 
     .toast-notification.show {
         transform: translateX(0);

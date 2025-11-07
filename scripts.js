@@ -20,7 +20,7 @@
     function showToastNotification() {
         if (!shouldShowNotification()) return;
         const toast = document.createElement('div');
-        toast.className = 'toast-notification';
+        toast.className = 'toast-notification peek';
         toast.innerHTML = `
             <span class="toast-icon">${NOTIFICATION_CONFIG.icon}</span>
             <div class="toast-content">
@@ -35,17 +35,32 @@
         setTimeout(() => {
             toast.classList.add('show');
         }, 100);
+
+        // Unfurl on hover/focus, peek on mouseleave/blur
+        function unfurl() {
+            toast.classList.remove('peek');
+            toast.classList.add('unfurled');
+        }
+        function peek() {
+            toast.classList.remove('unfurled');
+            toast.classList.add('peek');
+        }
+        toast.addEventListener('mouseenter', unfurl);
+        toast.addEventListener('focusin', unfurl);
+        toast.addEventListener('mouseleave', peek);
+        toast.addEventListener('focusout', peek);
+
+        // Start peeking, then auto-unfurl after 2s if not hovered
+        let autoUnfurlTimeout = setTimeout(() => {
+            unfurl();
+        }, 2000);
+
         // Close button handler
         const closeBtn = toast.querySelector('.toast-close');
-        closeBtn.addEventListener('click', () => {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             dismissNotification(toast);
         });
-        // Auto-hide if enabled
-        if (NOTIFICATION_CONFIG.autoHide) {
-            setTimeout(() => {
-                dismissNotification(toast);
-            }, NOTIFICATION_CONFIG.displayDuration);
-        }
         // Dismiss when link is clicked
         const link = toast.querySelector('.toast-link');
         link.addEventListener('click', () => {
@@ -53,6 +68,7 @@
                 dismissNotification(toast);
             }, 500);
         });
+        // Prevent auto-hide, but allow manual close
     }
 
     function dismissNotification(toastElement) {
