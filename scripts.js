@@ -220,8 +220,10 @@ const isTechMode = window.location.pathname.includes('/tech');
     }
 })();
 
-// Show tech mode banner if in tech mode
-if (isTechMode) {
+// Initialize tech mode banner and toggle
+function initTechMode() {
+    if (!isTechMode) return;
+    
     const techBanner = document.getElementById('tech-mode-banner');
     if (techBanner) {
         techBanner.style.display = 'flex';
@@ -234,12 +236,19 @@ if (isTechMode) {
         const techModeDefault = localStorage.getItem('tech_mode_default');
         techModeToggle.checked = techModeDefault === 'enabled';
         
+        console.log('Tech Mode Toggle Initialized:', {
+            checked: techModeToggle.checked,
+            localStorage: techModeDefault
+        });
+        
         // Handle toggle change
         techModeToggle.addEventListener('change', () => {
             if (techModeToggle.checked) {
                 localStorage.setItem('tech_mode_default', 'enabled');
+                console.log('Tech mode set as default');
             } else {
                 localStorage.removeItem('tech_mode_default');
+                console.log('Tech mode default disabled');
             }
         });
     }
@@ -632,6 +641,7 @@ function getIconForTheme(iconData) {
             initTabScrollArrows();
             initDefaultTabToggle();
             updateDefaultTabSettingVisibility();
+            initTechMode();
             initTechModeIndicator();
         }
     }

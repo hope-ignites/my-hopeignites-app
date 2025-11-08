@@ -778,14 +778,13 @@ details.collapsible summary::after {
     padding: 12px 20px;
     border-radius: 12px;
     margin-bottom: 24px;
-    text-align: center;
     font-weight: 600;
     font-size: 1rem;
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
     animation: slideDown 0.5s ease-out;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 24px;
 }
 
@@ -799,17 +798,20 @@ details.collapsible summary::after {
     gap: 8px;
     cursor: pointer;
     user-select: none;
+    flex-shrink: 0;
 }
 
 .tech-mode-toggle-text {
     font-size: 0.9rem;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 @media (max-width: 768px) {
     .tech-mode-banner {
         flex-direction: column;
         gap: 12px;
+        text-align: center;
     }
 }
 
