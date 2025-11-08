@@ -209,11 +209,39 @@ let renderTabs; // Will be defined below
 // Detect if we're on /tech path
 const isTechMode = window.location.pathname.includes('/tech');
 
+// Check for tech mode default preference on page load
+(function checkTechModeDefault() {
+    const techModeDefault = localStorage.getItem('tech_mode_default');
+    const isOnRootPath = window.location.pathname === '/' || window.location.pathname === '/index.html';
+    
+    // If tech mode is set as default and we're on the root path, redirect to /tech
+    if (techModeDefault === 'enabled' && isOnRootPath && !isTechMode) {
+        window.location.href = '/tech';
+    }
+})();
+
 // Show tech mode banner if in tech mode
 if (isTechMode) {
     const techBanner = document.getElementById('tech-mode-banner');
     if (techBanner) {
-        techBanner.style.display = 'block';
+        techBanner.style.display = 'flex';
+    }
+    
+    // Initialize tech mode default toggle
+    const techModeToggle = document.getElementById('tech-mode-default-toggle');
+    if (techModeToggle) {
+        // Set initial state based on localStorage
+        const techModeDefault = localStorage.getItem('tech_mode_default');
+        techModeToggle.checked = techModeDefault === 'enabled';
+        
+        // Handle toggle change
+        techModeToggle.addEventListener('change', () => {
+            if (techModeToggle.checked) {
+                localStorage.setItem('tech_mode_default', 'enabled');
+            } else {
+                localStorage.removeItem('tech_mode_default');
+            }
+        });
     }
 }
 

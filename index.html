@@ -78,7 +78,14 @@
 
         <!-- Tech Mode Banner (shown only in tech mode) -->
         <div id="tech-mode-banner" class="tech-mode-banner" style="display: none;">
-            ⚙️ Tech Mode Enabled
+            <span class="tech-mode-text"></span>⚙️ Tech Mode Enabled</span>
+            <label class="tech-mode-toggle-label">
+                <span class="tech-mode-toggle-text">Set as default</span>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="tech-mode-default-toggle" aria-label="Set tech mode as default">
+                    <span class="toggle-slider"></span>
+                </div>
+            </label>
         </div>
 
         <!-- Tab Navigation (dynamically generated) -->

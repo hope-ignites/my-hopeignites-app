@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Default favorites tab toggle - Users can now set Favorites as their default landing tab via a compact toggle slider
+- **Tech mode default preference** - Users in tech mode can now set `/tech` as their default landing page
+  - Toggle in tech mode banner to enable/disable
+  - Automatically redirects from root to `/tech` when enabled
+  - Preference saved in localStorage
 - Toast notification system for important updates:
   - Discrete, non-intrusive notification appears in the lower right
   - Configurable message, link, and icon
@@ -16,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Remembers dismissal per notification ID
   - Easy to enable/disable in code
   - Mobile responsive design
+  - Peek/unfurl behavior on hover
 
 ### Changed
 - Toast notification height increased by 8px for improved visibility and consistency.
