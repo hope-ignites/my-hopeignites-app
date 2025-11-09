@@ -561,6 +561,33 @@ body.dark-mode .portal-card h3 {
     color: #ffffff;
 }
 
+/* Missing App Feedback */
+.missing-app-feedback {
+    text-align: center;
+    margin-top: 30px;
+    padding: 16px;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+}
+
+.missing-app-feedback p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.missing-app-feedback a {
+    color: var(--accent-primary);
+    text-decoration: underline;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.missing-app-feedback a:hover {
+    opacity: 0.8;
+}
+
 .quick-links {
     background: var(--overlay-bg);
     backdrop-filter: blur(10px);
