@@ -53,7 +53,7 @@
             "dark": "campaign-monitor.png"
           },
           "title": "Campaign Monitor",
-          "description": "Email Marketing platform for newsletters and other donor communications, Integrated to Hopeforce.",
+          "description": "Email marketing platform for newsletters and donor communications",
           "url": "https://emarketing.hopeignites.app"
         },
         {
@@ -62,7 +62,7 @@
             "dark": "dialpad.png"
           },
           "title": "Dialpad",
-          "description": "Cloud-based phone system for Hope Ignites Team Members",
+          "description": "Cloud-based phone system for making calls and managing voicemail",
           "url": "https://dialpad.com/login",
           "universal": false,
           "sso" : true
@@ -73,10 +73,77 @@
             "dark": "monday-com.png"
           },
           "title": "Monday.com",
-          "description": "Project management and team collaboration platform",
+          "description": "Project management and workflow tracking platform for team collaboration",
           "url": "https://hopeignites.monday.com/",
           "nhqOnly": true
-        }
+        },
+        {
+          "icon": {
+            "light": "word.png",
+            "dark": "word.png"
+          },
+          "title": "Microsoft Word Online",
+          "description": "Create and edit documents in your browser",
+          "url": "https://word.cloud.microsoft/hopeignites.org/",
+          "nhqOnly": false,
+          "sso": true
+        },
+        {
+          "icon": {
+            "light": "excel.png",
+            "dark": "excel.png"
+          },
+          "title": "Microsoft Excel Online",
+          "description": "Create and analyze spreadsheets in your browser",
+          "url": "https://excel.cloud.microsoft/hopeignites.org/",
+          "nhqOnly": false,
+          "sso" : true
+
+        },
+        {
+          "icon": {
+            "light": "powerpoint.png",
+            "dark": "powerpoint.png"
+          },
+          "title": "Microsoft PowerPoint Online",
+          "description": "Create and deliver presentations in your browser",
+          "url": "https://powerpoint.cloud.microsoft/hopeignites.org/",
+          "nhqOnly": false,
+          "sso" : true
+        },                
+        {
+          "icon": {
+            "light": "forms.png",
+            "dark": "forms.png"
+          },
+          "title": "Microsoft Forms",
+          "description": "Create surveys, quizzes, and polls to collect feedback",
+          "url": "https://forms.office.com/hopeignites.org/",
+          "nhqOnly": false,
+          "sso": true
+        },
+        {
+          "icon": {
+            "light": "loop.png",
+            "dark": "loop.png"
+          },
+          "title": "Microsoft Loop",
+          "description": "Real-time collaborative workspace for shared documents and ideas",
+          "url": "https://loop.cloud.microsoft/hopeignites.org/",
+          "nhqOnly": false,
+          "sso": true
+        },
+        {
+          "icon": {
+            "light": "calendar.png",
+            "dark": "calendar.png"
+          },
+          "title": "Outlook Calendar",
+          "description": "Schedule meetings, manage appointments, and view team calendars",
+          "url": "https://outlook.office.com/calendar/hopeignites.org",
+          "universal": true,
+          "sso" : true
+        }                        
       ]
     },
     {
@@ -100,7 +167,7 @@
             "dark": "ilearn.png"
           },
           "title": "iLearning Engines",
-          "description": "Learning Management System made avaliable by Christian Brothers ",
+          "description": "Learning platform provided by Christian Brothers for professional development",
           "url": "https://ins.ilearningengines.com/main/"
         }
       ]
@@ -227,7 +294,7 @@
             "dark": "eco-dark.png"
           },
           "title": "Eco System Map",
-          "description": "Hope Ignites Eco System Map part of stackium.tech codename nova",
+          "description": "Visual map of Hope Ignites technology ecosystem and integrations",
           "url": "https://eco.hopeignites.app",
           "tech": true,
           "sso" : true
@@ -249,7 +316,7 @@
             "dark": "hover.png"
           },
           "title": "Hover",
-          "description": "Manage Hope Ignites Domains",
+          "description": "Domain name registrar for managing Hope Ignites domains",
           "url": "https://www.hover.com/signin",
           "tech": true,
           "sso" : true
@@ -260,7 +327,7 @@
             "dark": "app-launcher.png"
           },
           "title": "Microsoft SSO Portal",
-          "description": "SSO to apps such as Cisco Meraki, NHQ Data Center, etc.",
+          "description": "Single sign-on portal for third-party applications like Cisco Meraki",
           "url": "https://myapplications.microsoft.com/hopeignites.org",
           "tech": true,
           "sso" : true
@@ -302,7 +369,7 @@
             "dark": "scribe.png"
           },
           "title": "Scribe",
-          "description": "Create and manage process documentation and guides",
+          "description": "Automated documentation tool for creating step-by-step process guides",
           "url": "https://scribehow.com",
           "tech": true
         },
@@ -312,7 +379,7 @@
             "dark": "entra-id.png"
           },
           "title": "Entra ID Portal",
-          "description": "Manage Entra ID settings and configurations",
+          "description": "Microsoft identity and access management admin portal",
           "url": "https://entra.microsoft.com/hopeignites.org",
           "tech": true,
           "sso" : true
