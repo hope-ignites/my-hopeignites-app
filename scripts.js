@@ -2,10 +2,10 @@
     // Toast Notification Configuration
     const NOTIFICATION_CONFIG = {
         enabled: true, // Set to false to disable notification
-        message: "It's time for open enrollment! ",
+        message: "It's time for FSA Open Enrollment!",
         linkText: "Learn more →",
         linkUrl: "https://hopeignites1977.sharepoint.com/sites/Hub/SitePages/All-Team-News---November-7,-2025.aspx?from=SendByEmail&e=vDTtnzmF1UeY_-BFnwP6Bg&at=121#flexible-spending-accounts-open-enrollment-november-17-through-december-1",
-        icon: "⚕️", // Emoji or text icon
+        icon: "💳", // Emoji or text icon
         id: "update-nov-2025", // Change this ID to show notification again
         displayDuration: 8000, // How long to show (milliseconds)
         autoHide: true // Automatically hide after displayDuration
