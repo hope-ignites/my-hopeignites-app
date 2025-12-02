@@ -1,7 +1,7 @@
 (function() {
     // Toast Notification Configuration
     const NOTIFICATION_CONFIG = {
-        enabled: true, // Set to false to disable notification
+        enabled: false, // Set to false to disable notification
         message: "It's time for FSA Open Enrollment!",
         linkText: "Learn more →",
         linkUrl: "https://hopeignites1977.sharepoint.com/sites/Hub/SitePages/All-Team-News---November-7,-2025.aspx?from=SendByEmail&e=vDTtnzmF1UeY_-BFnwP6Bg&at=121#flexible-spending-accounts-open-enrollment-november-17-through-december-1",
@@ -310,6 +310,32 @@ function getIconForTheme(iconData) {
         }
     }
 
+    // Get all new apps across all categories
+    function getNewApps() {
+        const newApps = [];
+        portalData.categories.forEach(category => {
+            if (category.id !== 'all' && category.id !== 'favorites') {
+                // Skip tech-only categories if not in tech mode
+                if (!isTechMode && category.id === 'tech-tools') {
+                    return;
+                }
+                category.cards.forEach(card => {
+                    // Skip NHQ-only cards if not at NHQ
+                    if (card.nhqOnly && !isNHQIP) {
+                        return;
+                    }
+                    // Check if card is new
+                    const isNew = card.isNew === true || 
+                        (card.addedDate && isWithinDays(card.addedDate, 14));
+                    if (isNew) {
+                        newApps.push(card);
+                    }
+                });
+            }
+        });
+        return newApps;
+    }
+
     // Render tab buttons
     renderTabs = function() {
         const tabContainer = document.getElementById('tab-container');
@@ -331,9 +357,23 @@ function getIconForTheme(iconData) {
             }
         }
 
+        // Add "New Apps" category after favorites if there are new apps
+        const newApps = getNewApps();
+        if (newApps.length > 0) {
+            const favoritesIndex = categoriesToRender.findIndex(cat => cat.id === 'favorites');
+            if (favoritesIndex !== -1) {
+                // Insert "New Apps" category right after favorites
+                categoriesToRender.splice(favoritesIndex + 1, 0, {
+                    id: 'new',
+                    name: '❇️  New Apps',
+                    cards: newApps
+                });
+            }
+        }
+
         categoriesToRender.forEach(category => {
             // Filter out tech-only categories if not in tech mode
-            const hasTechCards = category.cards.some(card => card.tech === true);
+            const hasTechCards = category.cards && category.cards.some(card => card.tech === true);
             if (!isTechMode && hasTechCards && category.id === 'tech-tools') {
                 return; // Skip this category
             }
@@ -397,6 +437,9 @@ function getIconForTheme(iconData) {
                     });
                 }
             });
+        } else if (currentCategory === 'new') {
+            // Show only new apps
+            cardsToDisplay = getNewApps();
         } else if (currentCategory === 'all') {
             // Show all cards from all categories (except "all" and "favorites" itself)
             portalData.categories.forEach(category => {
