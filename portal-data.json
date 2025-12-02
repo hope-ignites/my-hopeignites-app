@@ -217,6 +217,28 @@
           "description": "Hopeforce application for managing program participants",
           "url": "https://community.bhgh.org/ppm",
           "sso": true
+        },
+        {
+          "icon": {
+            "light": "gearset.png",
+            "dark": "gearset.png"
+          },
+          "title": "Gearset DevOps for Salesforce",
+          "description": "DevOps Management tool for Salesforce deployments",
+          "url": "https://app.gearset.com/",
+          "sso": false,
+          "tech": true
+        },
+        {
+          "icon": {
+            "light": "formAssembly.png",
+            "dark": "formAssembly.png"
+          },
+          "title": "FormAssembly",
+          "description": "Online form builder for data collection and management",
+          "url": "https://forms.hopeignites.app",
+          "sso": true,
+          "tech": true
         }
       ]
     },
