@@ -513,6 +513,33 @@ body.dark-mode .portal-card:hover {
     opacity: 1;
 }
 
+/* NEW badge indicator */
+.new-indicator {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    animation: newPulse 2s ease-in-out infinite;
+    z-index: 10;
+}
+
+@keyframes newPulse {
+    0%, 100% {
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        box-shadow: 0 2px 16px rgba(16, 185, 129, 0.6);
+    }
+}
+
 /* Favorite/Pin button on cards */
 .favorite-btn {
     position: absolute;

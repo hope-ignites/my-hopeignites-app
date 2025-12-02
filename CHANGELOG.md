@@ -21,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Easy to enable/disable in code
   - Mobile responsive design
   - Peek/unfurl behavior on hover
+- **NEW badge for recently added apps**
+  - Green pulsing badge appears on cards with `isNew: true`
+  - Supports future date-based triggering with `addedDate` field
+  - Automatically highlights apps added within last 14 days (when using dates)
+- "Missing app" feedback link below portal cards grid
 
 ### Changed
 - Toast notification height increased by 8px for improved visibility and consistency.

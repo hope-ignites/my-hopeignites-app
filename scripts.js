@@ -254,6 +254,16 @@ function initTechMode() {
     }
 }
 
+// Helper function to check if a date is within X days of today
+function isWithinDays(dateString, days) {
+    if (!dateString) return false;
+    const addedDate = new Date(dateString);
+    const today = new Date();
+    const diffTime = today - addedDate;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    return diffDays >= 0 && diffDays <= days;
+}
+
 // Helper function to get theme-appropriate icon
 function getIconForTheme(iconData) {
     const isDarkMode = document.body.classList.contains('dark-mode');
@@ -463,6 +473,14 @@ function getIconForTheme(iconData) {
                 ? `<div class="sso-indicator" title="Single Sign-On enabled"><img src="assets/sso-badge.png" alt="SSO" /></div>`
                 : '';
 
+            // Check for NEW indicator (supports boolean flag or date-based)
+            // Future: if card.addedDate exists, compare to current date (e.g., within 14 days)
+            const isNewApp = card.isNew === true || 
+                (card.addedDate && isWithinDays(card.addedDate, 14));
+            const newIndicator = isNewApp
+                ? `<div class="new-indicator" title="Recently added">New</div>`
+                : '';
+
             cardLink.innerHTML = `
                 <button class="favorite-btn ${isFav ? 'favorited' : ''}"
                         data-url="${card.url}"
@@ -470,6 +488,7 @@ function getIconForTheme(iconData) {
                         title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
                     ${isFav ? '⭐' : '☆'}
                 </button>
+                ${newIndicator}
                 <div class="portal-icon">${iconHtml}</div>
                 <h3>${card.title}</h3>
                 <p>${card.description}</p>

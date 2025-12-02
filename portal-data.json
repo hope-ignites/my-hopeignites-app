@@ -49,6 +49,18 @@
         },
         {
           "icon": {
+            "light": "board-light.png",
+            "dark": "board-dark.png"
+          },
+          "title": "Hope Ignites Board Connection Registration",
+          "description": "This page is publically accessible and can be used by verified board members to register for Board Connection access.",
+          "url": "https://hopeignites.org/boardconnection/",
+          "universal": true,
+          "sso" : false,
+          "isNew" : true
+        },        
+        {
+          "icon": {
             "light": "campaign-monitor.png",
             "dark": "campaign-monitor.png"
           },
