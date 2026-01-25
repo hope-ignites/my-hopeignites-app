@@ -57,7 +57,7 @@
           "url": "https://hopeignites.org/boardconnection/",
           "universal": true,
           "sso" : false,
-          "isNew" : true
+          "isNew" : false
         },        
         {
           "icon": {
@@ -239,7 +239,18 @@
           "url": "https://forms.hopeignites.app",
           "sso": true,
           "tech": true
-        }
+        },
+        {
+          "icon": {
+            "light": "gofundme.png",
+            "dark": "gofundme.png"
+          },
+          "title": "GoFundMe Pro (Formerly Classy)",
+          "description": "Fundraising platform integrated with Salesforce",
+          "url": "https://www.classy.org/sso",
+          "sso": true,
+          "new": true
+        }        
       ]
     },
     {
