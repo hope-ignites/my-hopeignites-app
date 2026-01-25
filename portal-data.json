@@ -193,7 +193,7 @@
             "light": "salesforce.png",
             "dark": "salesforce.png"
           },
-          "title": "Salesforce for Fundraising",
+          "title": "Hopeforce for Fundraising",
           "description": "CRM platform for managing donors and fundraising activities",
           "url": "https://bhgh.my.salesforce.com",
           "sso": true
@@ -204,7 +204,7 @@
             "dark": "experience-app.png"
           },
           "title": "Human Capital Management App",
-          "description": "Team Member experience application integrated with Salesforce",
+          "description": "Hopeforcxe application for managing people data",
           "url": "https://community.bhgh.org/hiring",
           "sso": true
         },
