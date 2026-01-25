@@ -226,8 +226,8 @@
           "title": "Gearset DevOps for Salesforce",
           "description": "DevOps Management tool for Salesforce deployments",
           "url": "https://app.gearset.com/",
-          "sso": false,
-          "tech": true
+          "tech": true,         
+          "sso": false
         },
         {
           "icon": {
@@ -249,7 +249,7 @@
           "description": "Fundraising platform integrated with Salesforce",
           "url": "https://www.classy.org/sso",
           "sso": true,
-          "new": true
+          "isNew": true
         }        
       ]
     },

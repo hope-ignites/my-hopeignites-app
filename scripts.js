@@ -324,6 +324,10 @@ function getIconForTheme(iconData) {
                     if (card.nhqOnly && !isNHQIP) {
                         return;
                     }
+                    // Skip tech-only cards if not in tech mode
+                    if (!isTechMode && card.tech === true) {
+                        return;
+                    }
                     // Check if card is new
                     const isNew = card.isNew === true || 
                         (card.addedDate && isWithinDays(card.addedDate, 14));
@@ -431,6 +435,10 @@ function getIconForTheme(iconData) {
                         if (card.nhqOnly && !isNHQIP) {
                             return;
                         }
+                        // Skip tech-only cards if not in tech mode
+                        if (!isTechMode && card.tech === true) {
+                            return;
+                        }
                         if (favoriteUrls.includes(card.url)) {
                             cardsToDisplay.push(card);
                         }
@@ -450,9 +458,14 @@ function getIconForTheme(iconData) {
                     }
                     category.cards.forEach(card => {
                         // Skip NHQ-only cards if not at NHQ
-                        if (!card.nhqOnly || isNHQIP) {
-                            cardsToDisplay.push(card);
+                        if (card.nhqOnly && !isNHQIP) {
+                            return;
                         }
+                        // Skip tech-only cards if not in tech mode
+                        if (!isTechMode && card.tech === true) {
+                            return;
+                        }
+                        cardsToDisplay.push(card);
                     });
                 }
             });
@@ -464,7 +477,14 @@ function getIconForTheme(iconData) {
             if (category) {
                 cardsToDisplay = category.cards.filter(card => {
                     // Skip NHQ-only cards if not at NHQ
-                    return !card.nhqOnly || isNHQIP;
+                    if (card.nhqOnly && !isNHQIP) {
+                        return false;
+                    }
+                    // Skip tech-only cards if not in tech mode
+                    if (!isTechMode && card.tech === true) {
+                        return false;
+                    }
+                    return true;
                 });
             }
         }
