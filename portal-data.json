@@ -242,6 +242,29 @@
         },
         {
           "icon": {
+            "light": "wordpress.png",
+            "dark": "wordpress.png"
+          },
+          "title": "Hope Ignites Wordpress Admin",
+          "description": "Manage and update Hope Ignites website content",
+          "url": "https://hopeignites.org/wp-admin",
+          "sso": true,
+          "tech": false,
+          "isNew": true
+        },    
+        {
+          "icon": {
+            "light": "journeydo.png",
+            "dark": "journeydo.png"
+          },
+          "title": "Journey.do",
+          "description": "MyRoad on Journey.do",
+          "url": "https://bhgh.journey.do/",
+          "sso": false,
+          "tech": false
+        },            
+        {
+          "icon": {
             "light": "gofundme.png",
             "dark": "gofundme.png"
           },
@@ -249,7 +272,7 @@
           "description": "Fundraising platform integrated with Salesforce",
           "url": "https://www.classy.org/sso",
           "sso": true,
-          "isNew": true
+          "isNew": false
         }        
       ]
     },
