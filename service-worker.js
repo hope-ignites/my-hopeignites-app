@@ -1,5 +1,5 @@
 // Service Worker for Hope Ignites Application Launcher PWA
-const CACHE_NAME = 'hopeignites-app-launcher-v1';
+const CACHE_NAME = 'hopeignites-app-launcher-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -43,6 +43,27 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fall back to network
 self.addEventListener('fetch', (event) => {
+  // Use network-first strategy for portal-data.json to always get fresh data
+  if (event.request.url.includes('portal-data.json')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          // Clone and cache the fresh response
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+          return response;
+        })
+        .catch(() => {
+          // Fall back to cached version if network fails
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  // Use cache-first strategy for all other resources
   event.respondWith(
     caches.match(event.request)
       .then((response) => {

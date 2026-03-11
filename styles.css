@@ -84,7 +84,7 @@ body {
 #status-link {
     position: absolute;
     top: 0;
-    right: 120px;
+    right: 175px;
     background: var(--overlay-bg);
     border: 2px solid var(--overlay-bg-hover);
     color: var(--text-light);
@@ -1048,7 +1048,7 @@ details.collapsible summary::after {
 #search-trigger {
     position: absolute;
     top: 0;
-    right: 60px;
+    right: 65px;
     background: var(--overlay-bg);
     border: 2px solid var(--overlay-bg-hover);
     color: var(--text-light);
@@ -1071,6 +1071,74 @@ details.collapsible summary::after {
 #search-trigger:focus {
     outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
+}
+
+/* Refresh apps button (next to search) */
+#refresh-apps {
+    position: absolute;
+    top: 0;
+    right: 120px;
+    background: var(--overlay-bg);
+    border: 2px solid var(--overlay-bg-hover);
+    color: var(--text-light);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#refresh-apps:hover {
+    background: var(--overlay-bg-hover);
+    transform: rotate(180deg);
+}
+
+#refresh-apps:active {
+    transform: rotate(360deg);
+}
+
+#refresh-apps:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+#refresh-apps.refreshing {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100px);
+        opacity: 0;
+    }
 }
 
 /* Floating help button (bottom-left) */
@@ -1486,6 +1554,7 @@ details.collapsible summary::after {
 
     /* Hide desktop search, status, and dark mode buttons */
     #search-trigger,
+    #refresh-apps,
     #status-link,
     #dark-mode-toggle {
         display: none;

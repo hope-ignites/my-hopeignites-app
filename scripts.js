@@ -289,17 +289,25 @@ function getIconForTheme(iconData) {
 
 (async function() {
 
-    // Fetch portal data from JSON file
+    // Fetch portal data from JSON file (always fetches fresh data)
     async function loadPortalData() {
         try {
-            const response = await fetch('portal-data.json');
+            // Add cache-busting timestamp to ensure fresh data on every load
+            const timestamp = new Date().getTime();
+            const response = await fetch(`portal-data.json?v=${timestamp}`, {
+                cache: 'no-store',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache'
+                }
+            });
             if (!response.ok) {
                 throw new Error('Failed to load portal data');
             }
             portalData = await response.json();
             // Make data available globally for search feature
             window.portalDataCache = portalData;
-            console.log('Application Launcher data loaded successfully');
+            console.log('Application Launcher data loaded successfully (fresh from server)');
             return portalData;
         } catch (error) {
             console.error('Error loading Application Launcher data:', error);
@@ -307,6 +315,49 @@ function getIconForTheme(iconData) {
             const grid = document.getElementById('portal-grid');
             grid.innerHTML = '<p style="color: white; text-align: center;">Unable to load applications. Please refresh the page.</p>';
             return null;
+        }
+    }
+
+    // Refresh portal data - clears cache and fetches fresh data
+    async function refreshPortalData() {
+        try {
+            // Clear cache for portal-data.json
+            if ('caches' in window) {
+                const cacheNames = await caches.keys();
+                for (const cacheName of cacheNames) {
+                    const cache = await caches.open(cacheName);
+                    await cache.delete('/portal-data.json');
+                    await cache.delete('portal-data.json');
+                }
+                console.log('Cache cleared for portal-data.json');
+            }
+
+            // Fetch fresh data with cache-busting
+            const timestamp = new Date().getTime();
+            const response = await fetch(`portal-data.json?v=${timestamp}`, {
+                cache: 'no-store',
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to refresh portal data');
+            }
+
+            portalData = await response.json();
+            window.portalDataCache = portalData;
+            console.log('Application Launcher data refreshed successfully');
+            
+            // Re-render cards (favorites are preserved in localStorage)
+            renderCards();
+            renderTabs();
+            
+            return true;
+        } catch (error) {
+            console.error('Error refreshing Application Launcher data:', error);
+            throw error;
         }
     }
 
@@ -728,6 +779,16 @@ function getIconForTheme(iconData) {
         }
     }
 
+    // Listen for refresh events
+    document.addEventListener('refreshPortalData', async () => {
+        try {
+            await refreshPortalData();
+        } catch (error) {
+            console.error('Failed to refresh portal data:', error);
+            throw error;
+        }
+    });
+
     // Wait for DOM to be ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initPortal);
@@ -945,6 +1006,80 @@ let isNHQIP = false;
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
     });
+})();
+
+// ===== CACHE REFRESH FUNCTIONALITY =====
+(function() {
+    const refreshBtn = document.getElementById('refresh-apps');
+    const mobileRefreshBtn = document.getElementById('mobile-refresh-apps');
+
+    // Show success notification
+    function showRefreshNotification(success = true) {
+        const notification = document.createElement('div');
+        notification.className = 'refresh-notification';
+        notification.innerHTML = success 
+            ? '✓ App list refreshed successfully!' 
+            : '✗ Failed to refresh app list';
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: ${success ? '#10b981' : '#ef4444'};
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            animation: slideInUp 0.3s ease;
+        `;
+        document.body.appendChild(notification);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutDown 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    // Handle refresh click
+    async function handleRefresh(button) {
+        // Don't allow double-clicking
+        if (button.classList.contains('refreshing')) {
+            return;
+        }
+
+        button.classList.add('refreshing');
+        button.disabled = true;
+
+        try {
+            // Dispatch custom event to trigger refresh
+            const refreshEvent = new CustomEvent('refreshPortalData');
+            document.dispatchEvent(refreshEvent);
+
+            // Wait a moment for the refresh to complete
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            showRefreshNotification(true);
+        } catch (error) {
+            console.error('Refresh failed:', error);
+            showRefreshNotification(false);
+        } finally {
+            button.classList.remove('refreshing');
+            button.disabled = false;
+        }
+    }
+
+    // Desktop refresh button
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => handleRefresh(refreshBtn));
+    }
+
+    // Mobile refresh button  
+    if (mobileRefreshBtn) {
+        mobileRefreshBtn.addEventListener('click', () => handleRefresh(mobileRefreshBtn));
+    }
 })();
 
 // ===== WELCOME MODAL (FIRST-TIME VISITORS) =====
