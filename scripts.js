@@ -198,6 +198,65 @@ const FavoritesManager = (function() {
     };
 })();
 
+// ===== RECENTLY USED FUNCTIONALITY =====
+const RecentlyUsedManager = (function() {
+    const STORAGE_KEY = 'app_launcher_recently_used';
+    const MAX_RECENT_APPS = 8;
+    const MAX_AGE_DAYS = 30;
+
+    function getRecentlyUsed() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (!stored) return [];
+        
+        const apps = JSON.parse(stored);
+        const now = Date.now();
+        const maxAge = MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
+        
+        // Filter out apps older than MAX_AGE_DAYS
+        return apps.filter(app => (now - app.timestamp) < maxAge);
+    }
+
+    function saveRecentlyUsed(apps) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(apps));
+    }
+
+    function addRecentApp(cardData) {
+        let recentApps = getRecentlyUsed();
+        
+        // Remove existing entry if present (we'll re-add at top)
+        recentApps = recentApps.filter(app => app.url !== cardData.url);
+        
+        // Add to beginning
+        recentApps.unshift({
+            url: cardData.url,
+            title: cardData.title,
+            description: cardData.description,
+            icon: cardData.icon,
+            universal: cardData.universal,
+            sso: cardData.sso,
+            nhqOnly: cardData.nhqOnly,
+            timestamp: Date.now()
+        });
+        
+        // Keep only MAX_RECENT_APPS
+        if (recentApps.length > MAX_RECENT_APPS) {
+            recentApps = recentApps.slice(0, MAX_RECENT_APPS);
+        }
+        
+        saveRecentlyUsed(recentApps);
+    }
+
+    function clearHistory() {
+        localStorage.removeItem(STORAGE_KEY);
+    }
+
+    return {
+        getRecentlyUsed,
+        addRecentApp,
+        clearHistory
+    };
+})();
+
 // ===== APPLICATION LAUNCHER RENDERING FROM JSON =====
 // Global variables so mobile menu can access them
 let portalData = null; // Keep variable name for compatibility
@@ -426,6 +485,20 @@ function getIconForTheme(iconData) {
             }
         }
 
+        // Add "Recently Used" category after favorites
+        const recentApps = RecentlyUsedManager.getRecentlyUsed();
+        if (recentApps.length > 0) {
+            const favoritesIndex = categoriesToRender.findIndex(cat => cat.id === 'favorites');
+            if (favoritesIndex !== -1) {
+                // Insert right after favorites (before New Apps if it exists)
+                categoriesToRender.splice(favoritesIndex + 1, 0, {
+                    id: 'recently-used',
+                    name: '🕐 Recently Used',
+                    cards: recentApps
+                });
+            }
+        }
+
         categoriesToRender.forEach(category => {
             // Filter out tech-only categories if not in tech mode
             const hasTechCards = category.cards && category.cards.some(card => card.tech === true);
@@ -496,6 +569,10 @@ function getIconForTheme(iconData) {
                     });
                 }
             });
+        } else if (currentCategory === 'recently-used') {
+            // Show recently used apps
+            const recentApps = RecentlyUsedManager.getRecentlyUsed();
+            cardsToDisplay = recentApps;
         } else if (currentCategory === 'new') {
             // Show only new apps
             cardsToDisplay = getNewApps();
@@ -630,12 +707,22 @@ function getIconForTheme(iconData) {
                 }
             });
 
+            // Add click handler for tracking recently used apps
+            cardLink.addEventListener('click', () => {
+                RecentlyUsedManager.addRecentApp(card);
+            });
+
             grid.appendChild(cardLink);
         });
 
         // Show message if favorites is empty
         if (currentCategory === 'favorites' && cardsToDisplay.length === 0) {
             grid.innerHTML = '<p style="color: var(--text-light); text-align: center; grid-column: 1/-1;">No favorites yet. Click the ☆ on any card to add it to your favorites!</p>';
+        }
+
+        // Show message if recently used is empty
+        if (currentCategory === 'recently-used' && cardsToDisplay.length === 0) {
+            grid.innerHTML = '<p style="color: var(--text-light); text-align: center; grid-column: 1/-1;">No recently used apps yet. Click on any app to get started!</p>';
         }
     };
 
@@ -1440,13 +1527,45 @@ let isNHQIP = false;
 
         mobileCategories.innerHTML = '';
 
-        const categoriesToShow = portalData.categories.filter(cat => {
+        // Build categories list
+        let categoriesToShow = portalData.categories.filter(cat => {
             // Skip "all" category
             if (cat.id === 'all') return false;
             // Skip tech-only categories if not in tech mode
             if (!isTechMode && cat.id === 'tech-tools') return false;
             return true;
         });
+
+        // Add "Recently Used" after favorites if there are recent apps
+        const recentApps = RecentlyUsedManager.getRecentlyUsed();
+        if (recentApps.length > 0) {
+            const favoritesIndex = categoriesToShow.findIndex(cat => cat.id === 'favorites');
+            if (favoritesIndex !== -1) {
+                categoriesToShow.splice(favoritesIndex + 1, 0, {
+                    id: 'recently-used',
+                    name: '🕐 Recently Used',
+                    cards: recentApps
+                });
+            }
+        }
+
+        // Add "New Apps" category if there are new apps
+        const newApps = getNewApps();
+        if (newApps.length > 0) {
+            const favoritesIndex = categoriesToShow.findIndex(cat => cat.id === 'favorites');
+            if (favoritesIndex !== -1) {
+                // Insert after favorites (and recently-used if it exists)
+                let insertIndex = favoritesIndex + 1;
+                if (categoriesToShow[insertIndex]?.id === 'recently-used') {
+                    insertIndex++;
+                }
+                categoriesToShow.splice(insertIndex, 0, {
+                    id: 'new',
+                    name: '❇️  New Apps',
+                    cards: newApps
+                });
+            }
+        }
 
         console.log('Categories to show:', categoriesToShow);
 
