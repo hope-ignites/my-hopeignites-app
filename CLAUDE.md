@@ -12,9 +12,10 @@ This is the **Hope Ignites Application Launcher** - a single-page HTML hub for H
 
 ### Application Structure
 - **index.html** - Clean HTML markup (~119 lines)
-- **styles.css** - All CSS styling (~580 lines)
-- **scripts.js** - All JavaScript functionality (~558 lines)
+- **styles.css** - All CSS styling (~2300+ lines, includes onboarding styles)
+- **scripts.js** - All JavaScript functionality (~1000+ lines, includes onboarding logic)
 - **portal-data.json** - Application data (cards, categories, quick links)
+- **onboarding-data.json** - Onboarding steps for new hires
 - **_redirects** - CloudFlare Pages routing configuration
 - **assets/** - Logo and icon files
 
@@ -33,6 +34,7 @@ This is the **Hope Ignites Application Launcher** - a single-page HTML hub for H
 11. **Tech Mode** - Special view at /tech path showing tech team tools
 12. **Spotlight Search** - Keyboard-accessible search across all applications
 13. **PWA Support** - Progressive Web App with offline capability and installable on mobile devices
+14. **Onboarding Mode** - New hire onboarding page at /onboarding with progress tracking
 
 ### IP Detection & NHQ-Only Applications
 The Application Launcher includes client-side IP detection using the ipify API to:
@@ -79,6 +81,34 @@ Access the Application Launcher at `/tech` to enable Tech Mode:
 - Uses SPA routing via `_redirects` file
 
 **Local Testing**: Use query parameter `?tech=true` or hash `#tech` for testing in Live Server.
+
+### Onboarding Mode
+Access the onboarding page at `/onboarding` for new hire setup:
+
+**Features:**
+- Step-by-step onboarding checklist with interactive checkboxes
+- Progress bar showing completion percentage
+- Each step includes: title, description, action button with icon, and helpful notes
+- Progress automatically saved to localStorage (persists across sessions)
+- Clicking action buttons auto-checks the step
+- Modern card-style design matching the launcher theme
+- Fully responsive (stacks beautifully on mobile)
+
+**Configuration** (in [onboarding-data.json](onboarding-data.json)):
+- `welcomeMessage` - Customizable welcome message for new hires
+- `steps[]` - Array of onboarding step objects
+- Each step includes: `id`, `title`, `description`, `buttonText`, `buttonUrl`, `buttonIcon` (SVG), `notes[]`
+- Extensive inline comments explain how to add new steps and find SVG icons
+
+**Tab Behavior:**
+- "Onboarding" tab appears **only** when accessing `/onboarding`
+- Tab shows with house icon (🏠) and appears first in the tab list
+- Users can still navigate to other tabs (Favorites, Communication, etc.) while on onboarding route
+- Tab automatically hidden when visiting regular launcher routes
+
+**Local Testing**: Use hash `#onboarding` or query parameter `?onboarding=true` for testing in Live Server.
+
+**Production URL**: `https://your-domain.com/onboarding`
 
 ### Progressive Web App (PWA)
 The Application Launcher can be installed as a Progressive Web App on mobile devices:
@@ -240,6 +270,44 @@ You can specify different icons for light and dark themes. If only `light` is pr
 ```
 
 The portal automatically switches icons when the user toggles between light and dark mode. If no dark icon is specified, the light icon is used as a fallback.
+
+### Adding Onboarding Steps
+1. Open [onboarding-data.json](onboarding-data.json)
+2. Copy the template at the bottom of the file
+3. Add it to the `steps` array (after the last step, before the closing bracket)
+4. Update all properties:
+   ```json
+   {
+     "id": "unique-step-id",
+     "title": "Step Title",
+     "description": "What this step accomplishes",
+     "buttonText": "Open App",
+     "buttonUrl": "https://app-url.com",
+     "buttonIcon": "<svg>...SVG code here...</svg>",
+     "notes": [
+       "Helpful tip 1",
+       "Helpful tip 2"
+     ]
+   }
+   ```
+
+**Finding SVG Icons**:
+The file includes extensive comments with links to free SVG icon resources:
+- **Heroicons**: https://heroicons.com/ (clean, modern)
+- **Bootstrap Icons**: https://icons.getbootstrap.com/ (huge library)
+- **Feather Icons**: https://feathericons.com/ (minimalist)
+- **Simple Icons**: https://simpleicons.org/ (brand logos)
+
+**SVG Tips**:
+- Keep width/height at 20x20 for consistency
+- Use `fill='currentColor'` to inherit button color
+- Wrap in single quotes to avoid JSON escaping issues
+
+### Updating Onboarding Welcome Message
+Edit the `welcomeMessage` property at the top of [onboarding-data.json](onboarding-data.json):
+```json
+"welcomeMessage": "Your custom welcome message for new hires!"
+```
 
 ### Updating Help Desk Contact Info
 1. Open [index.html](index.html)

@@ -1,0 +1,98 @@
+{
+  "_comment_instructions": "=== HOW TO ADD NEW ONBOARDING STEPS ===",
+  "_comment_1": "1. Copy an existing step object from the 'steps' array below",
+  "_comment_2": "2. Paste it at the end of the array (use the blank lines at the bottom)",
+  "_comment_3": "3. Update these properties: id, title, description, buttonText, buttonUrl, buttonIcon, notes",
+  "_comment_4": "",
+  "_comment_svg_icons": "=== WHERE TO FIND SVG ICONS ===",
+  "_comment_5": "Option 1 - Heroicons: https://heroicons.com/ (free, MIT license, copy SVG code)",
+  "_comment_6": "Option 2 - Bootstrap Icons: https://icons.getbootstrap.com/ (free, copy SVG)",
+  "_comment_7": "Option 3 - Feather Icons: https://feathericons.com/ (free, simple icons)",
+  "_comment_8": "Option 4 - Simple Icons: https://simpleicons.org/ (brand logos as SVG)",
+  "_comment_9": "Option 5 - Use company/app favicons from their website and extract SVG",
+  "_comment_10": "",
+  "_comment_svg_tips": "=== SVG FORMATTING TIPS ===",
+  "_comment_11": "• Keep SVG width and height at 20x20 for consistency",
+  "_comment_12": "• Use inline SVG code (wrap in single quotes to avoid JSON issues)",
+  "_comment_13": "• If SVG has double quotes, escape them: \\\" or use single quotes inside",
+  "_comment_14": "• Test colors: use fill='currentColor' to inherit button text color",
+  "_comment_15": "• Keep SVG code compact (remove unnecessary attributes)",
+  "_comment_16": "",
+  "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day.",
+  "steps": [
+    {
+      "_note": "Each step needs a unique 'id' (used for tracking progress in localStorage)",
+      "id": "microsoft-365",
+      "title": "Login to Microsoft 365",
+      "description": "Access your Hope Ignites Microsoft 365 account to get started with email, OneDrive, and more.",
+      "buttonText": "Open Microsoft 365",
+      "buttonUrl": "https://www.office.com/",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 23' width='20' height='20'><path fill='#f25022' d='M1 1h10v10H1z'/><path fill='#00a4ef' d='M12 1h10v10H12z'/><path fill='#7fba00' d='M1 12h10v10H1z'/><path fill='#ffb900' d='M12 12h10v10H12z'/></svg>",
+      "notes": [
+        "Use the credentials provided by IT in your welcome email",
+        "You may need to set up multi-factor authentication (MFA)",
+        "Bookmark this page for quick access"
+      ]
+    },
+    {
+      "id": "outlook-setup",
+      "title": "Setup Outlook Mobile and Desktop",
+      "description": "Install and configure Outlook on your devices to stay connected on the go.",
+      "buttonText": "Get Outlook",
+      "buttonUrl": "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='20' height='20'><path fill='#1976D2' d='M41,42H9c-1.105,0-2-0.895-2-2V8c0-1.105,0.895-2,2-2h32c1.105,0,2,0.895,2,2v32C43,41.105,42.105,42,41,42z'/><path fill='#FFF' d='M25,31c-3.866,0-7-3.134-7-7s3.134-7,7-7s7,3.134,7,7S28.866,31,25,31z M25,19c-2.761,0-5,2.239-5,5s2.239,5,5,5s5-2.239,5-5S27.761,19,25,19z'/></svg>",
+      "notes": [
+        "Download Outlook mobile app from the App Store or Google Play",
+        "For desktop, Outlook comes with Microsoft 365",
+        "Sign in with your @hopeignites.org email address"
+      ]
+    },
+    {
+      "id": "access-training",
+      "title": "Access Training Materials",
+      "description": "Complete your required onboarding training modules in the Learning Management System.",
+      "buttonText": "Start Training",
+      "buttonUrl": "#",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='#4A90E2'><path d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3z'/><path d='M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/></svg>",
+      "notes": [
+        "Training modules must be completed within your first week",
+        "You'll receive a certificate upon completion",
+        "Contact HR if you have questions about required training"
+      ]
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  ],
+  "_comment_add_steps": "=== ADD NEW STEPS BELOW (copy/paste the template) ===",
+  "_template_new_step": {
+    "_usage": "Copy this template, uncomment, and add to the steps array above",
+    "id": "unique-step-id",
+    "title": "Step Title Here",
+    "description": "Brief description of what this step accomplishes.",
+    "buttonText": "Click Here",
+    "buttonUrl": "https://your-app-url.com",
+    "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 2L2 7l10 5 10-5-10-5z'/></svg>",
+    "notes": [
+      "First helpful tip for this step",
+      "Second important note",
+      "Third piece of guidance"
+    ]
+  }
+}

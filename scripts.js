@@ -265,8 +265,202 @@ const ICON_BASE_PATH = 'assets/app-icons/';
 let renderCards; // Will be defined below
 let renderTabs; // Will be defined below
 
-// Detect if we're on /tech path
-const isTechMode = window.location.pathname.includes('/tech');
+// Detect if we're on /tech path (supports both /tech and #tech for local testing)
+const isTechMode = window.location.pathname.includes('/tech') || 
+                   window.location.hash === '#tech' || 
+                   window.location.search.includes('tech=true');
+
+// Detect if we're on /onboarding path (supports both /onboarding and #onboarding for local testing)
+const isOnboardingMode = window.location.pathname.includes('/onboarding') || 
+                         window.location.hash === '#onboarding' || 
+                         window.location.search.includes('onboarding=true');
+
+// ===== ONBOARDING FUNCTIONALITY =====
+// Global variable for onboarding data
+let onboardingData = null;
+
+// Onboarding Progress Manager
+const OnboardingProgressManager = (function() {
+    const STORAGE_KEY = 'onboarding_progress';
+
+    function getProgress() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : {};
+    }
+
+    function saveProgress(progress) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    function isStepCompleted(stepId) {
+        const progress = getProgress();
+        return progress[stepId] === true;
+    }
+
+    function toggleStepCompletion(stepId) {
+        const progress = getProgress();
+        progress[stepId] = !progress[stepId];
+        saveProgress(progress);
+        return progress[stepId];
+    }
+
+    function getCompletionPercentage(totalSteps) {
+        const progress = getProgress();
+        const completedCount = Object.values(progress).filter(v => v === true).length;
+        return Math.round((completedCount / totalSteps) * 100);
+    }
+
+    function resetProgress() {
+        localStorage.removeItem(STORAGE_KEY);
+    }
+
+    return {
+        isStepCompleted,
+        toggleStepCompletion,
+        getCompletionPercentage,
+        resetProgress
+    };
+})();
+
+// Load onboarding data from JSON file
+async function loadOnboardingData() {
+    try {
+        const timestamp = new Date().getTime();
+        const response = await fetch(`onboarding-data.json?v=${timestamp}`, {
+            cache: 'no-store',
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Failed to load onboarding data');
+        }
+        onboardingData = await response.json();
+        console.log('Onboarding data loaded successfully');
+        return onboardingData;
+    } catch (error) {
+        console.error('Error loading onboarding data:', error);
+        return null;
+    }
+}
+
+// Render onboarding page
+function renderOnboarding() {
+    const grid = document.getElementById('portal-grid');
+    
+    if (!onboardingData || !onboardingData.steps) {
+        grid.innerHTML = '<p style="color: var(--text-light); text-align: center; grid-column: 1/-1;">Unable to load onboarding information. Please refresh the page.</p>';
+        return;
+    }
+
+    const totalSteps = onboardingData.steps.length;
+    const completionPercentage = OnboardingProgressManager.getCompletionPercentage(totalSteps);
+
+    // Create onboarding container
+    let html = `
+        <div class="onboarding-container">
+            <!-- Welcome Message Box -->
+            <div class="onboarding-welcome">
+                <h2>🎉 Welcome to Hope Ignites!</h2>
+                <p>${onboardingData.welcomeMessage}</p>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="onboarding-progress">
+                <div class="progress-header">
+                    <h3>Your Progress</h3>
+                    <span class="progress-percentage">${completionPercentage}% Complete</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" style="width: ${completionPercentage}%"></div>
+                </div>
+            </div>
+
+            <!-- Onboarding Steps -->
+            <div class="onboarding-steps">
+    `;
+
+    // Render each step
+    onboardingData.steps.forEach((step, index) => {
+        const isCompleted = OnboardingProgressManager.isStepCompleted(step.id);
+        const stepNumber = index + 1;
+
+        html += `
+            <div class="onboarding-step ${isCompleted ? 'completed' : ''}" data-step-id="${step.id}">
+                <div class="step-header">
+                    <div class="step-checkbox-wrapper">
+                        <input type="checkbox" 
+                               id="step-${step.id}" 
+                               class="step-checkbox" 
+                               ${isCompleted ? 'checked' : ''}
+                               aria-label="Mark step ${stepNumber} as complete">
+                        <label for="step-${step.id}" class="step-checkbox-label"></label>
+                    </div>
+                    <div class="step-title-wrapper">
+                        <h3 class="step-title">
+                            <span class="step-number">Step ${stepNumber}</span>
+                            ${step.title}
+                        </h3>
+                        <p class="step-description">${step.description}</p>
+                    </div>
+                </div>
+                
+                <div class="step-content">
+                    <a href="${step.buttonUrl}" 
+                       class="step-button" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       onclick="this.closest('.onboarding-step').querySelector('.step-checkbox').click()">
+                        <span class="step-button-icon">${step.buttonIcon}</span>
+                        ${step.buttonText}
+                    </a>
+                    
+                    ${step.notes && step.notes.length > 0 ? `
+                        <div class="step-notes">
+                            <h4>📝 Important Notes:</h4>
+                            <ul>
+                                ${step.notes.map(note => `<li>${note}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+            </div>
+        </div>
+    `;
+
+    grid.innerHTML = html;
+
+    // Add event listeners to checkboxes
+    const checkboxes = grid.querySelectorAll('.step-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            const stepElement = e.target.closest('.onboarding-step');
+            const stepId = stepElement.dataset.stepId;
+            const isCompleted = OnboardingProgressManager.toggleStepCompletion(stepId);
+            
+            // Update UI
+            stepElement.classList.toggle('completed', isCompleted);
+            
+            // Update progress bar
+            const newPercentage = OnboardingProgressManager.getCompletionPercentage(totalSteps);
+            const progressFill = document.querySelector('.progress-bar-fill');
+            const progressPercentage = document.querySelector('.progress-percentage');
+            
+            if (progressFill) {
+                progressFill.style.width = `${newPercentage}%`;
+            }
+            if (progressPercentage) {
+                progressPercentage.textContent = `${newPercentage}% Complete`;
+            }
+        });
+    });
+}
 
 // Check for tech mode default preference on page load
 (function checkTechModeDefault() {
@@ -457,6 +651,47 @@ function getIconForTheme(iconData) {
         const currentCategoryName = document.getElementById('current-category-name');
         tabContainer.innerHTML = '';
 
+        // Add Onboarding tab if in onboarding mode
+        if (isOnboardingMode) {
+            const onboardingButton = document.createElement('button');
+            onboardingButton.className = 'tab-button';
+            onboardingButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
+                    <path d="M12 2L2 7v3h20V7l-10-5zM4 11v9h6v-6h4v6h6v-9H4z"/>
+                </svg>
+                Onboarding
+            `;
+            onboardingButton.setAttribute('role', 'tab');
+            onboardingButton.setAttribute('aria-selected', currentCategory === 'onboarding' ? 'true' : 'false');
+            onboardingButton.setAttribute('data-category', 'onboarding');
+
+            if (currentCategory === 'onboarding') {
+                onboardingButton.classList.add('active');
+                if (currentCategoryName) {
+                    currentCategoryName.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
+                            <path d="M12 2L2 7v3h20V7l-10-5zM4 11v9h6v-6h4v6h6v-9H4z"/>
+                        </svg>
+                        Onboarding
+                    `;
+                }
+            }
+
+            onboardingButton.addEventListener('click', () => {
+                currentCategory = 'onboarding';
+                renderTabs();
+                renderCards();
+                updateDefaultTabSettingVisibility();
+                // Close mobile menu after selection
+                if (tabContainer.classList.contains('mobile-open')) {
+                    tabContainer.classList.remove('mobile-open');
+                    mobileToggle.classList.remove('open');
+                }
+            });
+
+            tabContainer.appendChild(onboardingButton);
+        }
+
         // Reorder categories if in tech mode - put tech-tools after favorites
         let categoriesToRender = [...portalData.categories];
         if (isTechMode) {
@@ -541,6 +776,12 @@ function getIconForTheme(iconData) {
     renderCards = function() {
         const grid = document.getElementById('portal-grid');
         grid.innerHTML = '';
+
+        // If in onboarding mode and onboarding tab is selected, render onboarding page
+        if (currentCategory === 'onboarding' && isOnboardingMode) {
+            renderOnboarding();
+            return;
+        }
 
         // Get cards for current category
         let cardsToDisplay = [];
@@ -854,6 +1095,13 @@ function getIconForTheme(iconData) {
     async function initPortal() {
         const data = await loadPortalData();
         if (data) {
+            // Load onboarding data if in onboarding mode
+            if (isOnboardingMode) {
+                await loadOnboardingData();
+                // Set initial category to onboarding when on /onboarding route
+                currentCategory = 'onboarding';
+            }
+            
             renderTabs();
             renderCards();
             renderQuickLinks();
