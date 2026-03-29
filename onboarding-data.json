@@ -18,19 +18,66 @@
   "_comment_14": "• Test colors: use fill='currentColor' to inherit button text color",
   "_comment_15": "• Keep SVG code compact (remove unnecessary attributes)",
   "_comment_16": "",
-  "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day.",
+  "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day. The steps below will guide you through accessing your Microsoft 365 account, setting up Outlook, and accessing the Vatterott Training Institute. If at any point you need help, pleaase visit hopeignites.org/help.",
   "steps": [
+    {
+      "id": "install-edge",
+      "title": "Install Microsoft Edge Browser",
+      "description": "Microsoft Edge is the officially supported browser for Hope Ignites. Install it before getting started.",
+      "buttonText": "Download Microsoft Edge",
+      "buttonUrl": "https://www.microsoft.com/en-us/edge/download",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path fill='#0078D4' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 13.5c-.83.58-1.93.9-3.17.9-2.95 0-4.92-1.7-4.92-4.15 0-1.57.87-2.85 2.3-3.47-.18.38-.28.8-.28 1.24 0 1.85 1.47 3.12 3.57 3.12.72 0 1.4-.17 1.97-.47-.1 1.18-.65 2.18-1.47 2.83z'/><path fill='#0EA5E9' d='M16.83 8.17C15.92 6.83 14.06 6 12 6 8.69 6 6 8.69 6 12c0 .28.02.55.05.82C6.85 10.1 9.22 8.5 12 8.5c1.02 0 1.98.22 2.83.62.93.43 1.67 1.1 2 2.05.08.23.13.48.13.73 0 .1-.01.2-.02.3.6-.7.96-1.6.96-2.6 0-.54-.1-1.05-.27-1.53l-.8-.9z'/></svg>",
+      "notes": [
+        "Microsoft Edge is required for the best experience with Hope Ignites applications",
+        "Once installed, set Edge as your default browser for seamless SSO (Single Sign-On)"
+      ],
+      "pc": {
+        "description": "Good news — Microsoft Edge comes pre-installed on Windows. Check that it's up to date before getting started.",
+        "buttonText": "Check for Edge Updates",
+        "buttonUrl": "edge://settings/help",
+        "notes": [
+          "Edge is already installed on Windows — open the Start menu and search for 'Microsoft Edge'",
+          "Go to Settings → Help & feedback → About Microsoft Edge to check for updates",
+          "Set Edge as your default browser: Settings → Default browser → Make default",
+          "Sign in to Edge with your @hopeignites.org account to sync bookmarks and settings"
+        ]
+      },
+      "mac": {
+        "description": "Microsoft Edge is not pre-installed on Mac. Download and install it to get started with Hope Ignites.",
+        "buttonText": "Download Edge for Mac",
+        "buttonUrl": "https://www.microsoft.com/en-us/edge/download",
+        "notes": [
+          "Download the .pkg installer from the Microsoft Edge download page",
+          "Open the downloaded file and follow the installation prompts",
+          "Once installed, open Edge and sign in with your @hopeignites.org account",
+          "Set Edge as your default browser: System Settings → Desktop & Dock → Default web browser → Microsoft Edge",
+          "Edge is also available on the Mac App Store if you prefer that route"
+        ]
+      },
+      "linux": {
+        "description": "Microsoft Edge is available for Linux. Install it via the package manager or download the installer directly.",
+        "buttonText": "Download Edge for Linux",
+        "buttonUrl": "https://www.microsoft.com/en-us/edge/download/",
+        "notes": [
+          "Choose your package format: .deb (Ubuntu/Debian) or .rpm (Fedora/RHEL/openSUSE)",
+          "Debian/Ubuntu: Run 'sudo dpkg -i microsoft-edge-stable_*.deb' after downloading",
+          "Fedora/RHEL: Run 'sudo rpm -i microsoft-edge-stable-*.rpm' after downloading",
+          "Alternatively, add the Microsoft Edge repo to get automatic updates via your package manager",
+          "Once installed, sign in with your @hopeignites.org account to sync settings"
+        ]
+      }
+    },
     {
       "_note": "Each step needs a unique 'id' (used for tracking progress in localStorage)",
       "id": "microsoft-365",
       "title": "Login to Microsoft 365",
       "description": "Access your Hope Ignites Microsoft 365 account to get started with email, OneDrive, and more.",
       "buttonText": "Open Microsoft 365",
-      "buttonUrl": "https://www.office.com/",
+      "buttonUrl": "https://m365.cloud.micrsoft/hopeignites.org",
       "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 23' width='20' height='20'><path fill='#f25022' d='M1 1h10v10H1z'/><path fill='#00a4ef' d='M12 1h10v10H12z'/><path fill='#7fba00' d='M1 12h10v10H1z'/><path fill='#ffb900' d='M12 12h10v10H12z'/></svg>",
       "notes": [
-        "Use the credentials provided by IT in your welcome email",
-        "You may need to set up multi-factor authentication (MFA)",
+        "Use the credentials provided by your supervisor in the account creation email",
+        "You will need to set up multi-factor authentication (MFA) as part of your account setup process. For more infmation on MFA, please visit {LINK_TO_MFA_GUIDE}",
         "Bookmark this page for quick access"
       ]
     },
@@ -45,7 +92,36 @@
         "Download Outlook mobile app from the App Store or Google Play",
         "For desktop, Outlook comes with Microsoft 365",
         "Sign in with your @hopeignites.org email address"
-      ]
+      ],
+      "mac": {
+        "description": "Install and configure Outlook on your Mac and mobile devices to stay connected.",
+        "notes": [
+          "Download Outlook for Mac from the Mac App Store or via the Microsoft 365 portal",
+          "Download the Outlook mobile app from the App Store on your iPhone",
+          "Sign in with your @hopeignites.org email address",
+          "On Mac, go to System Settings → Internet Accounts to also add your account to Apple Mail as a backup"
+        ]
+      },
+      "pc": {
+        "description": "Install and configure Outlook on your Windows PC and mobile devices to stay connected.",
+        "notes": [
+          "Outlook for Windows is included with your Microsoft 365 subscription — open the Start menu and search for Outlook",
+          "Download the Outlook mobile app from Google Play or the App Store",
+          "Sign in with your @hopeignites.org email address",
+          "Pin Outlook to your taskbar for quick access"
+        ]
+      },
+      "linux": {
+        "description": "Access your email via Outlook on the web or configure a desktop mail client on your Linux machine.",
+        "buttonText": "Open Outlook Web",
+        "buttonUrl": "https://outlook.office.com",
+        "notes": [
+          "Outlook desktop is not available for Linux — use Outlook on the web at outlook.office.com",
+          "For a native experience, you can also configure Thunderbird with your @hopeignites.org account using IMAP/SMTP",
+          "Download the Outlook mobile app from Google Play or the App Store",
+          "Sign in with your @hopeignites.org email address"
+        ]
+      }
     },
     {
       "id": "access-training",

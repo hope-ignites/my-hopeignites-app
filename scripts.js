@@ -279,6 +279,24 @@ const isOnboardingMode = window.location.pathname.includes('/onboarding') ||
 // Global variable for onboarding data
 let onboardingData = null;
 
+// Detect operating system: returns 'mac' or 'pc' (pc is the fallback)
+function detectOS() {
+    const platform = (navigator.userAgentData?.platform || '').toLowerCase();
+    const ua = navigator.userAgent.toLowerCase();
+    if (platform.includes('mac') || ua.includes('macintosh') || ua.includes('mac os')) {
+        return 'mac';
+    }
+    if (ua.includes('linux')) {
+        return 'linux';
+    }
+    return 'pc';
+}
+
+// Get the detected OS, allowing a manual override stored in localStorage
+function getOnboardingOS() {
+    return localStorage.getItem('onboarding_os_override') || detectOS();
+}
+
 // Onboarding Progress Manager
 const OnboardingProgressManager = (function() {
     const STORAGE_KEY = 'onboarding_progress';
@@ -345,15 +363,25 @@ async function loadOnboardingData() {
     }
 }
 
+// Resolve OS-specific field from a step: checks step.mac / step.pc, falls back to base field
+function resolveStepField(step, field, os) {
+    const osVariant = step[os];
+    if (osVariant && osVariant[field] !== undefined) return osVariant[field];
+    const pcVariant = step['pc'];
+    if (pcVariant && pcVariant[field] !== undefined) return pcVariant[field];
+    return step[field];
+}
+
 // Render onboarding page
 function renderOnboarding() {
     const grid = document.getElementById('portal-grid');
-    
+
     if (!onboardingData || !onboardingData.steps) {
         grid.innerHTML = '<p style="color: var(--text-light); text-align: center; grid-column: 1/-1;">Unable to load onboarding information. Please refresh the page.</p>';
         return;
     }
 
+    const os = getOnboardingOS();
     const totalSteps = onboardingData.steps.length;
     const completionPercentage = OnboardingProgressManager.getCompletionPercentage(totalSteps);
 
@@ -364,6 +392,26 @@ function renderOnboarding() {
             <div class="onboarding-welcome">
                 <h2>🎉 Welcome to Hope Ignites!</h2>
                 <p>${onboardingData.welcomeMessage}</p>
+            </div>
+
+            <!-- OS Toggle -->
+            <div class="onboarding-os-toggle">
+                <span class="os-toggle-label">Showing instructions for:</span>
+                <div class="os-toggle-buttons" role="group" aria-label="Select operating system">
+                    <button class="os-toggle-btn ${os === 'pc' ? 'active' : ''}" data-os="pc" aria-pressed="${os === 'pc'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 3H4a1 1 0 00-1 1v13a1 1 0 001 1h7v2H8v2h8v-2h-3v-2h7a1 1 0 001-1V4a1 1 0 00-1-1zm-1 13H5V5h14v11z"/></svg>
+                        Windows PC
+                    </button>
+                    <button class="os-toggle-btn ${os === 'mac' ? 'active' : ''}" data-os="mac" aria-pressed="${os === 'mac'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                        Mac
+                    </button>
+                    <button class="os-toggle-btn ${os === 'linux' ? 'active' : ''}" data-os="linux" aria-pressed="${os === 'linux'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C9 2 7 4 7 6.5c0 1.5.5 2.8 1.3 3.7C7.5 11 7 12.2 7 13.5V17c0 1.4.8 2.6 2 3.2V21h2v-1h2v1h2v-.8c1.2-.6 2-1.8 2-3.2v-3.5c0-1.3-.5-2.5-1.3-3.3C16.5 9.3 17 8 17 6.5 17 4 15 2 12 2zm-1.5 8.5c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm3 0c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm-4 3h5v1H9v-1zm1 2.5h4v1h-4v-1z"/></svg>
+                        Linux
+                    </button>
+                </div>
+                <span class="os-detected-badge">${os === detectOS() ? 'Auto-detected' : 'Manually selected'}</span>
             </div>
 
             <!-- Progress Indicator -->
@@ -386,13 +434,20 @@ function renderOnboarding() {
         const isCompleted = OnboardingProgressManager.isStepCompleted(step.id);
         const stepNumber = index + 1;
 
+        const title       = resolveStepField(step, 'title', os);
+        const description = resolveStepField(step, 'description', os);
+        const buttonText  = resolveStepField(step, 'buttonText', os);
+        const buttonUrl   = resolveStepField(step, 'buttonUrl', os);
+        const buttonIcon  = resolveStepField(step, 'buttonIcon', os);
+        const notes       = resolveStepField(step, 'notes', os);
+
         html += `
             <div class="onboarding-step ${isCompleted ? 'completed' : ''}" data-step-id="${step.id}">
                 <div class="step-header">
                     <div class="step-checkbox-wrapper">
-                        <input type="checkbox" 
-                               id="step-${step.id}" 
-                               class="step-checkbox" 
+                        <input type="checkbox"
+                               id="step-${step.id}"
+                               class="step-checkbox"
                                ${isCompleted ? 'checked' : ''}
                                aria-label="Mark step ${stepNumber} as complete">
                         <label for="step-${step.id}" class="step-checkbox-label"></label>
@@ -400,27 +455,27 @@ function renderOnboarding() {
                     <div class="step-title-wrapper">
                         <h3 class="step-title">
                             <span class="step-number">Step ${stepNumber}</span>
-                            ${step.title}
+                            ${title}
                         </h3>
-                        <p class="step-description">${step.description}</p>
+                        <p class="step-description">${description}</p>
                     </div>
                 </div>
-                
+
                 <div class="step-content">
-                    <a href="${step.buttonUrl}" 
-                       class="step-button" 
-                       target="_blank" 
+                    <a href="${buttonUrl}"
+                       class="step-button"
+                       target="_blank"
                        rel="noopener noreferrer"
                        onclick="this.closest('.onboarding-step').querySelector('.step-checkbox').click()">
-                        <span class="step-button-icon">${step.buttonIcon}</span>
-                        ${step.buttonText}
+                        <span class="step-button-icon">${buttonIcon}</span>
+                        ${buttonText}
                     </a>
-                    
-                    ${step.notes && step.notes.length > 0 ? `
+
+                    ${notes && notes.length > 0 ? `
                         <div class="step-notes">
                             <h4>📝 Important Notes:</h4>
                             <ul>
-                                ${step.notes.map(note => `<li>${note}</li>`).join('')}
+                                ${notes.map(note => `<li>${note}</li>`).join('')}
                             </ul>
                         </div>
                     ` : ''}
@@ -436,6 +491,15 @@ function renderOnboarding() {
 
     grid.innerHTML = html;
 
+    // OS toggle button handlers
+    grid.querySelectorAll('.os-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const selectedOS = btn.dataset.os;
+            localStorage.setItem('onboarding_os_override', selectedOS);
+            renderOnboarding();
+        });
+    });
+
     // Add event listeners to checkboxes
     const checkboxes = grid.querySelectorAll('.step-checkbox');
     checkboxes.forEach(checkbox => {
@@ -443,15 +507,15 @@ function renderOnboarding() {
             const stepElement = e.target.closest('.onboarding-step');
             const stepId = stepElement.dataset.stepId;
             const isCompleted = OnboardingProgressManager.toggleStepCompletion(stepId);
-            
+
             // Update UI
             stepElement.classList.toggle('completed', isCompleted);
-            
+
             // Update progress bar
             const newPercentage = OnboardingProgressManager.getCompletionPercentage(totalSteps);
             const progressFill = document.querySelector('.progress-bar-fill');
             const progressPercentage = document.querySelector('.progress-percentage');
-            
+
             if (progressFill) {
                 progressFill.style.width = `${newPercentage}%`;
             }

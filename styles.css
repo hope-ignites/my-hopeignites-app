@@ -1943,6 +1943,64 @@ details.collapsible summary::after {
     margin: 0;
 }
 
+/* OS Toggle */
+.onboarding-os-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 16px 24px;
+    box-shadow: 0 4px 12px var(--card-shadow);
+}
+
+.os-toggle-label {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.os-toggle-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.os-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--border-color, #e2e8f0);
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.os-toggle-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.os-toggle-btn.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: #fff;
+}
+
+.os-detected-badge {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-left: auto;
+}
+
 /* Progress indicator */
 .onboarding-progress {
     background: var(--card-bg);
@@ -1983,7 +2041,7 @@ details.collapsible summary::after {
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    background: linear-gradient(90deg, #ef7322 0%, #f79d1e 100%);
     border-radius: 6px;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 0 10px rgba(239, 115, 34, 0.5);
@@ -2014,12 +2072,12 @@ details.collapsible summary::after {
 
 /* Completed step styling */
 .onboarding-step.completed {
-    border-color: var(--accent-primary);
-    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(239, 115, 34, 0.08) 100%);
+    border-color: var(--accent-secondary);
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(11, 97, 128, 0.08) 100%);
 }
 
 .onboarding-step.completed .step-title {
-    color: var(--accent-primary);
+    color: var(--accent-secondary);
 }
 
 .onboarding-step.completed .step-description {
