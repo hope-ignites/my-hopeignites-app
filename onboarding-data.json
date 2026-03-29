@@ -18,67 +18,121 @@
   "_comment_14": "• Test colors: use fill='currentColor' to inherit button text color",
   "_comment_15": "• Keep SVG code compact (remove unnecessary attributes)",
   "_comment_16": "",
-  "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day. The steps below will guide you through accessing your Microsoft 365 account, setting up Outlook, and accessing the Vatterott Training Institute. If at any point you need help, pleaase visit hopeignites.org/help.",
+  "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day. The steps below will guide you through accessing your Microsoft 365 account, setting up Outlook, and accessing the Vatterott Training Institute. If at any point you need help, pleaase visit <a href='https://hopeignites.org/help'>hopeignites.org/help</a>.",
   "steps": [
     {
-      "id": "install-edge",
-      "title": "Install Microsoft Edge Browser",
-      "description": "Microsoft Edge is the officially supported browser for Hope Ignites. Install it before getting started.",
+      "id": "edge-and-account-setup",
+      "title": "Install Edge & Set Up Your Account",
       "buttonText": "Download Microsoft Edge",
       "buttonUrl": "https://www.microsoft.com/en-us/edge/download",
       "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path fill='#0078D4' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 13.5c-.83.58-1.93.9-3.17.9-2.95 0-4.92-1.7-4.92-4.15 0-1.57.87-2.85 2.3-3.47-.18.38-.28.8-.28 1.24 0 1.85 1.47 3.12 3.57 3.12.72 0 1.4-.17 1.97-.47-.1 1.18-.65 2.18-1.47 2.83z'/><path fill='#0EA5E9' d='M16.83 8.17C15.92 6.83 14.06 6 12 6 8.69 6 6 8.69 6 12c0 .28.02.55.05.82C6.85 10.1 9.22 8.5 12 8.5c1.02 0 1.98.22 2.83.62.93.43 1.67 1.1 2 2.05.08.23.13.48.13.73 0 .1-.01.2-.02.3.6-.7.96-1.6.96-2.6 0-.54-.1-1.05-.27-1.53l-.8-.9z'/></svg>",
-      "notes": [
-        "Microsoft Edge is required for the best experience with Hope Ignites applications",
-        "Once installed, set Edge as your default browser for seamless SSO (Single Sign-On)"
-      ],
       "pc": {
-        "description": "Good news — Microsoft Edge comes pre-installed on Windows. Check that it's up to date before getting started.",
-        "buttonText": "Check for Edge Updates",
-        "buttonUrl": "edge://settings/help",
+        "description": "Ussually Microsoft Edge is already installed on Windows. Open it, sign in with your temporary credentials, and follow the prompts to set your permanent password and configure two factor authentication.",
+        "buttonText": "Open Microsoft Edge",
+        "buttonUrl": "microsoft-edge:https://login.microsoftonline.com",
         "notes": [
-          "Edge is already installed on Windows — open the Start menu and search for 'Microsoft Edge'",
-          "Go to Settings → Help & feedback → About Microsoft Edge to check for updates",
+          "Open the Start menu and search for 'Microsoft Edge'",
+          "Go to Settings → Help & feedback → About Microsoft Edge to make sure Edge is up to date",
+          "Sign in with your @hopeignites.org address and the temporary password from your account creation email",
+          "You will be prompted to set a new permanent password immediately — do this before anything else",
+          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
           "Set Edge as your default browser: Settings → Default browser → Make default",
-          "Sign in to Edge with your @hopeignites.org account to sync bookmarks and settings"
+          "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
       },
       "mac": {
-        "description": "Microsoft Edge is not pre-installed on Mac. Download and install it to get started with Hope Ignites.",
+        "description": "Download and install Microsoft Edge, then sign in with your temporary credentials to set your permanent password and configure MFA.",
         "buttonText": "Download Edge for Mac",
-        "buttonUrl": "https://www.microsoft.com/en-us/edge/download",
+        "buttonUrl": "https://www.microsoft.com/en-us/edge/download/mac",
         "notes": [
-          "Download the .pkg installer from the Microsoft Edge download page",
-          "Open the downloaded file and follow the installation prompts",
-          "Once installed, open Edge and sign in with your @hopeignites.org account",
+          "Download the .pkg installer (linked above) and follow the installation prompts",
+          "Once installed, open Edge and sign in with your @hopeignites.org address and the temporary password from your account creation email",
+          "You will be prompted to set a new permanent password immediately — do this before anything else",
+          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
           "Set Edge as your default browser: System Settings → Desktop & Dock → Default web browser → Microsoft Edge",
-          "Edge is also available on the Mac App Store if you prefer that route"
+          "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
       },
       "linux": {
-        "description": "Microsoft Edge is available for Linux. Install it via the package manager or download the installer directly.",
+        "description": "Install Microsoft Edge, then sign in with your temporary credentials to set your permanent password and configure MFA.",
         "buttonText": "Download Edge for Linux",
-        "buttonUrl": "https://www.microsoft.com/en-us/edge/download/",
+        "buttonUrl": "https://www.microsoft.com/en-us/edge/download",
         "notes": [
           "Choose your package format: .deb (Ubuntu/Debian) or .rpm (Fedora/RHEL/openSUSE)",
           "Debian/Ubuntu: Run 'sudo dpkg -i microsoft-edge-stable_*.deb' after downloading",
           "Fedora/RHEL: Run 'sudo rpm -i microsoft-edge-stable-*.rpm' after downloading",
-          "Alternatively, add the Microsoft Edge repo to get automatic updates via your package manager",
-          "Once installed, sign in with your @hopeignites.org account to sync settings"
+          "Once installed, open Edge and sign in with your @hopeignites.org address and the temporary password from your account creation email",
+          "You will be prompted to set a new permanent password immediately — do this before anything else",
+          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
+          "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
-      }
+      },
+      "appStoreLinks": [
+        {
+          "appName": "Microsoft Edge",
+          "links": [
+            { "label": "App Store", "url": "https://apps.apple.com/app/microsoft-edge/id1288723196", "store": "apple" },
+            { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.microsoft.emmx", "store": "google" }
+          ]
+        },
+        {
+          "appName": "Microsoft Authenticator",
+          "links": [
+            { "label": "App Store", "url": "https://apps.apple.com/app/microsoft-authenticator/id983156458", "store": "apple" },
+            { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.azure.authenticator", "store": "google" }
+          ]
+        }
+      ]
     },
     {
-      "_note": "Each step needs a unique 'id' (used for tracking progress in localStorage)",
-      "id": "microsoft-365",
-      "title": "Login to Microsoft 365",
-      "description": "Access your Hope Ignites Microsoft 365 account to get started with email, OneDrive, and more.",
-      "buttonText": "Open Microsoft 365",
-      "buttonUrl": "https://m365.cloud.micrsoft/hopeignites.org",
-      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 23 23' width='20' height='20'><path fill='#f25022' d='M1 1h10v10H1z'/><path fill='#00a4ef' d='M12 1h10v10H12z'/><path fill='#7fba00' d='M1 12h10v10H1z'/><path fill='#ffb900' d='M12 12h10v10H12z'/></svg>",
+      "id": "teams-setup",
+      "title": "Set Up Microsoft Teams",
+      "description": "Install Microsoft Teams to connect and collaborate with your Hope Ignites colleagues.",
+      "buttonText": "Download Microsoft Teams",
+      "buttonUrl": "https://www.microsoft.com/en-us/microsoft-teams/download-app",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path fill='#5059C9' d='M19.5 8h-1A4.5 4.5 0 0014 12.5V17h7.5a1.5 1.5 0 001.5-1.5v-4A3.5 3.5 0 0019.5 8z'/><circle fill='#5059C9' cx='19.5' cy='5.5' r='2.5'/><path fill='#7B83EB' d='M13.5 8h-9A1.5 1.5 0 003 9.5v7A5.5 5.5 0 008.5 22a5.5 5.5 0 005.5-5.5v-7A1.5 1.5 0 0013.5 8z'/><circle fill='#7B83EB' cx='9' cy='5' r='3'/></svg>",
       "notes": [
-        "Use the credentials provided by your supervisor in the account creation email",
-        "You will need to set up multi-factor authentication (MFA) as part of your account setup process. For more infmation on MFA, please visit {LINK_TO_MFA_GUIDE}",
-        "Bookmark this page for quick access"
+        "Sign in with your @hopeignites.org account",
+        "Teams is used for messaging, video calls, and team collaboration across Hope Ignites",
+        "Download the desktop app for the best experience — it works better than the browser version",
+        "Enable notifications so you don't miss important messages"
+      ],
+      "pc": {
+        "notes": [
+          "Download the Teams installer from the button above and run the .exe file",
+          "Sign in with your @hopeignites.org Microsoft 365 account",
+          "Teams may already be installed if your machine was set up by Technology Services — check the Start menu first",
+          "Pin Teams to your taskbar for quick access",
+          "Enable channel notifications <a href='https://scribehow.com/viewer/Add_Teams_Channel_to_Favorites_and_set_channel_notifications__3QqMNKSaRKaUAmf3SrzhTQ'>in Teams settings</a> so you don't miss messages"
+        ]
+      },
+      "mac": {
+        "notes": [
+          "Download the Teams .pkg installer and follow the installation prompts",
+          "Teams is also available on the Mac App Store",
+          "Sign in with your @hopeignites.org Microsoft 365 account",
+          "Allow Teams to send notifications when prompted — this is important for staying connected",
+          "Enable channel notifications <a href='https://scribehow.com/viewer/Add_Teams_Channel_to_Favorites_and_set_channel_notifications__3QqMNKSaRKaUAmf3SrzhTQ'>in Teams settings</a> so you don't miss messages"
+        ]
+      },
+      "linux": {
+        "notes": [
+          "Download the .deb (Ubuntu/Debian) or .rpm (Fedora/RHEL) package from the button above",
+          "Debian/Ubuntu: Run 'sudo dpkg -i teams-linux_*.deb' to install",
+          "Fedora/RHEL: Run 'sudo rpm -i teams-linux-*.rpm' to install",
+          "Alternatively, use Teams in Edge at teams.microsoft.com — it works well on Linux",
+          "Sign in with your @hopeignites.org Microsoft 365 account",
+          "Enable channel notifications <a href='https://scribehow.com/viewer/Add_Teams_Channel_to_Favorites_and_set_channel_notifications__3QqMNKSaRKaUAmf3SrzhTQ'>in Teams settings</a> so you don't miss messages"
+        ]
+      },
+      "appStoreLinks": [
+        {
+          "appName": "Microsoft Teams",
+          "links": [
+            { "label": "App Store", "url": "https://apps.apple.com/app/microsoft-teams/id1113153706", "store": "apple" },
+            { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.microsoft.teams", "store": "google" }
+          ]
+        }
       ]
     },
     {
@@ -121,19 +175,28 @@
           "Download the Outlook mobile app from Google Play or the App Store",
           "Sign in with your @hopeignites.org email address"
         ]
-      }
+      },
+      "appStoreLinks": [
+        {
+          "appName": "Microsoft Outlook",
+          "links": [
+            { "label": "App Store", "url": "https://apps.apple.com/app/microsoft-outlook/id951937596", "store": "apple" },
+            { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.microsoft.office.outlook", "store": "google" }
+          ]
+        }
+      ]
     },
     {
       "id": "access-training",
-      "title": "Access Training Materials",
-      "description": "Complete your required onboarding training modules in the Learning Management System.",
+      "title": "Access The Vatterott Training Institute our Learning Management System",
+      "description": "Complete your required onboarding training modules via the Vatterott Training Institute on our Netwokr Hub.",
       "buttonText": "Start Training",
-      "buttonUrl": "#",
-      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='#4A90E2'><path d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3z'/><path d='M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/></svg>",
+      "buttonUrl": "https://hopeignites1977.sharepoint.com/sites/PROD-LMS365/",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='#cecece'><path d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3z'/><path d='M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/></svg>",
       "notes": [
-        "Training modules must be completed within your first week",
-        "You'll receive a certificate upon completion",
-        "Contact HR if you have questions about required training"
+        "Training modules will be assigned within your first week",
+        "You'll receive a message from Network Headquartes inviting you to complete the training plan assigned to you",
+        "Contact <a href='https://hopeignites.org/help'>Hope Ignites Technology Services</a> if you have questions about required training"
       ]
     }
     
