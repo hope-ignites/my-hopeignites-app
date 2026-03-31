@@ -299,7 +299,7 @@ function getOnboardingOS() {
 
 // Get device type (organization-issued or BYOD), stored in localStorage
 function getDeviceType() {
-    return localStorage.getItem('onboarding_device_type') || 'org'; // Default to org-issued
+    return localStorage.getItem('onboarding_device_type') || null; // No default - user must select
 }
 
 // Set device type in localStorage
@@ -441,6 +441,10 @@ function renderOnboarding() {
                 </div>
             </div>
 
+            ${!deviceType ? '<div class="onboarding-device-required"><p>👆 Please select your device type to view your personalized onboarding steps.</p></div>' : ''}
+
+            <div class="onboarding-steps-wrapper" style="${!deviceType ? 'display: none;' : ''}">
+
             <!-- OS Toggle -->
             <div class="onboarding-os-toggle">
                 <span class="os-toggle-label">Showing instructions for:</span>
@@ -553,6 +557,9 @@ function renderOnboarding() {
     html += `
             </div>
         </div>
+
+            </div><!-- /.onboarding-steps-wrapper -->
+        </div><!-- /.onboarding-container -->
     `;
 
     grid.innerHTML = html;

@@ -2053,6 +2053,23 @@ body.dark-mode .welcome-onboarding-prompt p {
     color: var(--text-secondary);
 }
 
+/* Device Required Message */
+.onboarding-device-required {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px var(--card-shadow);
+    text-align: center;
+}
+
+.onboarding-device-required p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.6;
+}
+
 /* OS Toggle */
 .onboarding-os-toggle {
     display: flex;

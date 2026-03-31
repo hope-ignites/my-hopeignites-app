@@ -87,6 +87,7 @@ Access the onboarding page at `/onboarding` for new hire setup:
 
 **Features:**
 - Device type selector: Organization Issued vs BYOD (Personal) - saved to localStorage
+- Steps hidden until device type is selected
 - Auto-detected OS (Mac/Windows/Linux) with manual override option
 - Step-by-step onboarding checklist with interactive checkboxes
 - Progress bar showing completion percentage

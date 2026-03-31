@@ -29,7 +29,7 @@
   "_comment_23": "• Test colors: use fill='currentColor' to inherit button text color",
   "_comment_24": "• Keep SVG code compact (remove unnecessary attributes)",
   "_comment_25": "",
-  "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day. The steps below will guide you through accessing your Microsoft 365 account, setting up Outlook, and accessing the Vatterott Training Institute. If at any point you need help, pleaase visit <a href='https://hopeignites.org/help'>hopeignites.org/help</a>.",
+  "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day. The steps below will guide you through accessing your Microsoft 365 account, setting up Outlook, and accessing the Vatterott Training Institute. If at any point you need help, please visit <a href='https://hopeignites.org/help'>hopeignites.org/help</a>.",
   "steps": [
     {
       "id": "edge-and-account-setup",
