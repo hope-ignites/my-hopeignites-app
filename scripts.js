@@ -1520,7 +1520,8 @@ let isNHQIP = false;
     // Check if user has seen the welcome modal before
     const hasSeenWelcome = localStorage.getItem(WELCOME_DISMISSED_KEY);
 
-    if (!hasSeenWelcome) {
+    // Don't show welcome modal on onboarding page
+    if (!hasSeenWelcome && !isOnboardingMode) {
         // Show welcome modal after a short delay (500ms) for better UX
         setTimeout(() => {
             openWelcomeModal();
