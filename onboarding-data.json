@@ -3,21 +3,32 @@
   "_comment_1": "1. Copy an existing step object from the 'steps' array below",
   "_comment_2": "2. Paste it at the end of the array (use the blank lines at the bottom)",
   "_comment_3": "3. Update these properties: id, title, description, buttonText, buttonUrl, buttonIcon, notes",
+  "_comment_3a": "4. Optional: Set 'hideButton: true' to hide the action button for steps that don't need one",
   "_comment_4": "",
-  "_comment_svg_icons": "=== WHERE TO FIND SVG ICONS ===",
-  "_comment_5": "Option 1 - Heroicons: https://heroicons.com/ (free, MIT license, copy SVG code)",
-  "_comment_6": "Option 2 - Bootstrap Icons: https://icons.getbootstrap.com/ (free, copy SVG)",
-  "_comment_7": "Option 3 - Feather Icons: https://feathericons.com/ (free, simple icons)",
-  "_comment_8": "Option 4 - Simple Icons: https://simpleicons.org/ (brand logos as SVG)",
-  "_comment_9": "Option 5 - Use company/app favicons from their website and extract SVG",
+  "_comment_device_variants": "=== DEVICE TYPE & OS VARIANTS ===",
+  "_comment_5": "Steps can have different content for different device types and operating systems.",
+  "_comment_6": "Supported variants (in priority order):",
+  "_comment_7": "  1. byod_mac, byod_pc, org_mac, org_pc (device type + OS specific)",
+  "_comment_8": "  2. mac, pc, linux (OS specific, works for both device types)",
+  "_comment_9": "  3. Base properties (universal fallback)",
   "_comment_10": "",
+  "_comment_11": "Example: If user has BYOD Mac, it checks: byod_mac → mac → base properties",
+  "_comment_12": "Linux is always universal (no device type variants needed)",
+  "_comment_13": "",
+  "_comment_svg_icons": "=== WHERE TO FIND SVG ICONS ===",
+  "_comment_14": "Option 1 - Heroicons: https://heroicons.com/ (free, MIT license, copy SVG code)",
+  "_comment_15": "Option 2 - Bootstrap Icons: https://icons.getbootstrap.com/ (free, copy SVG)",
+  "_comment_16": "Option 3 - Feather Icons: https://feathericons.com/ (free, simple icons)",
+  "_comment_17": "Option 4 - Simple Icons: https://simpleicons.org/ (brand logos as SVG)",
+  "_comment_18": "Option 5 - Use company/app favicons from their website and extract SVG",
+  "_comment_19": "",
   "_comment_svg_tips": "=== SVG FORMATTING TIPS ===",
-  "_comment_11": "• Keep SVG width and height at 20x20 for consistency",
-  "_comment_12": "• Use inline SVG code (wrap in single quotes to avoid JSON issues)",
-  "_comment_13": "• If SVG has double quotes, escape them: \\\" or use single quotes inside",
-  "_comment_14": "• Test colors: use fill='currentColor' to inherit button text color",
-  "_comment_15": "• Keep SVG code compact (remove unnecessary attributes)",
-  "_comment_16": "",
+  "_comment_20": "• Keep SVG width and height at 20x20 for consistency",
+  "_comment_21": "• Use inline SVG code (wrap in single quotes to avoid JSON issues)",
+  "_comment_22": "• If SVG has double quotes, escape them: \\\" or use single quotes inside",
+  "_comment_23": "• Test colors: use fill='currentColor' to inherit button text color",
+  "_comment_24": "• Keep SVG code compact (remove unnecessary attributes)",
+  "_comment_25": "",
   "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day. The steps below will guide you through accessing your Microsoft 365 account, setting up Outlook, and accessing the Vatterott Training Institute. If at any point you need help, pleaase visit <a href='https://hopeignites.org/help'>hopeignites.org/help</a>.",
   "steps": [
     {
@@ -26,12 +37,26 @@
       "buttonText": "Download Microsoft Edge",
       "buttonUrl": "https://www.microsoft.com/en-us/edge/download",
       "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'><path fill='#0078D4' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 13.5c-.83.58-1.93.9-3.17.9-2.95 0-4.92-1.7-4.92-4.15 0-1.57.87-2.85 2.3-3.47-.18.38-.28.8-.28 1.24 0 1.85 1.47 3.12 3.57 3.12.72 0 1.4-.17 1.97-.47-.1 1.18-.65 2.18-1.47 2.83z'/><path fill='#0EA5E9' d='M16.83 8.17C15.92 6.83 14.06 6 12 6 8.69 6 6 8.69 6 12c0 .28.02.55.05.82C6.85 10.1 9.22 8.5 12 8.5c1.02 0 1.98.22 2.83.62.93.43 1.67 1.1 2 2.05.08.23.13.48.13.73 0 .1-.01.2-.02.3.6-.7.96-1.6.96-2.6 0-.54-.1-1.05-.27-1.53l-.8-.9z'/></svg>",
-      "pc": {
-        "description": "Ussually Microsoft Edge is already installed on Windows. Open it, sign in with your temporary credentials, and follow the prompts to set your permanent password and configure two factor authentication.",
+      "_comment_example": "This step demonstrates device type + OS variants (byod_mac, org_mac, etc.)",
+      "byod_pc": {
+        "description": "Download and install Microsoft Edge, then sign in with your temporary credentials to set your permanent password and configure two factor authentication.",
+        "buttonText": "Download Edge for Windows",
+        "buttonUrl": "https://www.microsoft.com/en-us/edge/download",
+        "notes": [
+          "Download the installer from the button above and run the .exe file",
+          "Sign in with your @hopeignites.org address and the temporary password from your account creation email",
+          "You will be prompted to set a new permanent password immediately — do this before anything else",
+          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
+          "Set Edge as your default browser: Settings → Default browser → Make default",
+          "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
+        ]
+      },
+      "org_pc": {
+        "description": "Microsoft Edge should already be installed on your organization computer. Open it, sign in with your temporary credentials, and follow the prompts to set your permanent password and configure two factor authentication.",
         "buttonText": "Open Microsoft Edge",
         "buttonUrl": "microsoft-edge:https://login.microsoftonline.com",
         "notes": [
-          "Open the Start menu and search for 'Microsoft Edge'",
+          "Open the Start menu and search for 'Microsoft Edge' — it should already be installed",
           "Go to Settings → Help & feedback → About Microsoft Edge to make sure Edge is up to date",
           "Sign in with your @hopeignites.org address and the temporary password from your account creation email",
           "You will be prompted to set a new permanent password immediately — do this before anything else",
@@ -40,12 +65,26 @@
           "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
       },
-      "mac": {
-        "description": "Download and install Microsoft Edge, then sign in with your temporary credentials to set your permanent password and configure MFA.",
+      "byod_mac": {
+        "description": "Download and install Microsoft Edge on your personal Mac, then sign in with your temporary credentials to set your permanent password and configure MFA.",
         "buttonText": "Download Edge for Mac",
         "buttonUrl": "https://www.microsoft.com/en-us/edge/download/mac",
         "notes": [
           "Download the .pkg installer (linked above) and follow the installation prompts",
+          "Once installed, open Edge and sign in with your @hopeignites.org address and the temporary password from your account creation email",
+          "You will be prompted to set a new permanent password immediately — do this before anything else",
+          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
+          "Set Edge as your default browser: System Settings → Desktop & Dock → Default web browser → Microsoft Edge",
+          "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
+        ]
+      },
+      "org_mac": {
+        "description": "Microsoft Edge may already be installed on your organization Mac. If not, download and install it, then sign in with your temporary credentials.",
+        "buttonText": "Download Edge for Mac",
+        "buttonUrl": "https://www.microsoft.com/en-us/edge/download/mac",
+        "notes": [
+          "Check if Edge is already installed by searching for it in Spotlight (Cmd+Space)",
+          "If not installed, download the .pkg installer and follow the installation prompts",
           "Once installed, open Edge and sign in with your @hopeignites.org address and the temporary password from your account creation email",
           "You will be prompted to set a new permanent password immediately — do this before anything else",
           "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
@@ -188,22 +227,43 @@
     },
     {
       "id": "access-training",
-      "title": "Access The Vatterott Training Institute our Learning Management System",
-      "description": "Complete your required onboarding training modules via the Vatterott Training Institute on our Netwokr Hub.",
+      "title": "Access Your Training Plan on the Vatterott Training Institute (LMS)",
+      "description": "Start your Training Plan with an introduction to the technology tools on the Vatterott Training Institute, our learning management system.",
       "buttonText": "Start Training",
-      "buttonUrl": "https://hopeignites1977.sharepoint.com/sites/PROD-LMS365/",
+      "buttonUrl": "https://hopeignites1977.sharepoint.com/sites/PROD-LMS365/SitePages/IntroductiontoTechnologyServices.aspx",
       "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='#cecece'><path d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3z'/><path d='M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z'/></svg>",
       "notes": [
-        "Training modules will be assigned within your first week",
-        "You'll receive a message from Network Headquartes inviting you to complete the training plan assigned to you",
-        "Contact <a href='https://hopeignites.org/help'>Hope Ignites Technology Services</a> if you have questions about required training"
+        "You'll receive guidance from Network Headquarters and/or your local training administrator inviting you to complete the training plan assigned to you.",
+        "You can find all your assigned training on the <a href='https://hopeignites1977.sharepoint.com/sites/PROD-LMS365/SitePages/Dashboard.aspx'>Training Dashboard</a>.",
+        "Contact your supervisor or <a href='https://hopeignites.org/help'>Hope Ignites Technology Services</a> if you have questions about required training"
+      ]
+    },
+    {
+      "id": "onboarding-call",
+      "title": "Onboarding Call with Network Headquarters",
+      "description": "Schedule and complete your onboarding call with the Network Headquarters team.",
+      "hideButton": true,
+      "buttonText": "Schedule Call",
+      "buttonUrl": "https://hopeignites.org/help",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z'/></svg>",
+      "notes": [
+        "Additional details to be provided by Julie",
+        "This call will help you get acquainted with the Network Headquarters team and processes"
+      ]
+    },
+    {
+      "id": "policy-review",
+      "title": "Review the Hope Ignites Policy Manual",
+      "description": "All new employees should review the Policy Manual to understand organizational policies and procedures.",
+      "buttonText": "Start the Policy Review Now",
+      "buttonUrl": "https://hopeignites1977.sharepoint.com/sites/PROD-LMS365/SitePages/BoysHopeGirlsHopePolicyReview.aspx?web=1&isNewUI=true&xsdata=MDV8MDJ8cGV0ZXIuc2Nod2Vpc3NAaG9wZWlnbml0ZXMub3JnfGY5ODdhODVhZGIwZjQ3YjlmZDE4MDhkZThmNDdiODg0fDIzM2I0N2JhNDgxNjRlOWZhNGU0MGRmMWE1ZjQyMjFkfDF8MHw2MzkxMDU3MzU0ODc1NDU4NDV8VW5rbm93bnxUV0ZwYkdac2IzZDhleUpGYlhCMGVVMWhjR2tpT25SeWRXVXNJbFlpT2lJd0xqQXVNREF3TUNJc0lsQWlPaUpYYVc0ek1pSXNJa0ZPSWpvaVRXRnBiQ0lzSWxkVUlqb3lmUT09fDB8fHw%3d&sdata=QWpvSXJvcDhvOGlHN0s3cWYwUnNjaTlDY0VOYXdBRkY4M2VTbjAwWUJzOD0%3d",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z'/></svg>",
+      "notes": [
+        "The policy review is required for all new employees",
+        "Take your time to read through each section carefully",
+        "Contact Human Resources if you have questions about any policies"
       ]
     }
-    
-    
-    
-    
-    
     
     
     

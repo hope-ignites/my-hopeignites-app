@@ -1975,6 +1975,84 @@ body.dark-mode .welcome-onboarding-prompt p {
     margin: 0;
 }
 
+/* Device Type Selector */
+.onboarding-device-type {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px var(--card-shadow);
+}
+
+.onboarding-device-type h3 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+}
+
+.device-type-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.device-type-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border: 2px solid var(--border-color, #e2e8f0);
+    border-radius: 12px;
+    background: var(--bg-light);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.device-type-option:hover {
+    border-color: var(--accent-primary);
+    background: var(--card-bg);
+}
+
+.device-type-option.selected {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary);
+    color: #fff;
+}
+
+.device-type-option.selected .device-type-label strong,
+.device-type-option.selected .device-type-label small {
+    color: #fff;
+}
+
+.device-type-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.device-type-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.device-type-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.device-type-label strong {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.device-type-label small {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
 /* OS Toggle */
 .onboarding-os-toggle {
     display: flex;
@@ -2349,6 +2427,19 @@ body.dark-mode .step-app-store-btn--apple {
 
     .onboarding-welcome p {
         font-size: 1rem;
+    }
+
+    .device-type-options {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .device-type-option {
+        padding: 14px 16px;
+    }
+
+    .device-type-icon {
+        font-size: 1.5rem;
     }
 
     .onboarding-progress {

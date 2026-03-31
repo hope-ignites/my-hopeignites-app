@@ -297,6 +297,16 @@ function getOnboardingOS() {
     return localStorage.getItem('onboarding_os_override') || detectOS();
 }
 
+// Get device type (organization-issued or BYOD), stored in localStorage
+function getDeviceType() {
+    return localStorage.getItem('onboarding_device_type') || 'org'; // Default to org-issued
+}
+
+// Set device type in localStorage
+function setDeviceType(type) {
+    localStorage.setItem('onboarding_device_type', type);
+}
+
 // Onboarding Progress Manager
 const OnboardingProgressManager = (function() {
     const STORAGE_KEY = 'onboarding_progress';
@@ -363,12 +373,25 @@ async function loadOnboardingData() {
     }
 }
 
-// Resolve OS-specific field from a step: checks step.mac / step.pc, falls back to base field
-function resolveStepField(step, field, os) {
+// Resolve OS-specific field from a step, considering device type variants
+// Priority: device_os variant (e.g., byod_mac) > os variant (e.g., mac) > base field
+function resolveStepField(step, field, os, deviceType) {
+    // For Linux, skip device type variants (Linux is universal)
+    if (os !== 'linux') {
+        const deviceOsKey = `${deviceType}_${os}`; // e.g., "byod_mac" or "org_pc"
+        const deviceOsVariant = step[deviceOsKey];
+        if (deviceOsVariant && deviceOsVariant[field] !== undefined) {
+            return deviceOsVariant[field];
+        }
+    }
+    
+    // Fall back to OS variant (mac, pc, linux)
     const osVariant = step[os];
-    if (osVariant && osVariant[field] !== undefined) return osVariant[field];
-    const pcVariant = step['pc'];
-    if (pcVariant && pcVariant[field] !== undefined) return pcVariant[field];
+    if (osVariant && osVariant[field] !== undefined) {
+        return osVariant[field];
+    }
+    
+    // Final fallback to base field
     return step[field];
 }
 
@@ -382,6 +405,7 @@ function renderOnboarding() {
     }
 
     const os = getOnboardingOS();
+    const deviceType = getDeviceType();
     const totalSteps = onboardingData.steps.length;
     const completionPercentage = OnboardingProgressManager.getCompletionPercentage(totalSteps);
 
@@ -392,6 +416,29 @@ function renderOnboarding() {
             <div class="onboarding-welcome">
                 <h2>🎉 Welcome to Hope Ignites!</h2>
                 <p>${onboardingData.welcomeMessage}</p>
+            </div>
+
+            <!-- Device Type Selector -->
+            <div class="onboarding-device-type">
+                <h3>Select your device type:</h3>
+                <div class="device-type-options" role="radiogroup" aria-label="Select device type">
+                    <label class="device-type-option ${deviceType === 'org' ? 'selected' : ''}">
+                        <input type="radio" name="device-type" value="org" ${deviceType === 'org' ? 'checked' : ''} />
+                        <span class="device-type-icon">🏢</span>
+                        <span class="device-type-label">
+                            <strong>Organization Issued</strong>
+                            <small>Computer provided by Hope Ignites</small>
+                        </span>
+                    </label>
+                    <label class="device-type-option ${deviceType === 'byod' ? 'selected' : ''}">
+                        <input type="radio" name="device-type" value="byod" ${deviceType === 'byod' ? 'checked' : ''} />
+                        <span class="device-type-icon">💼</span>
+                        <span class="device-type-label">
+                            <strong>BYOD (Personal)</strong>
+                            <small>Using your own device</small>
+                        </span>
+                    </label>
+                </div>
             </div>
 
             <!-- OS Toggle -->
@@ -434,12 +481,13 @@ function renderOnboarding() {
         const isCompleted = OnboardingProgressManager.isStepCompleted(step.id);
         const stepNumber = index + 1;
 
-        const title       = resolveStepField(step, 'title', os);
-        const description = resolveStepField(step, 'description', os);
-        const buttonText  = resolveStepField(step, 'buttonText', os);
-        const buttonUrl   = resolveStepField(step, 'buttonUrl', os);
-        const buttonIcon  = resolveStepField(step, 'buttonIcon', os);
-        const notes       = resolveStepField(step, 'notes', os);
+        const title       = resolveStepField(step, 'title', os, deviceType);
+        const description = resolveStepField(step, 'description', os, deviceType);
+        const buttonText  = resolveStepField(step, 'buttonText', os, deviceType);
+        const buttonUrl   = resolveStepField(step, 'buttonUrl', os, deviceType);
+        const buttonIcon  = resolveStepField(step, 'buttonIcon', os, deviceType);
+        const notes       = resolveStepField(step, 'notes', os, deviceType);
+        const hideButton  = resolveStepField(step, 'hideButton', os, deviceType);
 
         html += `
             <div class="onboarding-step ${isCompleted ? 'completed' : ''}" data-step-id="${step.id}">
@@ -462,14 +510,15 @@ function renderOnboarding() {
                 </div>
 
                 <div class="step-content">
-                    <a href="${buttonUrl}"
-                       class="step-button"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       onclick="this.closest('.onboarding-step').querySelector('.step-checkbox').click()">
-                        <span class="step-button-icon">${buttonIcon}</span>
-                        ${buttonText}
-                    </a>
+                    ${!hideButton ? `
+                        <a href="${buttonUrl}"
+                           class="step-button"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="step-button-icon">${buttonIcon}</span>
+                            ${buttonText}
+                        </a>
+                    ` : ''}
 
                     ${step.appStoreLinks && step.appStoreLinks.length > 0 ? `
                         <div class="step-app-store-links">
@@ -507,6 +556,14 @@ function renderOnboarding() {
     `;
 
     grid.innerHTML = html;
+
+    // Device type radio button handlers
+    grid.querySelectorAll('input[name="device-type"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            setDeviceType(e.target.value);
+            renderOnboarding();
+        });
+    });
 
     // OS toggle button handlers
     grid.querySelectorAll('.os-toggle-btn').forEach(btn => {

@@ -86,18 +86,29 @@ Access the Application Launcher at `/tech` to enable Tech Mode:
 Access the onboarding page at `/onboarding` for new hire setup:
 
 **Features:**
+- Device type selector: Organization Issued vs BYOD (Personal) - saved to localStorage
+- Auto-detected OS (Mac/Windows/Linux) with manual override option
 - Step-by-step onboarding checklist with interactive checkboxes
 - Progress bar showing completion percentage
 - Each step includes: title, description, action button with icon, and helpful notes
+- Steps can have different content based on device type + OS combination
 - Progress automatically saved to localStorage (persists across sessions)
-- Clicking action buttons auto-checks the step
 - Modern card-style design matching the launcher theme
 - Fully responsive (stacks beautifully on mobile)
+
+**Device Type & OS Variants:**
+Steps can be customized for different device types and operating systems:
+- **Priority order**: `byod_mac` > `mac` > base properties
+- **Supported variants**: `byod_mac`, `byod_pc`, `org_mac`, `org_pc`, `mac`, `pc`, `linux`
+- Linux is always universal (no device type variants needed)
+- Example: BYOD Mac user sees `byod_mac` variant, then falls back to `mac`, then base properties
 
 **Configuration** (in [onboarding-data.json](onboarding-data.json)):
 - `welcomeMessage` - Customizable welcome message for new hires
 - `steps[]` - Array of onboarding step objects
 - Each step includes: `id`, `title`, `description`, `buttonText`, `buttonUrl`, `buttonIcon` (SVG), `notes[]`
+- Steps can optionally include device+OS variants: `byod_mac`, `byod_pc`, `org_mac`, `org_pc`
+- Steps can optionally include OS-only variants: `mac`, `pc`, `linux`
 - Extensive inline comments explain how to add new steps and find SVG icons
 
 **Tab Behavior:**
@@ -290,6 +301,34 @@ The portal automatically switches icons when the user toggles between light and 
      ]
    }
    ```
+
+**Device Type & OS Variants**:
+Steps can have different content for different device types and operating systems. Add variants to steps as needed:
+
+```json
+{
+  "id": "example-step",
+  "title": "Base Title (fallback)",
+  "description": "Base description",
+  "buttonText": "Base Button",
+  "buttonUrl": "https://example.com",
+  "buttonIcon": "<svg>...</svg>",
+  "byod_mac": {
+    "description": "BYOD Mac-specific description",
+    "notes": ["BYOD Mac tip 1", "BYOD Mac tip 2"]
+  },
+  "org_pc": {
+    "description": "Org-issued PC-specific description",
+    "notes": ["Org PC tip 1", "Org PC tip 2"]
+  },
+  "mac": {
+    "description": "Generic Mac description (applies to both BYOD and Org)",
+    "notes": ["Mac tip 1"]
+  }
+}
+```
+
+**Variant Priority**: `byod_mac` > `mac` > base properties. Linux steps don't need device type variants.
 
 **Finding SVG Icons**:
 The file includes extensive comments with links to free SVG icon resources:
