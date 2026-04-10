@@ -166,7 +166,7 @@
           "url": "https://hopeignites.org/wp-admin",
           "sso": true,
           "tech": false,
-          "isNew": true
+          "isNew": false
         }
       ]
     },
@@ -347,7 +347,8 @@
           "title": "Ramp",
           "description": "Corporate card and expense management platform",
           "url": "https://app.ramp.com/home",
-          "nhqOnly": false
+          "nhqOnly": false,
+          "isNew": true
         }
       ]
     },
