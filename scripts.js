@@ -275,6 +275,16 @@ const isOnboardingMode = window.location.pathname.includes('/onboarding') ||
                          window.location.hash === '#onboarding' || 
                          window.location.search.includes('onboarding=true');
 
+// Detect if we're on /force path (supports both /force and #force for local testing)
+const isForceMode = window.location.pathname.includes('/force') || 
+                    window.location.hash === '#force' || 
+                    window.location.search.includes('force=true');
+
+// Override currentCategory if we're in force mode
+if (isForceMode) {
+    currentCategory = 'crm-apps'; // Hopeforce category
+}
+
 // ===== ONBOARDING FUNCTIONALITY =====
 // Global variable for onboarding data
 let onboardingData = null;
@@ -789,56 +799,33 @@ function getIconForTheme(iconData) {
         return newApps;
     }
 
-    // Render tab buttons
+    // Render category dropdown and quick access buttons
     renderTabs = function() {
-        const tabContainer = document.getElementById('tab-container');
-        const mobileToggle = document.getElementById('category-mobile-toggle');
+        const categorySelect = document.getElementById('category-select');
+        const quickAccessContainer = document.getElementById('quick-access-buttons');
         const currentCategoryName = document.getElementById('current-category-name');
-        tabContainer.innerHTML = '';
+        
+        if (!categorySelect || !quickAccessContainer) {
+            console.error('Category navigation elements not found');
+            return;
+        }
+        
+        categorySelect.innerHTML = '';
+        quickAccessContainer.innerHTML = '';
 
-        // Add Onboarding tab if in onboarding mode
+        // Build categories list
+        let categoriesToRender = [...portalData.categories];
+
+        // Add Onboarding option if in onboarding mode
         if (isOnboardingMode) {
-            const onboardingButton = document.createElement('button');
-            onboardingButton.className = 'tab-button';
-            onboardingButton.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
-                    <path d="M12 2L2 7v3h20V7l-10-5zM4 11v9h6v-6h4v6h6v-9H4z"/>
-                </svg>
-                Onboarding
-            `;
-            onboardingButton.setAttribute('role', 'tab');
-            onboardingButton.setAttribute('aria-selected', currentCategory === 'onboarding' ? 'true' : 'false');
-            onboardingButton.setAttribute('data-category', 'onboarding');
-
-            if (currentCategory === 'onboarding') {
-                onboardingButton.classList.add('active');
-                if (currentCategoryName) {
-                    currentCategoryName.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
-                            <path d="M12 2L2 7v3h20V7l-10-5zM4 11v9h6v-6h4v6h6v-9H4z"/>
-                        </svg>
-                        Onboarding
-                    `;
-                }
-            }
-
-            onboardingButton.addEventListener('click', () => {
-                currentCategory = 'onboarding';
-                renderTabs();
-                renderCards();
-                updateDefaultTabSettingVisibility();
-                // Close mobile menu after selection
-                if (tabContainer.classList.contains('mobile-open')) {
-                    tabContainer.classList.remove('mobile-open');
-                    mobileToggle.classList.remove('open');
-                }
+            categoriesToRender.unshift({
+                id: 'onboarding',
+                name: '🏠 Onboarding',
+                cards: []
             });
-
-            tabContainer.appendChild(onboardingButton);
         }
 
         // Reorder categories if in tech mode - put tech-tools after favorites
-        let categoriesToRender = [...portalData.categories];
         if (isTechMode) {
             const techToolsIndex = categoriesToRender.findIndex(cat => cat.id === 'tech-tools');
             const favoritesIndex = categoriesToRender.findIndex(cat => cat.id === 'favorites');
@@ -851,26 +838,12 @@ function getIconForTheme(iconData) {
             }
         }
 
-        // Add "New Apps" category after favorites if there are new apps
-        const newApps = getNewApps();
-        if (newApps.length > 0) {
-            const favoritesIndex = categoriesToRender.findIndex(cat => cat.id === 'favorites');
-            if (favoritesIndex !== -1) {
-                // Insert "New Apps" category right after favorites
-                categoriesToRender.splice(favoritesIndex + 1, 0, {
-                    id: 'new',
-                    name: '❇️  New Apps',
-                    cards: newApps
-                });
-            }
-        }
-
         // Add "Recently Used" category after favorites
         const recentApps = RecentlyUsedManager.getRecentlyUsed();
         if (recentApps.length > 0) {
             const favoritesIndex = categoriesToRender.findIndex(cat => cat.id === 'favorites');
             if (favoritesIndex !== -1) {
-                // Insert right after favorites (before New Apps if it exists)
+                // Insert right after favorites
                 categoriesToRender.splice(favoritesIndex + 1, 0, {
                     id: 'recently-used',
                     name: '🕐 Recently Used',
@@ -879,6 +852,56 @@ function getIconForTheme(iconData) {
             }
         }
 
+        // Add "New Apps" category after favorites/recently-used if there are new apps
+        const newApps = getNewApps();
+        if (newApps.length > 0) {
+            const favoritesIndex = categoriesToRender.findIndex(cat => cat.id === 'favorites');
+            if (favoritesIndex !== -1) {
+                // Find insertion point (after recently-used if it exists)
+                let insertIndex = favoritesIndex + 1;
+                if (categoriesToRender[insertIndex]?.id === 'recently-used') {
+                    insertIndex++;
+                }
+                categoriesToRender.splice(insertIndex, 0, {
+                    id: 'new',
+                    name: '❇️  New Apps',
+                    cards: newApps
+                });
+            }
+        }
+
+        // Quick access button IDs (these appear as buttons, not in dropdown)
+        const quickAccessIds = ['favorites', 'recently-used'];
+
+        // Render quick access buttons (Favorites & Recently Used)
+        categoriesToRender.forEach(category => {
+            if (quickAccessIds.includes(category.id)) {
+                const button = document.createElement('button');
+                button.className = 'quick-access-btn';
+                button.textContent = category.name;
+                button.dataset.categoryId = category.id;
+
+                if (category.id === currentCategory) {
+                    button.classList.add('active');
+                }
+
+                button.addEventListener('click', () => {
+                    currentCategory = category.id;
+                    renderTabs(); // Re-render to update active states
+                    renderCards();
+                    updateDefaultTabSettingVisibility();
+                    
+                    // Update mobile category name
+                    if (currentCategoryName) {
+                        currentCategoryName.textContent = category.name;
+                    }
+                });
+
+                quickAccessContainer.appendChild(button);
+            }
+        });
+
+        // Populate dropdown options (all categories for accessibility, but quick access ones are also buttons)
         categoriesToRender.forEach(category => {
             // Filter out tech-only categories if not in tech mode
             const hasTechCards = category.cards && category.cards.some(card => card.tech === true);
@@ -886,35 +909,51 @@ function getIconForTheme(iconData) {
                 return; // Skip this category
             }
 
-            const button = document.createElement('button');
-            button.className = 'tab-button';
-            button.textContent = category.name;
-            button.setAttribute('role', 'tab');
-            button.setAttribute('aria-selected', category.id === currentCategory ? 'true' : 'false');
-            button.setAttribute('data-category', category.id);
+            // Skip quick access categories in dropdown to avoid duplication
+            if (quickAccessIds.includes(category.id)) {
+                return;
+            }
 
+            const option = document.createElement('option');
+            option.value = category.id;
+            option.textContent = category.name;
+            
             if (category.id === currentCategory) {
-                button.classList.add('active');
+                option.selected = true;
                 // Update mobile toggle button text with current category
                 if (currentCategoryName) {
                     currentCategoryName.textContent = category.name;
                 }
             }
 
-            button.addEventListener('click', () => {
-                currentCategory = category.id;
-                renderTabs();
+            categorySelect.appendChild(option);
+        });
+
+        // Add a placeholder option if a quick access button is selected
+        if (quickAccessIds.includes(currentCategory)) {
+            const placeholderOption = document.createElement('option');
+            placeholderOption.value = '';
+            placeholderOption.textContent = '— More Categories —';
+            placeholderOption.selected = true;
+            placeholderOption.disabled = true;
+            categorySelect.insertBefore(placeholderOption, categorySelect.firstChild);
+        }
+
+        // Add change event listener to dropdown
+        categorySelect.onchange = function() {
+            if (this.value) { // Ignore placeholder
+                currentCategory = this.value;
+                renderTabs(); // Re-render to update active states
                 renderCards();
                 updateDefaultTabSettingVisibility();
-                // Close mobile menu after selection
-                if (tabContainer.classList.contains('mobile-open')) {
-                    tabContainer.classList.remove('mobile-open');
-                    mobileToggle.classList.remove('open');
+                
+                // Update mobile category name
+                const selectedOption = this.options[this.selectedIndex];
+                if (currentCategoryName && selectedOption) {
+                    currentCategoryName.textContent = selectedOption.textContent;
                 }
-            });
-
-            tabContainer.appendChild(button);
-        });
+            }
+        };
     };
 
     // Render portal cards
@@ -1251,7 +1290,7 @@ function getIconForTheme(iconData) {
             renderCards();
             renderQuickLinks();
             initMobileToggle();
-            initTabScrollArrows();
+            // initTabScrollArrows(); // Removed - using dropdown instead of scrolling tabs
             initDefaultTabToggle();
             updateDefaultTabSettingVisibility();
             initTechMode();
@@ -1977,6 +2016,7 @@ let isNHQIP = false;
             btn.addEventListener('click', () => {
                 currentCategory = category.id;
                 renderCards();
+                renderTabs(); // Update dropdown selection
                 updateDefaultTabSettingVisibility();
 
                 // Update active state
@@ -1984,14 +2024,6 @@ let isNHQIP = false;
                     b.classList.remove('active');
                 });
                 btn.classList.add('active');
-
-                // Update desktop tabs too
-                document.querySelectorAll('.tab-button').forEach(b => {
-                    b.classList.remove('active');
-                    if (b.dataset.category === category.id) {
-                        b.classList.add('active');
-                    }
-                });
 
                 closeDrawer();
             });

@@ -101,14 +101,24 @@
             </label>
         </div>
 
-        <!-- Tab Navigation (dynamically generated) -->
+        <!-- Category Navigation: Quick Access Buttons + Dropdown -->
         <button id="category-mobile-toggle" class="category-mobile-toggle" aria-label="Toggle category menu">
             <span id="current-category-name">Categories</span>
         </button>
-        <div class="tab-navigation-wrapper">
-            <button class="tab-scroll-arrow tab-scroll-left" aria-label="Scroll categories left">‹</button>
-            <div id="tab-container" class="tab-container" role="tablist"></div>
-            <button class="tab-scroll-arrow tab-scroll-right" aria-label="Scroll categories right">›</button>
+        
+        <div class="category-nav-row">
+            <!-- Quick Access Buttons (Favorites & Recently Used) -->
+            <div id="quick-access-buttons" class="quick-access-buttons">
+                <!-- Buttons dynamically generated -->
+            </div>
+            
+            <!-- Category Dropdown for All Other Categories -->
+            <div class="category-dropdown-wrapper">
+                <label for="category-select" class="visually-hidden">Select Category</label>
+                <select id="category-select" class="category-dropdown" aria-label="Select application category">
+                    <!-- Options dynamically generated -->
+                </select>
+            </div>
         </div>
 
         <!-- Default Tab Setting (shown only on favorites tab) -->
@@ -227,7 +237,7 @@
                             </tr>
                             <tr>
                                 <td>Human Capital Management Apps</td>
-                                <td>Team Member experience applications integrated with Salesforce</td>
+                                <td>People record management applications built in Hope Force</td>
                                 <td>community.bhgh.org/hiring</td>
                             </tr>
                             <tr>

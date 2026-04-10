@@ -167,67 +167,111 @@ body {
 }
 
 /* Tab navigation */
-/* Tab navigation wrapper with scroll arrows */
-.tab-navigation-wrapper {
-    position: relative;
-    margin-bottom: 24px;
-}
-
-.tab-container {
+/* Quick Access Buttons (Favorites & Recently Used) */
+.quick-access-buttons {
     display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scroll-behavior: smooth;
-    /* Hide scrollbar */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    gap: 12px;
 }
 
-.tab-container::-webkit-scrollbar {
-    display: none; /* Chrome/Safari/Opera */
-}
-
-/* Scroll arrows */
-.tab-scroll-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: var(--card-bg);
-    color: var(--accent-primary);
-    border: 2px solid var(--accent-primary);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
-    font-weight: bold;
+.quick-access-btn {
+    background: var(--overlay-bg);
+    color: var(--text-light);
+    border: 2px solid transparent;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
     cursor: pointer;
-    z-index: 10;
-    opacity: 0;
-    transition: opacity 0.3s ease, background 0.3s ease;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.quick-access-btn:hover {
+    background: var(--overlay-bg-hover);
+    transform: translateY(-2px);
+}
+
+.quick-access-btn.active {
+    background: var(--card-bg);
+    color: var(--accent-secondary);
+    border-color: #0b6180;
+    box-shadow: 0 4px 12px var(--card-shadow), 0 0 20px rgba(239, 115, 34, 0.6);
+}
+
+.quick-access-btn:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Category Navigation Wrapper - combines buttons and dropdown */
+.category-nav-row {
     display: flex;
+    gap: 12px;
     align-items: center;
     justify-content: center;
-    line-height: 1;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+/* Category Dropdown Navigation */
+.category-dropdown-wrapper {
+    flex: 1;
+    max-width: 500px;
+    min-width: 250px;
+}
+
+.category-dropdown {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: var(--card-bg);
+    border: 2px solid var(--accent-primary);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--card-shadow);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ff6b35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 45px;
+}
+
+.category-dropdown:hover {
+    border-color: var(--accent-hover);
+    box-shadow: 0 4px 12px var(--card-shadow), 0 0 20px rgba(239, 115, 34, 0.3);
+    transform: translateY(-2px);
+}
+
+.category-dropdown:focus {
+    outline: none;
+    border-color: var(--accent-secondary);
+    box-shadow: 0 4px 12px var(--card-shadow), 0 0 20px rgba(239, 115, 34, 0.5);
+}
+
+.category-dropdown option {
+    padding: 10px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+/* Dark mode dropdown arrow color */
+body.dark-mode .category-dropdown {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ff6b35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
     padding: 0;
-}
-
-.tab-navigation-wrapper:hover .tab-scroll-arrow {
-    opacity: 1;
-}
-
-.tab-scroll-arrow:hover {
-    background: var(--accent-primary);
-    color: white;
-}
-
-.tab-scroll-arrow.hidden {
-    opacity: 0 !important;
-    pointer-events: none;
-}
-
-.tab-scroll-left {
-    left: -10px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 
 /* Default Tab Setting Toggle */
@@ -309,10 +353,7 @@ body {
     background-color: var(--accent-hover);
 }
 
-.tab-scroll-right {
-    right: -10px;
-}
-
+/* Keep tab-button styles for mobile menu compatibility */
 .tab-button {
     background: var(--overlay-bg);
     color: var(--text-light);
@@ -327,27 +368,6 @@ body {
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
-}
-
-/* Ripple effect on button click */
-.tab-button::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%);
-    background-size: 1000% 1000%;
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-
-.tab-button:active::after {
-    opacity: 1;
-    background-size: 0% 0%;
-    transition: 0s;
 }
 
 .tab-button:hover {
@@ -1717,12 +1737,12 @@ body.dark-mode .welcome-onboarding-prompt p {
         display: block;
     }
 
-    /* Hide scroll arrows on mobile */
-    .tab-scroll-arrow {
-        display: none !important;
+    /* Hide entire category navigation row on mobile (use mobile menu instead) */
+    .category-nav-row {
+        display: none;
     }
 
-    /* Hide tabs by default on mobile */
+    /* Hide tabs by default on mobile (legacy - still used by mobile menu) */
     .tab-container {
         display: none;
         flex-direction: column;
