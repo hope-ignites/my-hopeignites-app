@@ -1,11 +1,14 @@
 // Service Worker for Hope Ignites Application Launcher PWA
-const CACHE_NAME = 'hopeignites-app-launcher-v2';
+const CACHE_NAME = 'hopeignites-app-launcher-v3';
 const urlsToCache = [
   '/',
   '/index.html',
   '/styles.css',
+  '/styles.css?v=1.1.0',
   '/scripts.js',
+  '/scripts.js?v=1.1.0',
   '/portal-data.json',
+  '/onboarding-data.json',
   '/assets/light-logo.png',
   '/assets/dark-logo.png',
   '/assets/universal.png',

@@ -30,6 +30,22 @@
   "_comment_24": "• Keep SVG code compact (remove unnecessary attributes)",
   "_comment_25": "",
   "welcomeMessage": "Welcome to Hope Ignites! Let's get you set up with everything you need to start your first day. The steps below will guide you through accessing your Microsoft 365 account, setting up Outlook, and accessing the Vatterott Training Institute. If at any point you need help, please visit <a href='https://hopeignites.org/help'>hopeignites.org/help</a>.",
+  "m365Setup": {
+    "question": "Have you set up your hopeignites.org Microsoft 365 account yet?",
+    "yesLabel": "Yes",
+    "yesDescription": "I've already signed in to my account",
+    "noLabel": "No",
+    "noDescription": "I still need to sign in for the first time",
+    "instructionsTitle": "Set up your Microsoft 365 account",
+    "instructionsIntro": "Follow these steps to sign in to your new Hope Ignites Microsoft 365 account:",
+    "instructions": [
+      "Refer to the message from your supervisor to retrieve your email address and password.",
+      "Visit m365.cloud.microsoft/login and sign in with your new credentials."
+    ],
+    "loginButtonText": "Open Microsoft 365 Login",
+    "loginButtonUrl": "https://m365.cloud.microsoft/login",
+    "completeButtonText": "I've signed in — continue"
+  },
   "steps": [
     {
       "id": "edge-and-account-setup",

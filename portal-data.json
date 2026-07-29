@@ -27,6 +27,18 @@
         },
         {
           "icon": {
+            "light": "jira.png",
+            "dark": "jira.png"
+          },
+          "title": "Technical Support Portal (Jira)",
+          "description": "Access our Jira Technical Support Portal",
+          "url": "https://portal.techservices.hopeignites.app/",
+          "universal": true,
+          "sso" : true,
+          "isNew" : true
+        },
+        {
+          "icon": {
             "light": "one-drive.png",
             "dark": "one-drive.png"
           },
@@ -78,6 +90,18 @@
           "url": "https://dialpad.com/login",
           "universal": false,
           "sso" : true
+        },
+        {
+          "icon": {
+            "light": "bit-warden.png",
+            "dark": "bit-warden.png"
+          },
+          "title": "Bitwarden",
+          "description": "Password manager for storing and managing passwords",
+          "url": "https://vault.bitwarden.com/#/login",
+          "nhqOnly": true,
+          "sso" : true,
+          "isNew": true
         },
         {
           "icon": {
@@ -348,7 +372,7 @@
           "description": "Corporate card and expense management platform",
           "url": "https://app.ramp.com/home",
           "nhqOnly": false,
-          "isNew": true
+          "isNew": false
         }
       ]
     },
@@ -430,6 +454,16 @@
           "title": "Hope Ignites GitHub",
           "description": "Code repository for Hope Ignites web and software projects",
           "url": "https://github.com/hope-ignites",
+          "tech": true
+        },
+        {
+          "icon": {
+            "light": "jira-service-mgmt.png",
+            "dark": "jira-service-mgmt.png"
+          },
+          "title": "Jira Service Management",
+          "description": "Jira Service Management for Hope Ignites",
+          "url": "https://itsm.techservices.hopeignites.app/",
           "tech": true
         },
         {

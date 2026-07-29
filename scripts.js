@@ -317,6 +317,22 @@ function setDeviceType(type) {
     localStorage.setItem('onboarding_device_type', type);
 }
 
+// Get M365 setup gate status: null | 'yes' | 'no' | 'completed'
+function getM365SetupStatus() {
+    return localStorage.getItem('onboarding_m365_setup') || null;
+}
+
+// Set M365 setup gate status in localStorage
+function setM365SetupStatus(status) {
+    localStorage.setItem('onboarding_m365_setup', status);
+}
+
+// True when user has finished the M365 gate (answered Yes, or completed No instructions)
+function isM365SetupDone() {
+    const status = getM365SetupStatus();
+    return status === 'yes' || status === 'completed';
+}
+
 // Onboarding Progress Manager
 const OnboardingProgressManager = (function() {
     const STORAGE_KEY = 'onboarding_progress';
@@ -416,6 +432,9 @@ function renderOnboarding() {
 
     const os = getOnboardingOS();
     const deviceType = getDeviceType();
+    const m365Status = getM365SetupStatus();
+    const m365Done = isM365SetupDone();
+    const m365 = onboardingData.m365Setup || {};
     const totalSteps = onboardingData.steps.length;
     const completionPercentage = OnboardingProgressManager.getCompletionPercentage(totalSteps);
 
@@ -427,7 +446,88 @@ function renderOnboarding() {
                 <h2>🎉 Welcome to Hope Ignites!</h2>
                 <p>${onboardingData.welcomeMessage}</p>
             </div>
+    `;
 
+    // M365 setup gate — shown before device type selection
+    if (!m365Done) {
+        if (m365Status === 'no') {
+            // Instructions after answering No
+            html += `
+            <div class="onboarding-m365-gate">
+                <h3>${m365.instructionsTitle || 'Set up your Microsoft 365 account'}</h3>
+                <p class="m365-gate-intro">${m365.instructionsIntro || ''}</p>
+                <div class="m365-gate-instructions">
+                    <ol>
+                        ${(m365.instructions || []).map(item => `<li>${item}</li>`).join('')}
+                    </ol>
+                    <div class="m365-gate-actions">
+                        <a href="${m365.loginButtonUrl || 'https://m365.cloud.microsoft/login'}"
+                           class="step-button m365-login-btn"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="step-button-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z"/></svg>
+                            </span>
+                            ${m365.loginButtonText || 'Open Microsoft 365 Login'}
+                        </a>
+                        <button type="button" class="m365-complete-btn" data-m365-action="complete">
+                            ${m365.completeButtonText || "I've signed in — continue"}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+        } else {
+            // Yes/No question
+            html += `
+            <div class="onboarding-m365-gate">
+                <h3>${m365.question || 'Have you set up your hopeignites.org Microsoft 365 account yet?'}</h3>
+                <div class="m365-gate-options" role="group" aria-label="Microsoft 365 account setup">
+                    <button type="button" class="m365-gate-option" data-m365-action="yes">
+                        <span class="m365-gate-icon">✓</span>
+                        <span class="m365-gate-label">
+                            <strong>${m365.yesLabel || 'Yes'}</strong>
+                            <small>${m365.yesDescription || ''}</small>
+                        </span>
+                    </button>
+                    <button type="button" class="m365-gate-option" data-m365-action="no">
+                        <span class="m365-gate-icon">→</span>
+                        <span class="m365-gate-label">
+                            <strong>${m365.noLabel || 'No'}</strong>
+                            <small>${m365.noDescription || ''}</small>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            `;
+        }
+
+        html += `
+        </div><!-- /.onboarding-container -->
+        `;
+
+        grid.innerHTML = html;
+
+        // M365 gate handlers
+        grid.querySelectorAll('[data-m365-action]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.dataset.m365Action;
+                if (action === 'yes') {
+                    setM365SetupStatus('yes');
+                } else if (action === 'no') {
+                    setM365SetupStatus('no');
+                } else if (action === 'complete') {
+                    setM365SetupStatus('completed');
+                }
+                renderOnboarding();
+            });
+        });
+
+        return;
+    }
+
+    // M365 gate complete — show device type and rest of onboarding
+    html += `
             <!-- Device Type Selector -->
             <div class="onboarding-device-type">
                 <h3>Select your device type:</h3>
@@ -1284,6 +1384,11 @@ function getIconForTheme(iconData) {
                 await loadOnboardingData();
                 // Set initial category to onboarding when on /onboarding route
                 currentCategory = 'onboarding';
+                // Support portal banner is launcher-only
+                const supportBanner = document.querySelector('.support-portal-banner');
+                if (supportBanner) {
+                    supportBanner.hidden = true;
+                }
             }
             
             renderTabs();
