@@ -1388,11 +1388,12 @@ function getIconForTheme(iconData) {
                 await loadOnboardingData();
                 // Set initial category to onboarding when on /onboarding route
                 currentCategory = 'onboarding';
-                // Support portal banner is launcher-only
-                const supportBanner = document.querySelector('.support-portal-banner');
-                if (supportBanner) {
-                    supportBanner.hidden = true;
-                }
+                // Hide launcher-only chrome on the onboarding page
+                document.querySelectorAll(
+                    '.support-portal-banner, .missing-app-feedback, .more-information'
+                ).forEach((el) => {
+                    el.hidden = true;
+                });
             }
             
             renderTabs();
