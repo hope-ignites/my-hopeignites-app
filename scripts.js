@@ -441,6 +441,10 @@ function renderOnboarding() {
     // Create onboarding container
     let html = `
         <div class="onboarding-container">
+            <div class="onboarding-preview-notice" role="status">
+                <strong>Network Preview</strong>
+                <span>This onboarding experience is a network preview.</span>
+            </div>
             <!-- Welcome Message Box -->
             <div class="onboarding-welcome">
                 <h2>🎉 Welcome to Hope Ignites!</h2>

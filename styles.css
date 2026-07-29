@@ -2003,6 +2003,38 @@ body.dark-mode .welcome-onboarding-prompt p {
     display: flex;
     flex-direction: column;
     gap: 0;
+    position: relative;
+}
+
+/* Network Preview notice — onboarding only */
+.onboarding-preview-notice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px 12px;
+    background: linear-gradient(135deg, #ef7322 0%, #f79d1e 100%);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(239, 115, 34, 0.3);
+    font-size: 0.95rem;
+}
+
+.onboarding-preview-notice strong {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.onboarding-preview-notice span {
+    opacity: 0.95;
 }
 
 /* Welcome message box */
