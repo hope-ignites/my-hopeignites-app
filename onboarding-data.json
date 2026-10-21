@@ -48,6 +48,31 @@
   },
   "steps": [
     {
+      "id": "microsoft-authenticator",
+      "title": "Set Up Microsoft Authenticator",
+      "description": "Do this immediately after you sign in to your hopeignites.org account for the first time. Microsoft Authenticator confirms it is you each time you sign in, and your account is not fully set up until this is finished.",
+      "buttonText": "Set Up Authenticator",
+      "buttonUrl": "https://aka.ms/mfasetup",
+      "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 16l-4-4 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z'/></svg>",
+      "notes": [
+        "Complete this step before you set up Edge, Teams, or Outlook",
+        "Install the Microsoft Authenticator app on your phone using the App Store or Google Play links below",
+        "On your computer, open Set Up Authenticator and sign in with your @hopeignites.org account",
+        "Choose Microsoft Authenticator, then scan the QR code with the app on your phone",
+        "Approve the test notification in the app to finish setup",
+        "Keep your phone with you — you will approve a notification in Authenticator each time you sign in"
+      ],
+      "appStoreLinks": [
+        {
+          "appName": "Microsoft Authenticator",
+          "links": [
+            { "label": "App Store", "url": "https://apps.apple.com/app/microsoft-authenticator/id983156458", "store": "apple" },
+            { "label": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.azure.authenticator", "store": "google" }
+          ]
+        }
+      ]
+    },
+    {
       "id": "edge-and-account-setup",
       "title": "Install Edge & Set Up Your Account",
       "buttonText": "Download Microsoft Edge",
@@ -62,7 +87,7 @@
           "Download the installer from the button above and run the .exe file",
           "Sign in with your @hopeignites.org address and the temporary password from your account creation email",
           "You will be prompted to set a new permanent password immediately — do this before anything else",
-          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
+          "Microsoft Authenticator should already be set up from Step 1 — finish that before continuing if you have not",
           "Set Edge as your default browser: Settings → Default browser → Make default",
           "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
@@ -76,7 +101,7 @@
           "Go to Settings → Help & feedback → About Microsoft Edge to make sure Edge is up to date",
           "Sign in with your @hopeignites.org address and the temporary password from your account creation email",
           "You will be prompted to set a new permanent password immediately — do this before anything else",
-          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
+          "Microsoft Authenticator should already be set up from Step 1 — finish that before continuing if you have not",
           "Set Edge as your default browser: Settings → Default browser → Make default",
           "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
@@ -89,7 +114,7 @@
           "Download the .pkg installer (linked above) and follow the installation prompts",
           "Once installed, open Edge and sign in with your @hopeignites.org address and the temporary password from your account creation email",
           "You will be prompted to set a new permanent password immediately — do this before anything else",
-          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
+          "Microsoft Authenticator should already be set up from Step 1 — finish that before continuing if you have not",
           "Set Edge as your default browser: System Settings → Desktop & Dock → Default web browser → Microsoft Edge",
           "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
@@ -103,7 +128,7 @@
           "If not installed, download the .pkg installer and follow the installation prompts",
           "Once installed, open Edge and sign in with your @hopeignites.org address and the temporary password from your account creation email",
           "You will be prompted to set a new permanent password immediately — do this before anything else",
-          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
+          "Microsoft Authenticator should already be set up from Step 1 — finish that before continuing if you have not",
           "Set Edge as your default browser: System Settings → Desktop & Dock → Default web browser → Microsoft Edge",
           "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
@@ -118,7 +143,7 @@
           "Fedora/RHEL: Run 'sudo rpm -i microsoft-edge-stable-*.rpm' after downloading",
           "Once installed, open Edge and sign in with your @hopeignites.org address and the temporary password from your account creation email",
           "You will be prompted to set a new permanent password immediately — do this before anything else",
-          "Next, set up multi-factor authentication (MFA) — have your phone ready for the Microsoft Authenticator app",
+          "Microsoft Authenticator should already be set up from Step 1 — finish that before continuing if you have not",
           "Microsoft Edge is our recommended browser for the best experience with Microsoft 365 apps and services"
         ]
       },
@@ -256,15 +281,17 @@
     },
     {
       "id": "onboarding-call",
-      "title": "Onboarding Call with Network Headquarters",
-      "description": "Schedule and complete your onboarding call with the Network Headquarters team.",
+      "title": "Prepare for your Onboarding Call",
+      "description": "Prepare for your Onboarding Call with the Hope Ignites Network Headquarters Human Capital Management (HCM) Team. A member of our HCM team will walk you through new hire paperwork and answer questions about benefits available to you at Hope Ignites.",
       "hideButton": true,
       "buttonText": "Schedule Call",
       "buttonUrl": "https://hopeignites.org/help",
       "buttonIcon": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill='currentColor'><path d='M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z'/></svg>",
       "notes": [
-        "Additional details to be provided by Julie",
-        "This call will help you get acquainted with the Network Headquarters team and processes"
+        "Calls are hosted on Tuesday at 12 Noon Central Time via Microsoft Teams.",
+        "It is recommended that you join this call from a laptop or desktop computer, and not from a mobile device such as a cell phone or tablet.",
+        "For more information on Onboarding, visit <a href='https://hopeignites1977.sharepoint.com/sites/hub-hcm-onboarding/' target='_blank' rel='noopener noreferrer'>the HCM Onboarding site</a>.",
+        "For information on Benefits, visit <a href='https://hopeignites1977.sharepoint.com/sites/hub-hcm-benefits/' target='_blank' rel='noopener noreferrer'>the HCM Benefits site</a>."
       ]
     },
     {
@@ -277,7 +304,7 @@
       "notes": [
         "The policy review is required for all new employees",
         "Take your time to read through each section carefully",
-        "Contact Human Resources if you have questions about any policies"
+        "Contact <a href='https://boyshopegirlshope271.sharepoint.com/sites/hub-humancapital' target='_blank' rel='noopener noreferrer'>NHQ Human Capital Management</a> if you have questions about any policies"
       ]
     }
     
